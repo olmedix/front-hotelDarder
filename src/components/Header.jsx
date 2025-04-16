@@ -17,7 +17,7 @@ export function Header() {
   const activeIndex = navItems.findIndex((item) => location.pathname === item.path);
 
   return (
-    <header className="w-full relative flex">
+    <header className=" w-full relative flex">
         <div className="flex w-1/3 pl-20 pt-4 text-center items-center">
             <div className="flex items-center justify-center p-2.5 rounded-full shadow-2xl text-gray-800">
                 <CiMedicalCross className="text-5xl text-white font-bold" />
@@ -26,7 +26,7 @@ export function Header() {
         </div>
       
 
-      <div className="w-2/3 mt-8 flex justify-end">
+      <div className="w-2/3 mt-10 mr-5 flex justify-end">
         <nav className="navigation">
           <ul>
             {navItems.map((item, index) => (
