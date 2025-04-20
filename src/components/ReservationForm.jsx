@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { FaHotel } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaBed } from "react-icons/fa";
+import { IoCalendarNumberSharp } from "react-icons/io5";
 
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import React, { useState } from "react";
@@ -26,15 +27,13 @@ export function ReservationForm({
   const handleClickAway = () => {
     setShowCalendar(false);
   };
+
   const [room1, setRoom1] = useState(1);
   const [room2, setRoom2] = useState(1);
   const [room3, setRoom3] = useState(1);
 
   return (
-    <section
-      className="absolute w-3/5 h-22 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2  bg-[#FFFFF0] border
-        rounded-2xl"
-    >
+    <section className="sticky top-0 w-3/5 h-22 mx-auto mt-96 bg-[#FFFFF0] border rounded-2xl z-50">
       <div className="flex h-full text-black">
         <div className="h-full border-r w-2/7">
           <h5 className="font-semibold mt-1 mb-3">DESTINO</h5>
@@ -46,21 +45,21 @@ export function ReservationForm({
           </p>
         </div>
 
-        <div className="h-full border-r w-1/4">
-          <button
-            className="w-full h-full"
-            onClick={() => setShowCalendar(!showCalendar)}
-          >
-            <h5 className="font-semibold -mt-5 mb-3">FECHAS</h5>
-
+        <div
+          className="h-full border-r w-1/4 cursor-pointer "
+          onClick={() => setShowCalendar(!showCalendar)}
+        >
+          <h5 className="font-semibold mb-4">FECHAS</h5>
+          <p className="flex w-full items-center justify-center">
+            <IoCalendarNumberSharp className="text-[#0097e6]" />
             {`${format(state[0].startDate, "yyyy/MM/dd")} - ${format(
               state[0].endDate,
               "yyyy/MM/dd"
             )}`}
-          </button>
+          </p>
           {showCalendar && (
             <ClickAwayListener onClickAway={handleClickAway}>
-              <div className="absolute z-50">
+              <div className="absolute z-70 mt-6">
                 <DateRange
                   editableDateInputs={true}
                   onChange={(item) => setState([item.selection])}
@@ -90,7 +89,7 @@ export function ReservationForm({
           </button>
 
           {showPeople && (
-            <div className="absolute z-50 w-44 h-auto bg-[#FFFFF0] border">
+            <div className="absolute z-60 w-44 h-20 bg-[#FFFFF0] border">
               {/* Habitación 1 */}
               <div className="flex flex-col justify-between items-center border-b last:border-b-0 p-2 bg-[#FFFFF0]">
                 <h3 className="font-bold text-[#0097e6] text-lg mb-2">
@@ -217,7 +216,7 @@ export function ReservationForm({
           </button>
 
           {showRooms && (
-            <div className="absolute z-50  w-44 h-16 bg-[#FFFFF0] border">
+            <div className="absolute z-50  w-44 h-20 bg-[#FFFFF0] border">
               <div className="flex justify-between items-center h-full px-10">
                 <div
                   className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full"
@@ -239,7 +238,7 @@ export function ReservationForm({
                     }
                   }}
                 >
-                  <button className="absolute top-3 left-12 font-bold text-[#0097e6] text-2xl">
+                  <button className="absolute top-5 left-11.5 font-bold text-[#0097e6] text-2xl">
                     -
                   </button>
                 </div>
@@ -264,7 +263,7 @@ export function ReservationForm({
                     }
                   }}
                 >
-                  <button className="absolute top-3.5 right-11.5 font-bold text-[#0097e6] text-xl">
+                  <button className="absolute top-5.5 right-11 font-bold text-[#0097e6] text-xl">
                     +
                   </button>
                 </div>

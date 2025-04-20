@@ -1,36 +1,36 @@
-import './App.css'
-import { Contacto } from './pages/Contacto';
-import { Extras } from './pages/Extras';
-import { Home } from './pages/Home';
-import { Login } from './pages/Login';
+import { CategoryProvider } from "./contexts/CategoryContext";
+
+import "./App.css";
+import { Contacto } from "./pages/Contacto";
+import { Extras } from "./pages/Extras";
+import { Home } from "./pages/Home";
+import { Login } from "./pages/Login";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate
+  Navigate,
 } from "react-router-dom";
-import { Reservas } from './pages/Reservas';
-
+import { Reservas } from "./pages/Reservas";
 
 function App() {
-
-
   return (
     <>
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/contacto" element={<Contacto/>} />
-        <Route path="/extras" element={<Extras/>} />
-        <Route path="/reservas" element={<Reservas/>} />
-        <Route path="/login" element={<Login/>} />
-        
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Router>
+      <CategoryProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/contacto" element={<Contacto />} />
+            <Route path="/extras" element={<Extras />} />
+            <Route path="/reservas" element={<Reservas />} />
+            <Route path="/login" element={<Login />} />
+
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Router>
+      </CategoryProvider>
     </>
-  )
+  );
 }
 
-export default App
- 
+export default App;
