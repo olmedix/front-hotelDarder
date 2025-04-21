@@ -2,7 +2,7 @@ import React from "react";
 import "../css/react-carousel.css";
 import { Carousel } from "react-responsive-carousel";
 import { useCategories } from "../contexts/CategoryContext";
-import { API_BASE } from "../services/api";
+import { URL_BACK } from "../services/api";
 
 export function CardCategory() {
   const { categories, loading, error } = useCategories();
@@ -13,14 +13,14 @@ export function CardCategory() {
   return (
     <article className="flex gap-4">
       {categories.map((category) => (
-        <div className="flex w-md gap-4 mt-6 text-black bg-[#f2f2f2] rounded-bl-lg rounded-br-lg shadow-gray-700 shadow-lg">
-          <div className="rounded-lg w-md mr-8">
+        <div className="flex w-md gap-4 my-6 text-black bg-[#f2f2f2] rounded-bl-lg rounded-br-lg shadow-gray-700 shadow-lg">
+          <div className="rounded-lg w-md">
             {console.log(categories)}
             <Carousel>
               {category.images.map((image) => (
                 <img
                   key={image.id}
-                  src={API_BASE + image.url}
+                  src={URL_BACK + image.url}
                   alt={category.name}
                   className="w-full rounded-tl-lg rounded-tr-lg"
                 />

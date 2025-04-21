@@ -1,5 +1,5 @@
-export const API_BASE = "http://hotelemilidarder.test/";
-const API_BASE_URL = API_BASE + "api";
+export const URL_BACK = "http://hotelemilidarder.test/";
+const API_BASE_URL = "http://hotelemilidarder.test/api";
 
 export const fetchCategories = async () => {
   const response = await fetch(`${API_BASE_URL}/category`, {

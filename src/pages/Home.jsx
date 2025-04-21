@@ -3,6 +3,7 @@ import { Header } from "../components/Header";
 import React, { useState } from "react";
 import { ReservationForm } from "../components/ReservationForm";
 import { Accommodation } from "../components/Accommodation";
+import { Facilities } from "../components/Facilities";
 
 export function Home() {
   const [showCalendar, setShowCalendar] = useState(false);
@@ -57,6 +58,7 @@ export function Home() {
       </section>
 
       <Accommodation />
+      <Facilities />
     </main>
   );
 }
