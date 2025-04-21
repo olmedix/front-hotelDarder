@@ -33,7 +33,7 @@ export function ReservationForm({
   const [room3, setRoom3] = useState(1);
 
   return (
-    <section className="sticky top-0 w-3/5 h-22 mx-auto mt-96 bg-[#FFFFF0] border rounded-2xl z-50">
+    <section className="sticky top-0 w-3/5 h-22 mt-96 mx-auto bg-[#FFFFF0] border rounded-2xl z-50">
       <div className="flex h-full text-black">
         <div className="h-full border-r w-2/7">
           <h5 className="font-semibold mt-1 mb-3">DESTINO</h5>
