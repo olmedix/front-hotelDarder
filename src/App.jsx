@@ -1,4 +1,5 @@
 import { CategoryProvider } from "./contexts/CategoryContext";
+import { HotelProvider } from "./contexts/HotelContext";
 
 import "./App.css";
 import { Contacto } from "./pages/Contacto";
@@ -17,17 +18,19 @@ function App() {
   return (
     <>
       <CategoryProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/contacto" element={<Contacto />} />
-            <Route path="/extras" element={<Extras />} />
-            <Route path="/reservas" element={<Reservas />} />
-            <Route path="/login" element={<Login />} />
+        <HotelProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/contacto" element={<Contacto />} />
+              <Route path="/extras" element={<Extras />} />
+              <Route path="/reservas" element={<Reservas />} />
+              <Route path="/login" element={<Login />} />
 
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </Router>
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </Router>
+        </HotelProvider>
       </CategoryProvider>
     </>
   );

@@ -1,27 +1,12 @@
-import { useEffect, useState } from "react";
 import "../css/react-carousel.css";
 import { Carousel } from "react-responsive-carousel";
-import { fetchHotel } from "../services/api";
 import { DESCRIPTION_HOTEL } from "../services/descriptionsHotel";
 import { URL_BACK } from "../services/api";
+import { useHotel } from "../contexts/HotelContext";
 
 export function HotelServices() {
-  const [hotel, setHotel] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  useEffect(() => {
-    const getHotel = async () => {
-      try {
-        const data = await fetchHotel();
-        setHotel(data);
-      } catch (err) {
-        setError("Error al obtener el hotel");
-      } finally {
-        setLoading(false);
-      }
-    };
-    getHotel();
-  }, []);
+  const { hotel, loading, error } = useHotel();
+
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>{error}</div>;
 
