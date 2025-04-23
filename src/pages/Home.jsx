@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { ReservationForm } from "../components/ReservationForm";
 import { Accommodation } from "../components/Accommodation";
 import { Facilities } from "../components/Facilities";
-import { RestaurantBar } from "../components/RestaurantBar";
+import { HotelServices } from "../components/HotelServices";
 
 export function Home() {
   const [showCalendar, setShowCalendar] = useState(false);
@@ -59,7 +59,7 @@ export function Home() {
 
       <Accommodation />
       <Facilities />
-      <RestaurantBar />
+      <HotelServices />
     </main>
   );
 }
