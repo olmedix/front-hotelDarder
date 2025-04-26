@@ -4,15 +4,22 @@ import { Header } from "../components/Header";
 import { useState, useEffect } from "react";
 import { fetchExtras } from "../services/api";
 import { URL_BACK } from "../services/api";
+import { IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 
 export function Extras() {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [extras, setExtras] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [openItems, setOpenItems] = useState({});
 
-  const toggleCollapse = () => setIsOpen((prev) => !prev);
+  const toggleCollapse = (id) => {
+    setOpenItems((prev) => ({
+      ...prev,
+      [id]: !prev[id], // Cambia el estado solo del elemento con el id correspondiente
+    }));
+  };
 
   useEffect(() => {
     const getExtras = async () => {
@@ -48,8 +55,8 @@ export function Extras() {
       <Header />
       {console.log(extras)}
 
-      <main className="relative px-5 mt-20 mb-36 w-2/3 mx-auto  rounded-t-xl">
-        <section className="grid grid-cols-3 gap-14">
+      <section className="relative flex px-5 mt-20 mb-36 w-9/10 mx-auto rounded-t-xl">
+        <main className="w-3/4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-14">
           {extras.map((extra) => (
             <article>
               <div
@@ -64,34 +71,47 @@ export function Extras() {
                 }}
                 className="bg-gray-200 rounded-lg shadow-md flex items-center justify-center"
               >
-                <div className="absolute top-0 -right-3 bg-[#0097e6] text-white text-xs font-medium rounded-md rotate-25 px-2 py-1 shadow-2xs">
+                <div className="absolute top-0 -right-3 bg-[#0097e6] text-white font-semibold rounded-md rotate-25 px-3 py-1 shadow-2xs">
                   {extra.price} €
                 </div>
 
-                <div className="absolute -bottom-6 left-0   inline-flex  gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-gray-300 text-gray-800 shadow-2xs">
+                <div className="absolute -bottom-6 left-0 inline-flex gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-gray-300 text-gray-800 shadow-2xs">
                   <Collapsible
                     trigger={
-                      <div className="cursor-pointer  py-3 px-4">
+                      <div
+                        className="flex justify-between cursor-pointer py-3 px-4"
+                        onClick={() => toggleCollapse(extra.id)}
+                      >
                         {extra.name}
+                        {openItems[extra.id] ? (
+                          <IoIosArrowUp className="text-xl text-bold" />
+                        ) : (
+                          <IoIosArrowDown className="text-xl text-bold" />
+                        )}
                       </div>
                     }
+                    open={openItems[extra.id]}
                   >
-                    <div className="w-full text-gray-500 bg-gray-200  px-4">
+                    <div className="w-full text-gray-500 bg-gray-200 px-4">
                       <p>{extra.description}</p>
                     </div>
                   </Collapsible>
                 </div>
               </div>
 
-              <div className=" w-62 h-7 mt-7">
+              <div className="w-62 h-7 mt-7">
                 <button className="bg-[#0097e6] text-white py-2 w-full rounded-lg shadow-2xs hover:bg-[#007bb5] focus:outline-hidden focus:bg-[#007bb5]">
-                  ¡ LO QUIERO !{" "}
+                  ¡ LO QUIERO !
                 </button>
               </div>
             </article>
           ))}
-        </section>
-      </main>
+        </main>
+
+        <aside className="w-1/4 h-screen py-2.5  rounded-lg border border-gray-200 bg-gray-300 text-gray-800 shadow-2xs">
+          <h2 className="text-xl font-medium">Resumen de tu selección</h2>
+        </aside>
+      </section>
 
       <div className="py-2 px-3 w-full bg-white border border-gray-200 rounded-lg">
         <div
