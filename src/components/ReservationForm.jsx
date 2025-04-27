@@ -26,6 +26,8 @@ export function ReservationForm({
 }) {
   const handleClickAway = () => {
     setShowCalendar(false);
+    setShowPeople(false);
+    setShowRooms(false);
   };
 
   const [room1, setRoom1] = useState(1);
@@ -35,7 +37,7 @@ export function ReservationForm({
   return (
     <section className="sticky top-0 w-3/5 h-22 mt-96 mx-auto bg-[#FFFFF0] border rounded-2xl z-50">
       <div className="flex h-full text-black">
-        <div className="h-full border-r w-2/7">
+        <div className="h-full border-r w-3/10">
           <h5 className="font-semibold mt-1 mb-3">DESTINO</h5>
           <p className="flex ml-3tems-center justify-center">
             <span className="mr-2 mt-1 text-[#0097e6]">
@@ -46,8 +48,8 @@ export function ReservationForm({
         </div>
 
         <div
-          className="h-full border-r w-1/4 cursor-pointer "
-          onClick={() => setShowCalendar(!showCalendar)}
+          className="h-full border-r w-3/10 cursor-pointer "
+          onClick={() => {setShowCalendar(!showCalendar),setShowPeople(false),setShowRooms(false)}}
         >
           <h5 className="font-semibold mb-4">FECHAS</h5>
           <p className="flex w-full items-center justify-center">
@@ -74,12 +76,12 @@ export function ReservationForm({
           )}
         </div>
 
-        <div className="h-full border-r w-44">
+        <div className="h-full border-r w-1/10 cursor-pointer">
           <button
             className="w-full h-full text-left"
-            onClick={() => setShowPeople(!showPeople)}
+            onClick={() =>{ setShowPeople(!showPeople),setShowRooms(false)}}
           >
-            <h5 className="relative font-semibold text-center -top-4">
+            <h5 className="relative font-semibold text-center -top-4 truncate">
               PERSONAS
             </h5>
             <p className="flex text-center items-center justify-center">
@@ -89,7 +91,8 @@ export function ReservationForm({
           </button>
 
           {showPeople && (
-            <div className="absolute z-60 w-44 h-20 bg-[#FFFFF0] border">
+            <ClickAwayListener onClickAway={handleClickAway}>
+            <div className="absolute z-60 w-2/10 h-20 bg-[#FFFFF0] border">
               {/* Habitación 1 */}
               <div className="flex flex-col justify-between items-center border-b last:border-b-0 p-2 bg-[#FFFFF0]">
                 <h3 className="font-bold text-[#0097e6] text-lg mb-2">
@@ -200,12 +203,13 @@ export function ReservationForm({
                 </div>
               )}
             </div>
+            </ClickAwayListener>
           )}
         </div>
 
-        <div className="h-full border-r w-44">
+        <div className="h-full border-r w-1/10 cursor-pointer truncate">
           <button
-            onClick={() => setShowRooms(!showRooms)}
+            onClick={() => {setShowRooms(!showRooms),setShowPeople(false)}}
             className="w-full h-full text"
           >
             <h5 className="relative font-semibold -top-4">HABITACIONES</h5>
@@ -216,7 +220,8 @@ export function ReservationForm({
           </button>
 
           {showRooms && (
-            <div className="absolute z-50  w-44 h-20 bg-[#FFFFF0] border">
+            <ClickAwayListener onClickAway={handleClickAway}>
+            <div className="absolute w-2/10 left-6/10 z-50 h-20 bg-[#FFFFF0] border">
               <div className="flex justify-between items-center h-full px-10">
                 <div
                   className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full"
@@ -269,10 +274,11 @@ export function ReservationForm({
                 </div>
               </div>
             </div>
+            </ClickAwayListener>
           )}
         </div>
 
-        <div className="w-1/6">
+        <div className="w-2/10">
           <button
             className="w-full h-full bg-[#0097e6] text-white font-bold text-2xl rounded-br-2xl rounded-tr-2xl"
             onClick={() => {

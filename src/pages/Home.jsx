@@ -9,8 +9,8 @@ import { HotelServices } from "../components/HotelServices";
 export function Home() {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
-  const [people, setPeople] = useState(1);
   const [showRooms, setShowRooms] = useState(false);
+  const [people, setPeople] = useState(1);
   const [rooms, setRooms] = useState(1);
 
   const [state, setState] = useState([
