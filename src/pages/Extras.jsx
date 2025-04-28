@@ -129,7 +129,6 @@ export function Extras() {
   return (
     <div className="relative w-full min-h-screen text-black bg-cover bg-center">
       <Header />
-      {console.log(extras)}
 
       <section className="relative flex px-5 mt-20 mb-36 w-9/10 mx-auto rounded-t-xl">
         <main className="w-3/4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-14">
@@ -221,7 +220,13 @@ export function Extras() {
         </main>
 
         {/* Detalles de Reserva de los extras */}
-        <ExtraReservation selectedExtras={selectedExtras} extras={extras} />
+        <ExtraReservation
+          selectedExtras={selectedExtras}
+          extras={extras}
+          setSelectedExtras={setSelectedExtras}
+          setQuantity={setQuantity}
+          setOpenQuantity={setOpenQuantity}
+        />
       </section>
     </div>
   );

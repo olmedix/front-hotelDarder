@@ -17,6 +17,7 @@
     "@stripe/stripe-js": "^7.2.0",
     "@tailwindcss/vite": "^4.1.4",
     "date-fns": "^4.1.0",
+    "jspdf": "^3.0.1",
     "preline": "^3.0.1",
     "react": "^19.0.0",
     "react-collapsible": "2.7.0",
