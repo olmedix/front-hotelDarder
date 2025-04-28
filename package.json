@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^7.0.2",
     "@preline/input-number": "^3.0.0",
+    "@stripe/stripe-js": "^7.2.0",
     "@tailwindcss/vite": "^4.1.4",
     "date-fns": "^4.1.0",
     "preline": "^3.0.1",

@@ -37,3 +37,16 @@ export const fetchExtras = async () => {
   const result = await response.json();
   return result;
 };
+
+export const fetchReservaExtras = async (reservations) => {
+  const response = await fetch(`${API_BASE_URL}/extraReservation`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ reservations }),
+  });
+  if (!response.ok) throw new Error("Error al obtener los extras reservados");
+  const result = await response.json();
+  return result;
+};

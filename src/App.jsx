@@ -13,6 +13,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Reservas } from "./pages/Reservas";
+import { PaymentSuccess } from "./pages/PaymentSuccess";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/extras" element={<Extras />} />
               <Route path="/reservas" element={<Reservas />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
 
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>

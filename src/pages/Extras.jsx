@@ -3,6 +3,7 @@ import Collapsible from "react-collapsible";
 import { fetchExtras } from "../services/api";
 import { URL_BACK } from "../services/api";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 import { Header } from "../components/Header";
 import { ExtraReservation } from "../components/ExtraReservation";
@@ -11,23 +12,10 @@ export function Extras() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [extras, setExtras] = useState([]);
+  const [selectedExtras, setSelectedExtras] = useState({});
   const [openItems, setOpenItems] = useState({});
   const [openQuantity, setOpenQuantity] = useState({});
   const [quantity, setQuantity] = useState({});
-
-  const toggleCollapse = (id) => {
-    setOpenItems((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
-
-  const toggleQuantity = (id) => {
-    setOpenQuantity((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
 
   useEffect(() => {
     const getExtras = async () => {
@@ -44,17 +32,94 @@ export function Extras() {
     getExtras();
   }, []);
 
-  const handleIncrement = (id) => {
-    setQuantity((prev) => ({
+  useEffect(() => {
+    const storedExtras = localStorage.getItem("selectedExtras");
+    if (storedExtras) {
+      setSelectedExtras(JSON.parse(storedExtras));
+      setQuantity(JSON.parse(storedExtras)); // Para que también se refleje visualmente
+      const openQuantityState = {};
+      Object.keys(JSON.parse(storedExtras)).forEach((id) => {
+        openQuantityState[id] = true;
+      });
+      setOpenQuantity(openQuantityState);
+    }
+  }, []);
+
+  const toggleCollapse = (id) => {
+    setOpenItems((prev) => ({
       ...prev,
-      [id]: (prev[id] || 1) + 1,
+      [id]: !prev[id],
     }));
   };
 
-  const handleDecrement = (id) => {
+  const toggleQuantity = (id) => {
+    setOpenQuantity((prev) => ({
+      ...prev,
+      [id]: true, // Cuando haga click, siempre abrir
+    }));
+
     setQuantity((prev) => ({
       ...prev,
-      [id]: Math.max(1, (prev[id] || 1) - 1),
+      [id]: 1, // Iniciar la cantidad directamente en 1
+    }));
+  };
+  const handleIncrement = (id) => {
+    setQuantity((prev) => {
+      const newQuantity = (prev[id] || 1) + 1;
+      const updated = {
+        ...prev,
+        [id]: newQuantity,
+      };
+      updateSelectedExtras(updated);
+      return updated;
+    });
+  };
+
+  const handleDecrement = (id) => {
+    setQuantity((prev) => {
+      const newQuantity = Math.max(0, (prev[id] || 1) - 1);
+      const updated = {
+        ...prev,
+        [id]: newQuantity,
+      };
+      updateSelectedExtras(updated);
+      if (newQuantity === 0) {
+        setOpenQuantity((prevOpen) => ({
+          ...prevOpen,
+          [id]: false,
+        }));
+      }
+      return updated;
+    });
+  };
+
+  const updateSelectedExtras = (updatedQuantities) => {
+    const selected = {};
+
+    for (const id in updatedQuantities) {
+      if (updatedQuantities[id] > 0) {
+        selected[id] = updatedQuantities[id];
+      }
+    }
+
+    setSelectedExtras(selected);
+    localStorage.setItem("selectedExtras", JSON.stringify(selected));
+  };
+
+  const handleSelectExtra = (id) => {
+    setOpenQuantity((prev) => ({
+      ...prev,
+      [id]: true,
+    }));
+
+    setQuantity((prev) => ({
+      ...prev,
+      [id]: 1, // empezamos en 1 al primer click
+    }));
+
+    setSelectedExtras((prev) => ({
+      ...prev,
+      [id]: 1, // también lo guardamos en los seleccionados
     }));
   };
 
@@ -109,30 +174,43 @@ export function Extras() {
                 </div>
               </div>
 
-              <div className="w-62 h-7 mt-7" onClick={() => toggleQuantity(extra.id)}>
+              <div
+                className="w-62 h-7 mt-7"
+                onClick={() => {
+                  if (!openQuantity[extra.id]) {
+                    toggleQuantity(extra.id);
+                  }
+                }}
+              >
                 {openQuantity[extra.id] ? (
                   <div className="flex justify-between px-5 bg-[#0097e6] text-white py-2 w-full rounded-lg shadow-2xs hover:bg-[#007bb5] focus:outline-hidden focus:bg-[#007bb5]">
-                   <span>{quantity[extra.id] || 0} </span> 
+                    <span>{quantity[extra.id] || 1}</span>
 
-                   <div className="flex space-x-2">
-                    <button
-                      onClick={(e) => { e.stopPropagation(); handleDecrement(extra.id); }}
-                      className="bg-white text-[#0097e6] rounded-full px-2 font-bold"
-                    >
-                      -
-                    </button>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); handleIncrement(extra.id); }}
-                      className="bg-white text-[#0097e6] rounded-full px-2 font-bold"
-                    >
-                      +
-                    </button>
-                  </div>
-                     
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDecrement(extra.id);
+                        }}
+                        className="bg-white text-[#0097e6] rounded-full px-2 font-bold"
+                      >
+                        {quantity[extra.id] === 1 ? <FaRegTrashAlt /> : "-"}
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleIncrement(extra.id);
+                        }}
+                        className="bg-white text-[#0097e6] rounded-full px-2 font-bold"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <button
                     className="bg-[#0097e6] text-white py-2 w-full rounded-lg shadow-2xs hover:bg-[#007bb5] focus:outline-hidden focus:bg-[#007bb5]"
+                    onClick={() => handleSelectExtra(extra.id)}
                   >
                     ¡LO QUIERO!
                   </button>
@@ -143,7 +221,7 @@ export function Extras() {
         </main>
 
         {/* Detalles de Reserva de los extras */}
-        <ExtraReservation />
+        <ExtraReservation selectedExtras={selectedExtras} extras={extras} />
       </section>
     </div>
   );
