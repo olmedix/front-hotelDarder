@@ -1,7 +1,7 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { fetchReservaExtras } from "../services/api";
 import { API_BASE_URL } from "../services/api";
-import { jsPDF } from "jspdf";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { generatePDF } from "../services/generatePdf";
 
@@ -16,6 +16,7 @@ export function ExtraReservation({
   setQuantity,
   setOpenQuantity,
 }) {
+  const navigate = useNavigate();
   const [showDialog, setShowDialog] = useState(false);
 
   const totalPrice = Object.entries(selectedExtras).reduce(
@@ -88,9 +89,12 @@ export function ExtraReservation({
 
         const session = await response.json();
         const stripe = await stripePromise;
-        await stripe.redirectToCheckout({ sessionId: session.id });
-        generatePDF(reserva, extras, reservations); // Generar PDF de la reserva
+
+        localStorage.setItem("reserva", JSON.stringify(reserva));
+        localStorage.setItem("extras", JSON.stringify(extras));
+        localStorage.setItem("reservations", JSON.stringify(reservations));
         resetSelectedExtras();
+        await stripe.redirectToCheckout({ sessionId: session.id });
       } else if (status === "pending") {
         generatePDF(reserva, extras, reservations);
         setShowDialog(true);

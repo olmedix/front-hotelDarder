@@ -107,20 +107,22 @@ export function Extras() {
   };
 
   const handleSelectExtra = (id) => {
+    const updatedSelected = {
+      ...selectedExtras,
+      [id]: 1,
+    };
+
+    setSelectedExtras(updatedSelected);
     setOpenQuantity((prev) => ({
       ...prev,
       [id]: true,
     }));
-
     setQuantity((prev) => ({
       ...prev,
-      [id]: 1, // empezamos en 1 al primer click
+      [id]: 1,
     }));
 
-    setSelectedExtras((prev) => ({
-      ...prev,
-      [id]: 1, // también lo guardamos en los seleccionados
-    }));
+    localStorage.setItem("selectedExtras", JSON.stringify(updatedSelected));
   };
 
   if (loading) return <p>Loading...</p>;
