@@ -63,3 +63,37 @@ export const fetchPayment = async (payment) => {
   const result = await response.json();
   return result;
 };
+
+export const login = async (loginData) => {
+  const response = await fetch(`${API_BASE_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(loginData),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Error de inicio de sesión");
+  }
+
+  return response.json();
+};
+
+export const register = async (registerData) => {
+  const response = await fetch(`${API_BASE_URL}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(registerData),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Error en el registro");
+  }
+
+  return response.json();
+};

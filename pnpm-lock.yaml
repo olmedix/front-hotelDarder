@@ -20,6 +20,9 @@ importers:
       '@preline/input-number':
         specifier: ^3.0.0
         version: 3.0.0
+      '@react-login-page/page8':
+        specifier: ^1.0.4
+        version: 1.0.4(@babel/runtime@7.27.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@stripe/stripe-js':
         specifier: ^7.2.0
         version: 7.2.0
@@ -560,6 +563,13 @@ packages:
 
   '@preline/input-number@3.0.0':
     resolution: {integrity: sha512-rl7NO5vsbLR6lJwFhxM/CJn8K7Rc6yZ9d3Ffm7MO5qwoI8/wiTTAS9XV3b3vGi85D41xhEZslh6ZzwpETGBRZg==}
+
+  '@react-login-page/page8@1.0.4':
+    resolution: {integrity: sha512-UNcnXUZTtSsgon+zkS5G55SIYbB0H9AJoYPIH1r5+hcsIVD5Rbj2MqhgSfjXexXJ9P9GKm4msXSoT42ajeIZcA==}
+    peerDependencies:
+      '@babel/runtime': '>=7.11.0'
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
 
   '@rollup/rollup-android-arm-eabi@4.40.0':
     resolution: {integrity: sha512-+Fbls/diZ0RDerhE8kyC6hjADCXA1K4yVNlH0EYfd2XjyH0UGgzaQ8MlT0pCXAThfxv3QUAczHaL+qSv1E4/Cg==}
@@ -1396,6 +1406,13 @@ packages:
     peerDependencies:
       react: 0.14 || 15 - 19
 
+  react-login-page@1.0.4:
+    resolution: {integrity: sha512-6TxZMgA47M/ncnXLp18VMfvpemMMHmgvMikzljxtxO/8XegxYCRP8wySim6Tn9qLvGgctw88hNByhGU5Syp3Mg==}
+    peerDependencies:
+      '@babel/runtime': '>=7.11.0'
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+
   react-refresh@0.17.0:
     resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
     engines: {node: '>=0.10.0'}
@@ -2045,6 +2062,13 @@ snapshots:
   '@popperjs/core@2.11.8': {}
 
   '@preline/input-number@3.0.0': {}
+
+  '@react-login-page/page8@1.0.4(@babel/runtime@7.27.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@babel/runtime': 7.27.0
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      react-login-page: 1.0.4(@babel/runtime@7.27.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
   '@rollup/rollup-android-arm-eabi@4.40.0':
     optional: true
@@ -2805,6 +2829,12 @@ snapshots:
   react-list@0.8.18(react@19.1.0):
     dependencies:
       react: 19.1.0
+
+  react-login-page@1.0.4(@babel/runtime@7.27.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      '@babel/runtime': 7.27.0
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   react-refresh@0.17.0: {}
 
