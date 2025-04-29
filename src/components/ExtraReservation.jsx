@@ -151,19 +151,25 @@ export function ExtraReservation({
           )}
 
           {/* Botón de continuar con la reserva */}
-          <button
-            className=" mt-4 mr-2 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
-            onClick={() => handlePurchase("confirmed")}
-          >
-            Pagar ahora
-          </button>
+          {totalPrice !== 0 && (
+            <>
+              <button
+                className=" mt-4 mr-2 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
+                disabled={totalPrice === 0}
+                onClick={() => handlePurchase("confirmed")}
+              >
+                Pagar ahora
+              </button>
 
-          <button
-            className=" mt-4 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
-            onClick={() => handlePurchase("pending")}
-          >
-            Pagar en el hotel
-          </button>
+              <button
+                className=" mt-4 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
+                disabled={totalPrice === 0}
+                onClick={() => handlePurchase("pending")}
+              >
+                Pagar en el hotel
+              </button>
+            </>
+          )}
         </div>
       </aside>
 

@@ -49,7 +49,11 @@ export function ReservationForm({
 
         <div
           className="h-full border-r w-3/10 cursor-pointer "
-          onClick={() => {setShowCalendar(!showCalendar),setShowPeople(false),setShowRooms(false)}}
+          onClick={() => {
+            setShowCalendar(!showCalendar),
+              setShowPeople(false),
+              setShowRooms(false);
+          }}
         >
           <h5 className="font-semibold mb-4">FECHAS</h5>
           <p className="flex w-full items-center justify-center">
@@ -79,7 +83,9 @@ export function ReservationForm({
         <div className="h-full border-r w-1/10 cursor-pointer">
           <button
             className="w-full h-full text-left"
-            onClick={() =>{ setShowPeople(!showPeople),setShowRooms(false)}}
+            onClick={() => {
+              setShowPeople(!showPeople), setShowRooms(false);
+            }}
           >
             <h5 className="relative font-semibold text-center -top-4 truncate">
               PERSONAS
@@ -92,124 +98,130 @@ export function ReservationForm({
 
           {showPeople && (
             <ClickAwayListener onClickAway={handleClickAway}>
-            <div className="absolute z-60 w-2/10 h-20 bg-[#FFFFF0] border">
-              {/* Habitación 1 */}
-              <div className="flex flex-col justify-between items-center border-b last:border-b-0 p-2 bg-[#FFFFF0]">
-                <h3 className="font-bold text-[#0097e6] text-lg mb-2">
-                  Habitación 1
-                </h3>
+              <div className="absolute z-60 w-2/10 h-20 bg-[#FFFFF0] border">
+                {/* Habitación 1 */}
+                <div className="flex flex-col justify-between items-center border-b last:border-b-0 p-2 bg-[#FFFFF0]">
+                  <h3 className="font-bold text-[#0097e6] text-lg mb-2">
+                    Habitación 1
+                  </h3>
 
-                <div className="flex justify-between items-center w-full px-4">
-                  <div
-                    className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
-                    onClick={() => {
-                      if (room1 > 1) {
-                        setRoom1(room1 - 1);
-                        setPeople(room1 - 1);
-                      }
-                    }}
-                  >
-                    <span className="text-[#0097e6] font-bold text-xl">-</span>
-                  </div>
+                  <div className="flex justify-between items-center w-full px-4">
+                    <div
+                      className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
+                      onClick={() => {
+                        if (room1 > 1) {
+                          setRoom1(room1 - 1);
+                          setPeople(room1 - 1);
+                        }
+                      }}
+                    >
+                      <span className="text-[#0097e6] font-bold text-xl">
+                        -
+                      </span>
+                    </div>
 
-                  <p className="font-semibold text-xl">{room1}</p>
-                  <div
-                    className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
-                    onClick={() => {
-                      if (room1 < 4) {
-                        setRoom1(room1 + 1);
-                        setPeople(room1 + 1);
-                      }
-                    }}
-                  >
-                    <span className="text-[#0097e6] font-bold text-xl">+</span>
+                    <p className="font-semibold text-xl">{room1}</p>
+                    <div
+                      className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
+                      onClick={() => {
+                        if (room1 < 4) {
+                          setRoom1(room1 + 1);
+                          setPeople(room1 + 1);
+                        }
+                      }}
+                    >
+                      <span className="text-[#0097e6] font-bold text-xl">
+                        +
+                      </span>
+                    </div>
                   </div>
                 </div>
+
+                {/* Habitación 2 */}
+                {rooms >= 2 && (
+                  <div className="flex flex-col justify-between items-center border-b last:border-b-0 p-2 bg-[#FFFFF0]">
+                    <h3 className="font-bold text-[#0097e6] text-lg mb-2">
+                      Habitación 2
+                    </h3>
+                    <div className="flex justify-between items-center w-full px-4">
+                      <div
+                        className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
+                        onClick={() => {
+                          if (room2 > 1) {
+                            setRoom2(room2 - 1);
+                            setPeople(room1 + room2 - 1);
+                          }
+                        }}
+                      >
+                        <span className="text-[#0097e6] font-bold text-xl">
+                          -
+                        </span>
+                      </div>
+                      <p className="font-semibold text-xl">{room2}</p>
+                      <div
+                        className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
+                        onClick={() => {
+                          if (room2 < 4) {
+                            setRoom2(room2 + 1);
+                            setPeople(people + 1);
+                          }
+                        }}
+                      >
+                        <span className="text-[#0097e6] font-bold text-xl">
+                          +
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Habitación 3 */}
+                {rooms === 3 && (
+                  <div className="flex flex-col justify-between items-center border-b last:border-b-0 p-2 bg-[#FFFFF0]">
+                    <h3 className="font-bold text-[#0097e6] text-lg mb-2">
+                      Habitación 3
+                    </h3>
+                    <div className="flex justify-between items-center w-full px-4">
+                      <div
+                        className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
+                        onClick={() => {
+                          if (room3 > 1) {
+                            setRoom3(room3 - 1);
+                            setPeople(people - 1);
+                          }
+                        }}
+                      >
+                        <span className="text-[#0097e6] font-bold text-xl">
+                          -
+                        </span>
+                      </div>
+                      <p className="font-semibold text-xl">{room3}</p>
+                      <div
+                        className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
+                        onClick={() => {
+                          if (room3 < 4) {
+                            setRoom3(room3 + 1);
+                            setPeople(people + 1);
+                          }
+                        }}
+                      >
+                        <span className="text-[#0097e6] font-bold text-xl">
+                          +
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-
-              {/* Habitación 2 */}
-              {rooms >= 2 && (
-                <div className="flex flex-col justify-between items-center border-b last:border-b-0 p-2 bg-[#FFFFF0]">
-                  <h3 className="font-bold text-[#0097e6] text-lg mb-2">
-                    Habitación 2
-                  </h3>
-                  <div className="flex justify-between items-center w-full px-4">
-                    <div
-                      className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
-                      onClick={() => {
-                        if (room2 > 1) {
-                          setRoom2(room2 - 1);
-                          setPeople(room1 + room2 - 1);
-                        }
-                      }}
-                    >
-                      <span className="text-[#0097e6] font-bold text-xl">
-                        -
-                      </span>
-                    </div>
-                    <p className="font-semibold text-xl">{room2}</p>
-                    <div
-                      className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
-                      onClick={() => {
-                        if (room2 < 4) {
-                          setRoom2(room2 + 1);
-                          setPeople(people + 1);
-                        }
-                      }}
-                    >
-                      <span className="text-[#0097e6] font-bold text-xl">
-                        +
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Habitación 3 */}
-              {rooms === 3 && (
-                <div className="flex flex-col justify-between items-center border-b last:border-b-0 p-2 bg-[#FFFFF0]">
-                  <h3 className="font-bold text-[#0097e6] text-lg mb-2">
-                    Habitación 3
-                  </h3>
-                  <div className="flex justify-between items-center w-full px-4">
-                    <div
-                      className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
-                      onClick={() => {
-                        if (room3 > 1) {
-                          setRoom3(room3 - 1);
-                          setPeople(people - 1);
-                        }
-                      }}
-                    >
-                      <span className="text-[#0097e6] font-bold text-xl">
-                        -
-                      </span>
-                    </div>
-                    <p className="font-semibold text-xl">{room3}</p>
-                    <div
-                      className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center"
-                      onClick={() => {
-                        if (room3 < 4) {
-                          setRoom3(room3 + 1);
-                          setPeople(people + 1);
-                        }
-                      }}
-                    >
-                      <span className="text-[#0097e6] font-bold text-xl">
-                        +
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
             </ClickAwayListener>
           )}
         </div>
 
         <div className="h-full border-r w-1/10 cursor-pointer truncate">
           <button
-            onClick={() => {setShowRooms(!showRooms),setShowPeople(false)}}
+            onClick={() => {
+              setShowRooms(!showRooms), setShowPeople(false);
+            }}
             className="w-full h-full text"
           >
             <h5 className="relative font-semibold -top-4">HABITACIONES</h5>
@@ -221,59 +233,59 @@ export function ReservationForm({
 
           {showRooms && (
             <ClickAwayListener onClickAway={handleClickAway}>
-            <div className="absolute w-2/10 left-6/10 z-50 h-20 bg-[#FFFFF0] border">
-              <div className="flex justify-between items-center h-full px-10">
-                <div
-                  className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full"
-                  onClick={() => {
-                    if (rooms > 1) {
-                      const newRooms = rooms - 1;
-                      setRooms(newRooms);
+              <div className="absolute w-2/10 left-6/10 z-50 h-20 bg-[#FFFFF0] border">
+                <div className="flex justify-between items-center h-full px-10">
+                  <div
+                    className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full"
+                    onClick={() => {
+                      if (rooms > 1) {
+                        const newRooms = rooms - 1;
+                        setRooms(newRooms);
 
-                      // Actualiza los valores de las habitaciones según el nuevo número de habitaciones
-                      let newRoom1 = room1;
-                      let newRoom2 = newRooms >= 2 ? room2 : 0;
-                      let newRoom3 = newRooms === 3 ? room3 : 0;
+                        // Actualiza los valores de las habitaciones según el nuevo número de habitaciones
+                        let newRoom1 = room1;
+                        let newRoom2 = newRooms >= 2 ? room2 : 0;
+                        let newRoom3 = newRooms === 3 ? room3 : 0;
 
-                      setRoom2(newRoom2);
-                      setRoom3(newRoom3);
+                        setRoom2(newRoom2);
+                        setRoom3(newRoom3);
 
-                      const totalPeople = newRoom1 + newRoom2 + newRoom3;
-                      setPeople(totalPeople);
-                    }
-                  }}
-                >
-                  <button className="absolute top-5 left-11.5 font-bold text-[#0097e6] text-2xl">
-                    -
-                  </button>
-                </div>
-
-                <p className="font-semibold text-xl">{rooms}</p>
-
-                <div
-                  className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full"
-                  onClick={() => {
-                    if (rooms < 3) {
-                      setRooms(rooms + 1);
-                      if (rooms === 1) {
-                        setRoom2(1);
-                      } else if (rooms === 2) {
-                        setRoom3(1);
+                        const totalPeople = newRoom1 + newRoom2 + newRoom3;
+                        setPeople(totalPeople);
                       }
-                      setPeople(
-                        room1 +
-                          (rooms === 1 ? 1 : room2) +
-                          (rooms === 2 ? 1 : room3)
-                      );
-                    }
-                  }}
-                >
-                  <button className="absolute top-5.5 right-11 font-bold text-[#0097e6] text-xl">
-                    +
-                  </button>
+                    }}
+                  >
+                    <button className="absolute top-5 left-11.5 font-bold text-[#0097e6] text-2xl">
+                      -
+                    </button>
+                  </div>
+
+                  <p className="font-semibold text-xl">{rooms}</p>
+
+                  <div
+                    className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full"
+                    onClick={() => {
+                      if (rooms < 3) {
+                        setRooms(rooms + 1);
+                        if (rooms === 1) {
+                          setRoom2(1);
+                        } else if (rooms === 2) {
+                          setRoom3(1);
+                        }
+                        setPeople(
+                          room1 +
+                            (rooms === 1 ? 1 : room2) +
+                            (rooms === 2 ? 1 : room3)
+                        );
+                      }
+                    }}
+                  >
+                    <button className="absolute top-5.5 right-11 font-bold text-[#0097e6] text-xl">
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
             </ClickAwayListener>
           )}
         </div>

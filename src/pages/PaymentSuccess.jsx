@@ -1,26 +1,36 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { generatePDF } from "../services/generatePdf";
+import { fetchPayment } from "../services/api";
 
 export function PaymentSuccess() {
   const navigate = useNavigate();
 
   useEffect(() => {
     async function handleSuccess() {
-      // Puedes sacar info de la reserva si quieres
       const storedReserva = JSON.parse(localStorage.getItem("reserva"));
       const storedExtras = JSON.parse(localStorage.getItem("extras"));
       const storedReservations = JSON.parse(
         localStorage.getItem("reservations")
       );
 
-      if (storedReserva && storedExtras && storedReservations) {
+      try {
+        await fetchPayment({
+          amount: storedReserva.totalPrice,
+          payment_method: "card",
+          IVA: storedReserva.totalPrice * 0.21,
+          status: "paid",
+          paymentable_type: "extra_reservation",
+          paymentable_id: storedReserva.id,
+        });
+
         await generatePDF(storedReserva, storedExtras, storedReservations);
 
-        // Limpia el storage si quieres
         localStorage.removeItem("reserva");
         localStorage.removeItem("extras");
         localStorage.removeItem("reservations");
+      } catch (error) {
+        console.error(error.message);
       }
     }
 

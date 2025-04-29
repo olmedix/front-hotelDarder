@@ -56,11 +56,7 @@ export const generatePDF = (reserva, extras, reservations) => {
     // Total
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
-    doc.text(
-      `Total a pagar en el hotel: ${reserva.totalPrice.toFixed(2)}€`,
-      20,
-      y
-    );
+    doc.text(`Total a pagar: ${reserva.totalPrice.toFixed(2)}€`, 20, y);
 
     // Guardar
     doc.save(`reserva_extras_${reserva.extra_reservation_number}.pdf`);

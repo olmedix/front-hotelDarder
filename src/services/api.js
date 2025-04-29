@@ -50,3 +50,16 @@ export const fetchReservaExtras = async (reservations) => {
   const result = await response.json();
   return result;
 };
+
+export const fetchPayment = async (payment) => {
+  const response = await fetch(`${API_BASE_URL}/payment`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payment),
+  });
+  if (!response.ok) throw new Error("Error al realizar el pago");
+  const result = await response.json();
+  return result;
+};
