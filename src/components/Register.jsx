@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { register } from "../services/api";
 
-export function Register() {
+export function Register({ setIsLogin }) {
   const [registerPassword, setRegisterPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
@@ -40,7 +40,7 @@ export function Register() {
     setPasswordError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setPasswordError("Les contrasenyes no coincideixen");
+      setPasswordError("Las contraseñas no coinciden.");
       return;
     }
 
@@ -68,6 +68,9 @@ export function Register() {
       setMessage(error.message);
     } finally {
       setIsSubmitting(false);
+      setTimeout(() => {
+        setIsLogin(true);
+      }, 1500);
     }
   };
 
@@ -77,9 +80,8 @@ export function Register() {
 
   return (
     <section className="w-1/2 mx-auto">
-      <h2 className="text-3xl font-semibold mb-8">Regístrate</h2>
       <form
-        className="px-5 bg-gray-300 p-4 rounded-xl mb-5"
+        className="px-5 bg-white p-4 rounded-lg shadow-gray-700 shadow-lg"
         onSubmit={handleSubmit}
       >
         <label
@@ -96,6 +98,7 @@ export function Register() {
           onChange={handleInputChange}
           required
           placeholder="Nombre..."
+          maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
         />
 
@@ -113,6 +116,7 @@ export function Register() {
           onChange={handleInputChange}
           required
           placeholder="Primer apellido..."
+          maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
         />
 
@@ -128,7 +132,8 @@ export function Register() {
           name="secondLastName"
           value={formData.secondLastName}
           onChange={handleInputChange}
-          placeholder="Segundo apellido..."
+          placeholder="Opcional"
+          maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
         />
 
@@ -146,9 +151,8 @@ export function Register() {
           className="block p-3 rounded-xl border border-gray-300 w-full"
         >
           <option value="">Selecciona tu género</option>
-          <option value="male">Masculino</option>
-          <option value="female">Femenino</option>
-          <option value="other">Otro</option>
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
         </select>
 
         <label
@@ -165,6 +169,8 @@ export function Register() {
           onChange={handleInputChange}
           required
           placeholder="Documento de identidad..."
+          minLength={9}
+          maxLength={20}
           className="block p-3 rounded-xl border border-gray-300  w-full"
         />
 
@@ -182,6 +188,7 @@ export function Register() {
           onChange={handleInputChange}
           required
           placeholder="Nacionalidad..."
+          maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
         />
 
@@ -205,7 +212,7 @@ export function Register() {
           htmlFor="residence"
           className="block text-left font-bold ml-2 mb-2 text-lg"
         >
-          Residencia <span className="text-red-500">*</span>
+          País de residencia <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
@@ -215,6 +222,7 @@ export function Register() {
           onChange={handleInputChange}
           required
           placeholder="Residencia..."
+          maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
         />
 
@@ -232,7 +240,8 @@ export function Register() {
           onChange={handleInputChange}
           required
           placeholder="Dirección completa..."
-          className="block p-3 rounded-xl border border-gray-300  w-full"
+          maxLength={150}
+          className="block p-3 rounded-xl border border-blue-100  w-full"
         />
 
         <label
@@ -249,6 +258,8 @@ export function Register() {
           onChange={handleInputChange}
           required
           placeholder="Teléfono..."
+          minLength={8}
+          maxLength={20}
           className="block p-3 rounded-xl border border-gray-300  w-full"
         />
 
@@ -266,6 +277,7 @@ export function Register() {
           onChange={handleInputChange}
           required
           placeholder="Correo electrónico..."
+          maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
         />
 
@@ -284,6 +296,8 @@ export function Register() {
             onChange={handleInputChange}
             required
             placeholder="Contraseña..."
+            minLength={4}
+            maxLength={150}
             className="block p-3 rounded-xl border border-gray-300 w-full pr-10"
           />
           <span
@@ -309,6 +323,8 @@ export function Register() {
             onChange={handleInputChange}
             required
             placeholder="Confirma contraseña..."
+            minLength={4}
+            maxLength={150}
             className="block p-3 rounded-xl border border-gray-300 w-full pr-10"
           />
           <span
@@ -323,7 +339,7 @@ export function Register() {
         )}
 
         <button
-          className="my-5  font-semibold  bg-green-600 text-white px-4 py-2 rounded-full border-2 border-white hover:text-white hover:bg-green-900 transition duration-300"
+          className=" mt-4 mr-2 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
           type="submit"
         >
           {isSubmitting ? "Enviando" : "REGÍSTRATE"}

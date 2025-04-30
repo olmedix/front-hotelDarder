@@ -1,7 +1,6 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { fetchReservaExtras } from "../services/api";
 import { API_BASE_URL } from "../services/api";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { generatePDF } from "../services/generatePdf";
 
@@ -16,7 +15,6 @@ export function ExtraReservation({
   setQuantity,
   setOpenQuantity,
 }) {
-  const navigate = useNavigate();
   const [showDialog, setShowDialog] = useState(false);
 
   const totalPrice = Object.entries(selectedExtras).reduce(

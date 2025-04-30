@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../services/api";
 import { useAuth } from "../contexts/AuthContext";
 
-export function Login({ setIsLogin }) {
+export function Login() {
   const { setHasToken } = useAuth();
   const navigate = useNavigate();
   const [initPassword, setInitPassword] = useState(false);
@@ -41,9 +41,8 @@ export function Login({ setIsLogin }) {
 
   return (
     <section className="w-1/2 mx-auto">
-      <h2 className="text-3xl font-semibold mb-8">Inicia Sesión</h2>
       <form
-        className="px-5 bg-gray-300 p-4 rounded-xl"
+        className="px-5 bg-white p-4 rounded-lg shadow-gray-700 shadow-lg"
         onSubmit={handleLoginSubmit}
       >
         <label
@@ -93,23 +92,13 @@ export function Login({ setIsLogin }) {
         )}
 
         <button
-          className="my-5 bg-green-600 text-white px-4 py-2 rounded-full border-2 border-white hover:text-white hover:bg-green-900 transition duration-300"
+          className=" mt-4 mr-2 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
           type="submit"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Enviando..." : "Inicia sesión"}
         </button>
       </form>
-
-      <p className="text-center text-gray-500 my-5">
-        ¿No tienes cuenta?{" "}
-        <span
-          className="text-[#0097e6] font-semibold cursor-pointer"
-          onClick={() => setIsLogin(false)}
-        >
-          Regístrate aquí
-        </span>
-      </p>
 
       <button
         className="my-5 py-4 text-red-400 text-xl font-semibold rounded-full"
