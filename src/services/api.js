@@ -97,3 +97,22 @@ export const register = async (registerData) => {
 
   return response.json();
 };
+
+export const fetchForgotPassword = async (email) => {
+  const response = await fetch(`${API_BASE_URL}/forgot-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(
+      errorData.message || "Error al enviar el correo de recuperación"
+    );
+  }
+
+  return response.json();
+};

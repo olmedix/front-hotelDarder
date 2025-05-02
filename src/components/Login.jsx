@@ -99,13 +99,6 @@ export function Login() {
           {isSubmitting ? "Enviando..." : "Inicia sesión"}
         </button>
       </form>
-
-      <button
-        className="my-5 py-4 text-red-400 text-xl font-semibold rounded-full"
-        onClick={() => navigate("/forgot-password")}
-      >
-        "He olvidado la contraseña"
-      </button>
     </section>
   );
 }
