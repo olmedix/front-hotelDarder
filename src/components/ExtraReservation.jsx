@@ -2,6 +2,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { fetchReservaExtras } from "../services/api";
 import { API_BASE_URL } from "../services/api";
 import { useState } from "react";
+import { useHotel } from "../contexts/HotelContext";
 import { generatePDF } from "../services/generatePdf";
 
 const stripePromise = loadStripe(
@@ -15,6 +16,7 @@ export function ExtraReservation({
   setQuantity,
   setOpenQuantity,
 }) {
+  const { hotel } = useHotel();
   const [showDialog, setShowDialog] = useState(false);
 
   const totalPrice = Object.entries(selectedExtras).reduce(
@@ -168,6 +170,23 @@ export function ExtraReservation({
               </button>
             </>
           )}
+        </div>
+        <div className="mt-6 mx-2 px-4 bg-gray-200 rounded-md shadow font-bold text-lg flex flex-col items-center justify-center h-40 text-center">
+          <p className="text-gray-600">
+            ¡Confirma el día de tu reserva con el Hotel!
+          </p>
+          <p className="text-[#0097e6] mt-2">
+            Telf:{" "}
+            <a href={`tel:${hotel[0].phone}`} className="hover:underline">
+              {hotel[0].phone}
+            </a>
+          </p>
+          <p className="text-[#0097e6] mt-2">
+            Email:{" "}
+            <a href={`tel:${hotel[0].phone}`} className="hover:underline">
+              {hotel[0].email}
+            </a>
+          </p>
         </div>
       </aside>
 
