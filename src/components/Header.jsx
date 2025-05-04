@@ -2,10 +2,11 @@ import { NavLink, useLocation } from "react-router-dom";
 import "../css/navigation.css";
 import { TbMassage } from "react-icons/tb";
 import { CiMedicalCross } from "react-icons/ci";
+import { useUser } from "../contexts/UserContext";
 
 export function Header() {
+  const { user } = useUser();
   const location = useLocation();
-  const user = localStorage.getItem("authToken") || null;
 
   const navItems = [
     {
@@ -59,6 +60,7 @@ export function Header() {
                 <NavLink to={item.path}>
                   <span className="icon">{item.icon}</span>
                   {item.label === "Login/Registro" && user ? (
+                    
                     <span className="texto">Mi perfil</span>
                   ) : (
                     <span className="texto">{item.label}</span>

@@ -1,6 +1,6 @@
 import { CategoryProvider } from "./contexts/CategoryContext";
 import { HotelProvider } from "./contexts/HotelContext";
-import { AuthProvider } from "./contexts/AuthContext";
+import {  UserProvider } from "./contexts/UserContext";
 
 import "./App.css";
 import { Contacto } from "./pages/Contacto";
@@ -20,7 +20,7 @@ import {
 function App() {
   return (
     <>
-      <AuthProvider>
+      <UserProvider>
         <CategoryProvider>
           <HotelProvider>
             <Router>
@@ -37,7 +37,7 @@ function App() {
             </Router>
           </HotelProvider>
         </CategoryProvider>
-      </AuthProvider>
+      </UserProvider>
     </>
   );
 }

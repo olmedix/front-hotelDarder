@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/api";
-import { useAuth } from "../contexts/AuthContext";
 
 export function Login() {
-  const { setHasToken } = useAuth();
   const navigate = useNavigate();
   const [initPassword, setInitPassword] = useState(false);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -26,7 +24,6 @@ export function Login() {
     try {
       const data = await login(loginData);
       localStorage.setItem("authToken", data.access_token);
-      setHasToken(true);
       navigate("/home");
     } catch (error) {
       setLoginError(error.message);

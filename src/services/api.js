@@ -118,7 +118,7 @@ export const fetchForgotPassword = async (email) => {
 };
 
 export const fetchGetUser = async () => {
-  const response = await fetch(`${API_BASE_URL}/user`, {
+  const response = await fetch(`${API_BASE_URL}/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
