@@ -171,20 +171,20 @@ export function ExtraReservation({
             </>
           )}
         </div>
-        <div className="mt-6 mx-2 px-4 bg-gray-200 rounded-md shadow font-bold text-lg flex flex-col items-center justify-center h-40 text-center">
+        <div className="mt-6 mx-2 p-4 bg-gray-200 rounded-md shadow font-bold text-lg flex flex-col items-center justify-center text-center">
           <p className="text-gray-600">
             ¡Confirma el día de tu reserva con el Hotel!
-          </p>
-          <p className="text-[#0097e6] mt-2">
-            Telf:{" "}
-            <a href={`tel:${hotel[0].phone}`} className="hover:underline">
-              {hotel[0].phone}
-            </a>
           </p>
           <p className="text-[#0097e6] mt-2">
             Email:{" "}
             <a href={`tel:${hotel[0].phone}`} className="hover:underline">
               {hotel[0].email}
+            </a>
+          </p>
+          <p className="text-[#0097e6] mt-2">
+            Telf:{" "}
+            <a href={`tel:${hotel[0].phone}`} className="hover:underline">
+              {hotel[0].phone}
             </a>
           </p>
         </div>

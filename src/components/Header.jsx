@@ -5,6 +5,7 @@ import { CiMedicalCross } from "react-icons/ci";
 
 export function Header() {
   const location = useLocation();
+  const user = localStorage.getItem("authToken") || null;
 
   const navItems = [
     {
@@ -57,7 +58,11 @@ export function Header() {
               >
                 <NavLink to={item.path}>
                   <span className="icon">{item.icon}</span>
-                  <span className="texto">{item.label}</span>
+                  {item.label === "Login/Registro" && user ? (
+                    <span className="texto">Mi perfil</span>
+                  ) : (
+                    <span className="texto">{item.label}</span>
+                  )}
                 </NavLink>
               </li>
             ))}
