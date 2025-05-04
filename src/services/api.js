@@ -116,3 +116,20 @@ export const fetchForgotPassword = async (email) => {
 
   return response.json();
 };
+
+export const fetchGetUser = async () => {
+  const response = await fetch(`${API_BASE_URL}/user`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Error al obtener el usuario");
+  }
+
+  return response.json();
+};
