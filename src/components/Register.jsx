@@ -4,7 +4,6 @@ import { register } from "../services/api";
 export function Register({ setIsLogin }) {
   const [registerPassword, setRegisterPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -36,7 +35,6 @@ export function Register({ setIsLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
     setPasswordError("");
 
     if (formData.password !== formData.confirmPassword) {
@@ -46,9 +44,13 @@ export function Register({ setIsLogin }) {
 
     setIsSubmitting(true);
 
+    const cleanedData = { ...formData };
+    if (!cleanedData.secondLastName) {
+      delete cleanedData.secondLastName;
+    }
+
     try {
-      await register(formData);
-      setMessage("¡Se han actualizado los datos con éxito!");
+      await register(cleanedData);
       setFormData({
         name: "",
         firstLastName: "",
@@ -65,7 +67,7 @@ export function Register({ setIsLogin }) {
         confirmPassword: "",
       });
     } catch (error) {
-      setMessage(error.message);
+      console.error("Error al registrar:", error);
     } finally {
       setIsSubmitting(false);
       setTimeout(() => {
@@ -100,6 +102,7 @@ export function Register({ setIsLogin }) {
           placeholder="Nombre..."
           maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
+          autocomplete="off"
         />
 
         <label
@@ -118,6 +121,7 @@ export function Register({ setIsLogin }) {
           placeholder="Primer apellido..."
           maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
+          autocomplete="off"
         />
 
         <label
@@ -135,6 +139,7 @@ export function Register({ setIsLogin }) {
           placeholder="Opcional"
           maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
+          utocomplete="new-family-name"
         />
 
         <label
@@ -172,6 +177,7 @@ export function Register({ setIsLogin }) {
           minLength={9}
           maxLength={20}
           className="block p-3 rounded-xl border border-gray-300  w-full"
+          autocomplete="off"
         />
 
         <label
@@ -190,6 +196,7 @@ export function Register({ setIsLogin }) {
           placeholder="Nacionalidad..."
           maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
+          autocomplete="off"
         />
 
         <label
@@ -206,6 +213,7 @@ export function Register({ setIsLogin }) {
           onChange={handleInputChange}
           required
           className="block p-3 rounded-xl border border-gray-300  w-full"
+          autocomplete="off"
         />
 
         <label
@@ -224,6 +232,7 @@ export function Register({ setIsLogin }) {
           placeholder="Residencia..."
           maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
+          autocomplete="off"
         />
 
         <label
@@ -242,6 +251,7 @@ export function Register({ setIsLogin }) {
           placeholder="Dirección completa..."
           maxLength={150}
           className="block p-3 rounded-xl border border-blue-100  w-full"
+          autocomplete="off"
         />
 
         <label
@@ -261,6 +271,7 @@ export function Register({ setIsLogin }) {
           minLength={8}
           maxLength={20}
           className="block p-3 rounded-xl border border-gray-300  w-full"
+          autocomplete="off"
         />
 
         <label
@@ -279,6 +290,7 @@ export function Register({ setIsLogin }) {
           placeholder="Correo electrónico..."
           maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
+          autocomplete="off"
         />
 
         <label
@@ -299,6 +311,7 @@ export function Register({ setIsLogin }) {
             minLength={4}
             maxLength={150}
             className="block p-3 rounded-xl border border-gray-300 w-full pr-10"
+            autocomplete="off"
           />
           <span
             className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
@@ -326,6 +339,7 @@ export function Register({ setIsLogin }) {
             minLength={4}
             maxLength={150}
             className="block p-3 rounded-xl border border-gray-300 w-full pr-10"
+            autocomplete="off"
           />
           <span
             className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
@@ -344,11 +358,6 @@ export function Register({ setIsLogin }) {
         >
           {isSubmitting ? "Enviando" : "REGÍSTRATE"}
         </button>
-        {message && (
-          <p className="mt-4 text-xl font-semibold text-center text-green-600">
-            {message}
-          </p>
-        )}
       </form>
     </section>
   );

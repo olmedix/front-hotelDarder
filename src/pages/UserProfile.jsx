@@ -2,7 +2,6 @@ import { Header } from "../components/Header.jsx";
 import { useUser } from "../contexts/UserContext";
 import { useState } from "react";
 import { fetchUpdateUser } from "../services/api.js";
-import { set } from "date-fns";
 
 export function UserProfile() {
   const { user, setUser, loading, error } = useUser();
@@ -68,10 +67,7 @@ export function UserProfile() {
         <h1 className="pt-8">Datos personales</h1>
 
         <main className="px-5 mt-8 w-2/3 mx-auto  rounded-t-xl ">
-          <form
-            className="px-5 bg-white p-4 pb-8 rounded-lg shadow-gray-700 shadow-lg"
-            onSubmit={handleSubmit}
-          >
+          <form onSubmit={handleSubmit}>
             <label
               htmlFor="name"
               className="block text-left font-bold ml-2 mb-1 text-lg"
@@ -87,7 +83,7 @@ export function UserProfile() {
               required
               placeholder="Nombre..."
               maxLength={150}
-              className="block p-3 rounded-xl border border-gray-300  w-full"
+              className="block p-3 rounded-xl bg-white border border-gray-500  w-full"
             />
 
             <label
@@ -105,7 +101,7 @@ export function UserProfile() {
               required
               placeholder="Primer apellido..."
               maxLength={150}
-              className="block p-3 rounded-xl border border-gray-300  w-full"
+              className="block p-3 rounded-xl bg-white border border-gray-500  w-full"
             />
 
             <label
@@ -122,7 +118,7 @@ export function UserProfile() {
               onChange={handleInputChange}
               placeholder="Opcional"
               maxLength={150}
-              className="block p-3 rounded-xl border border-gray-300  w-full"
+              className="block p-3 rounded-xl bg-white border border-gray-500  w-full"
             />
 
             <label
@@ -136,7 +132,7 @@ export function UserProfile() {
               name="gender"
               value={formData.gender}
               onChange={handleInputChange}
-              className="block p-3 rounded-xl border border-gray-300 w-full"
+              className="block p-3 rounded-xl bg-white border border-gray-500  w-full"
             >
               <option value="">Selecciona tu género</option>
               <option value="M">Masculino</option>
@@ -159,7 +155,7 @@ export function UserProfile() {
               placeholder="Documento de identidad..."
               minLength={9}
               maxLength={20}
-              className="block p-3 rounded-xl border border-gray-300  w-full"
+              className="block p-3 rounded-xl bg-white border border-gray-500  w-full"
             />
 
             <label
@@ -177,7 +173,7 @@ export function UserProfile() {
               required
               placeholder="Nacionalidad..."
               maxLength={150}
-              className="block p-3 rounded-xl border border-gray-300  w-full"
+              className="block p-3 rounded-xl bg-white border border-gray-500  w-full"
             />
 
             <label
@@ -193,7 +189,7 @@ export function UserProfile() {
               value={formData.birthDate}
               onChange={handleInputChange}
               required
-              className="block p-3 rounded-xl border border-gray-300  w-full"
+              className="block p-3 rounded-xl bg-white border border-gray-500  w-full"
             />
 
             <label
@@ -211,7 +207,7 @@ export function UserProfile() {
               required
               placeholder="Residencia..."
               maxLength={150}
-              className="block p-3 rounded-xl border border-gray-300  w-full"
+              className="block p-3 rounded-xl bg-white border border-gray-500  w-full"
             />
 
             <label
@@ -229,7 +225,7 @@ export function UserProfile() {
               required
               placeholder="Dirección completa..."
               maxLength={150}
-              className="block p-3 rounded-xl border border-blue-100  w-full"
+              className="block p-3 rounded-xl bg-white border border-gray-500  w-full"
             />
 
             <label
@@ -248,7 +244,7 @@ export function UserProfile() {
               placeholder="Teléfono..."
               minLength={8}
               maxLength={20}
-              className="block p-3 rounded-xl border border-gray-300  w-full"
+              className="block p-3 rounded-xl bg-white border border-gray-500  w-full"
             />
 
             <button
