@@ -1,11 +1,21 @@
 import { useState } from "react";
-import { login } from "../services/api";
+import { useNavigate } from "react-router-dom";
+import { fetchRestoreUser, login } from "../services/api";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 export function Login() {
+  const navigate = useNavigate();
   const [initPassword, setInitPassword] = useState(false);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [loginError, setLoginError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showRestoreUser, setShowRestoreUser] = useState(false);
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleClickAway = () => {
+    setShowRestoreUser(false);
+  };
 
   const handleLoginChange = (e) => {
     setLoginData({
@@ -34,10 +44,21 @@ export function Login() {
     setInitPassword(!initPassword);
   };
 
+  const handleRestoreUser = async (e) => {
+    e.preventDefault();
+    try {
+      await fetchRestoreUser(email);
+      setShowRestoreUser(false);
+      navigate("/login");
+    } catch (error) {
+      setMessage(error.message);
+    }
+  };
+
   return (
     <section className="w-1/2 mx-auto">
       <form
-        className="px-5 bg-white p-4 rounded-lg shadow-gray-700 shadow-lg"
+        className="px-5 bg-white p-4 rounded-lg shadow-gray-700 shadow-lg animate-fade-in"
         onSubmit={handleLoginSubmit}
       >
         <label
@@ -87,13 +108,62 @@ export function Login() {
         )}
 
         <button
-          className=" mt-4 mr-2 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
+          className="mt-4 mr-2 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
           type="submit"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Enviando..." : "Inicia sesión"}
         </button>
       </form>
+
+      {/* Restablecer cuenta */}
+      <div className="flex w-full mt-3 text-[#0097e6] text-md font-semibold justify-end ">
+        <button
+          className="cursor-pointer"
+          onClick={() => {
+            setShowRestoreUser(!showRestoreUser);
+          }}
+        >
+          Restablecer mi cuenta
+        </button>
+        {showRestoreUser && (
+          <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+            <ClickAwayListener onClickAway={handleClickAway}>
+              <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md animate-fade-in">
+                <h2 className="text-xl font-semibold mb-4 text-center text-gray-800">
+                  Restaurar cuenta
+                </h2>
+                <form
+                  onSubmit={handleRestoreUser}
+                  className="flex flex-col gap-4"
+                >
+                  <label className="text-gray-700 text-left">
+                    Ingresa tu email:
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    />
+                  </label>
+                  <button
+                    type="submit"
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg transition"
+                  >
+                    Restaurar cuenta
+                  </button>
+                  {message && (
+                    <p className="text-center text-sm text-red-500">
+                      {message}
+                    </p>
+                  )}
+                </form>
+              </div>
+            </ClickAwayListener>
+          </div>
+        )}
+      </div>
     </section>
   );
 }

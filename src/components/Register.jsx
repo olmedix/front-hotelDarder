@@ -83,7 +83,7 @@ export function Register({ setIsLogin }) {
   return (
     <section className="w-1/2 mx-auto">
       <form
-        className="px-5 bg-white p-4 rounded-lg shadow-gray-700 shadow-lg"
+        className="px-5 bg-white p-4 rounded-lg shadow-gray-700 shadow-lg animate-fade-in"
         onSubmit={handleSubmit}
       >
         <label
@@ -121,7 +121,7 @@ export function Register({ setIsLogin }) {
           placeholder="Primer apellido..."
           maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
-          autocomplete="off"
+          autoComplete="off"
         />
 
         <label
@@ -177,7 +177,7 @@ export function Register({ setIsLogin }) {
           minLength={9}
           maxLength={20}
           className="block p-3 rounded-xl border border-gray-300  w-full"
-          autocomplete="off"
+          autoComplete="off"
         />
 
         <label
@@ -196,7 +196,7 @@ export function Register({ setIsLogin }) {
           placeholder="Nacionalidad..."
           maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
-          autocomplete="off"
+          autoComplete="off"
         />
 
         <label
@@ -213,7 +213,7 @@ export function Register({ setIsLogin }) {
           onChange={handleInputChange}
           required
           className="block p-3 rounded-xl border border-gray-300  w-full"
-          autocomplete="off"
+          autoComplete="off"
         />
 
         <label
@@ -232,7 +232,7 @@ export function Register({ setIsLogin }) {
           placeholder="Residencia..."
           maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
-          autocomplete="off"
+          autoComplete="off"
         />
 
         <label
@@ -251,7 +251,7 @@ export function Register({ setIsLogin }) {
           placeholder="Dirección completa..."
           maxLength={150}
           className="block p-3 rounded-xl border border-blue-100  w-full"
-          autocomplete="off"
+          autoComplete="off"
         />
 
         <label
@@ -271,7 +271,7 @@ export function Register({ setIsLogin }) {
           minLength={8}
           maxLength={20}
           className="block p-3 rounded-xl border border-gray-300  w-full"
-          autocomplete="off"
+          autoComplete="off"
         />
 
         <label
@@ -290,7 +290,7 @@ export function Register({ setIsLogin }) {
           placeholder="Correo electrónico..."
           maxLength={150}
           className="block p-3 rounded-xl border border-gray-300  w-full"
-          autocomplete="off"
+          autoComplete="off"
         />
 
         <label
@@ -311,7 +311,7 @@ export function Register({ setIsLogin }) {
             minLength={4}
             maxLength={150}
             className="block p-3 rounded-xl border border-gray-300 w-full pr-10"
-            autocomplete="off"
+            autoComplete="off"
           />
           <span
             className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
@@ -339,7 +339,7 @@ export function Register({ setIsLogin }) {
             minLength={4}
             maxLength={150}
             className="block p-3 rounded-xl border border-gray-300 w-full pr-10"
-            autocomplete="off"
+            autoComplete="off"
           />
           <span
             className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"

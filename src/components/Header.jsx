@@ -30,7 +30,7 @@ export function Header() {
     {
       path: "/reservas",
       icon: <ion-icon name="bed-outline"></ion-icon>,
-      label: "Reservas",
+      label: "Mis Reservas",
     },
     {
       path: "/login",

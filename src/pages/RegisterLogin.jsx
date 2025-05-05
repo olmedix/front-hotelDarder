@@ -12,7 +12,6 @@ export function RegisterLogin() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
-
   useEffect(() => {
     if (error || success) {
       const timeout = setTimeout(() => {
@@ -86,12 +85,11 @@ export function RegisterLogin() {
             className="my-5 py-4 text-red-400 text-xl font-semibold rounded-full"
             onClick={() => setshowForgotPassword(!showForgotPassword)}
           >
-            "He olvidado la contraseña"
+            He olvidado la contraseña
           </button>
 
           {error && <p className="text-red-600 mt-2 text-sm">{error}</p>}
           {success && <p className="text-green-600 mt-2 text-sm">{success}</p>}
-
           {showForgotPassword && (
             <div className="w-1/2 mx-auto">
               <form

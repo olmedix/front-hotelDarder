@@ -168,3 +168,37 @@ export const fetchUpdateUser = async (id, userData) => {
 
   return response.json();
 };
+
+export const fetchDeleteUser = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/user/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Error al eliminar el usuario");
+  }
+
+  return response.json();
+};
+
+export const fetchRestoreUser = async (email) => {
+  const response = await fetch(`${API_BASE_URL}/user/${email}/restore`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Error al restaurar el usuario");
+  }
+
+  return response.json();
+};
