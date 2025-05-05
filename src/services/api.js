@@ -81,6 +81,23 @@ export const login = async (loginData) => {
   return response.json();
 };
 
+export const logout = async () => {
+  const response = await fetch(`${API_BASE_URL}/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Error al cerrar sesión");
+  }
+
+  return response.json();
+};
+
 export const register = async (registerData) => {
   const response = await fetch(`${API_BASE_URL}/register`, {
     method: "POST",
