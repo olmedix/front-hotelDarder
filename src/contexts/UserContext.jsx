@@ -12,22 +12,24 @@ export const UserProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const data = await fetchGetUser();
-        setUser(data);
-      } catch (err) {
-        setError("Error al obtener los datos del usuario");
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (!user) {
+      const getUser = async () => {
+        try {
+          const data = await fetchGetUser();
+          setUser(data);
+        } catch (err) {
+          setError("Error al obtener los datos del usuario");
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    getUser();
+      getUser();
+    }
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, loading, error }}>
       {children}
     </UserContext.Provider>
   );

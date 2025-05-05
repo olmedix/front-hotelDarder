@@ -18,3 +18,10 @@
   background-image: url(/imgs/hotel/HotelDarder.png);
 }
 
+.custom-link {
+  background-color: #0097e6 !important;
+  color: white !important;
+  font-weight: bold;
+  border-radius: 6px;
+}
+

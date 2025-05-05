@@ -48,7 +48,7 @@ export function Register({ setIsLogin }) {
 
     try {
       await register(formData);
-      setMessage("¡Registro con éxito! Ahora puedes iniciar sessión.");
+      setMessage("¡Se han actualizado los datos con éxito!");
       setFormData({
         name: "",
         firstLastName: "",

@@ -36,9 +36,11 @@ export function Header() {
     },
   ];
 
-  const activeIndex = navItems.findIndex(
-    (item) => location.pathname === item.path
-  );
+  const activeIndex = navItems.findIndex((item) => {
+    const expectedPath =
+      item.label === "Login/Registro" && user ? "/profile" : item.path;
+    return location.pathname === expectedPath;
+  });
 
   return (
     <header className=" w-full relative flex">
@@ -57,10 +59,15 @@ export function Header() {
                 key={index}
                 className={`list ${index === activeIndex ? "activo" : ""}`}
               >
-                <NavLink to={item.path}>
+                <NavLink
+                  to={
+                    item.label === "Login/Registro" && user
+                      ? "/profile"
+                      : item.path
+                  }
+                >
                   <span className="icon">{item.icon}</span>
                   {item.label === "Login/Registro" && user ? (
-                    
                     <span className="texto">Mi perfil</span>
                   ) : (
                     <span className="texto">{item.label}</span>

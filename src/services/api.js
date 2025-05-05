@@ -133,3 +133,21 @@ export const fetchGetUser = async () => {
 
   return response.json();
 };
+
+export const fetchUpdateUser = async (id, userData) => {
+  const response = await fetch(`${API_BASE_URL}/user/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+    body: JSON.stringify(userData),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Error al actualizar el usuario");
+  }
+
+  return response.json();
+};

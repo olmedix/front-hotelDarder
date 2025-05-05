@@ -1,8 +1,10 @@
 import { CategoryProvider } from "./contexts/CategoryContext";
 import { HotelProvider } from "./contexts/HotelContext";
-import {  UserProvider } from "./contexts/UserContext";
+import { UserProvider } from "./contexts/UserContext";
+import PrivateRoute from "./components/PrivateRoute";
 
 import "./App.css";
+import { UserProfile } from "./pages/UserProfile";
 import { Contacto } from "./pages/Contacto";
 import { Extras } from "./pages/Extras";
 import { Home } from "./pages/Home";
@@ -28,7 +30,22 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/contacto" element={<Contacto />} />
                 <Route path="/extras" element={<Extras />} />
-                <Route path="/reservas" element={<Reservas />} />
+                <Route
+                  path="/reservas"
+                  element={
+                    <PrivateRoute>
+                      <Reservas />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <PrivateRoute>
+                      <UserProfile />
+                    </PrivateRoute>
+                  }
+                />
                 <Route path="/login" element={<RegisterLogin />} />
                 <Route path="/payment-success" element={<PaymentSuccess />} />
 

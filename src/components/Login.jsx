@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/api";
+import { useUser } from "../contexts/UserContext";
+import { fetchGetUser } from "../services/api";
 
 export function Login() {
   const navigate = useNavigate();
+  const { setUser } = useUser();
   const [initPassword, setInitPassword] = useState(false);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [loginError, setLoginError] = useState(null);
@@ -24,6 +27,8 @@ export function Login() {
     try {
       const data = await login(loginData);
       localStorage.setItem("authToken", data.access_token);
+      const userData = await fetchGetUser();
+      setUser(userData);
       navigate("/home");
     } catch (error) {
       setLoginError(error.message);
