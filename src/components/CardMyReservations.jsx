@@ -1,6 +1,6 @@
 export function CardMyReservations({ reservation }) {
   return (
-    <div className="bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg p-4 m-4 text-left">
+    <div className="bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg p-4 my-4 text-left">
       <p>
         <span className="font-semibold"> Número de reserva: </span>
         {reservation.reservation_number + " "}

@@ -1,8 +1,10 @@
 import { Header } from "../components/Header.jsx";
 import { useUser } from "../contexts/UserContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchUpdateUser } from "../services/api.js";
 import { fetchDeleteUser } from "../services/api.js";
+import { CardMyReservations } from "../components/CardMyReservations";
+import { fetchMyReservations } from "../services/api";
 
 export function UserProfile() {
   const { user, setUser, loading, error } = useUser();
@@ -23,6 +25,26 @@ export function UserProfile() {
     phone: user?.phone || "",
     email: user?.email || "",
   });
+  const [reservations, setReservations] = useState([]);
+  const [loadingReservation, setLoadingReservation] = useState(true);
+  const [errorReservation, setErrorReservation] = useState(null);
+
+  useEffect(() => {
+    if (!user) return; // Espera a que user esté disponible
+
+    const fetchReservations = async () => {
+      try {
+        const response = await fetchMyReservations(user.id);
+        console.log("response" + response);
+        setReservations(response);
+      } catch (error) {
+        setErrorReservation(error.message);
+      } finally {
+        setLoadingReservation(false);
+      }
+    };
+    fetchReservations();
+  }, [user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -70,21 +92,22 @@ export function UserProfile() {
     }
   };
 
-  if (loading || loadingUpdate) return <div>Loading...</div>;
+  if (loading || loadingUpdate || loadingReservation)
+    return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (errorUpdate) return <div>Error: {error}</div>;
+  if (errorReservation) return <div>Error: {errorReservation}</div>;
 
   return (
     <div className="relative w-full bg-cover bg-center ">
       <Header />
 
+      <h1 className="text-black text-4xl font-bold pt-8">Datos personales</h1>
       <div className="w-2/3 mx-auto my-14 pb-8 text-black bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg">
-        <h1 className="pt-8">Datos personales</h1>
-
         <main className="px-5 mt-8 w-2/3 mx-auto rounded-t-xl">
           <form
             onSubmit={handleSubmit}
-            className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4"
+            className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 pt-8"
           >
             <div>
               <label
@@ -159,7 +182,9 @@ export function UserProfile() {
                 onChange={handleInputChange}
                 className="block p-3 rounded-xl bg-white border border-gray-500 w-full"
               >
-                <option value="">Selecciona tu género</option>
+                <option value="" disabled>
+                  Selecciona tu género
+                </option>
                 <option value="M">Masculino</option>
                 <option value="F">Femenino</option>
               </select>
@@ -313,6 +338,22 @@ export function UserProfile() {
           </p>
         </section>
       </div>
+
+      {/* Mis Reservas */}
+      <section className="w-2/3 mx-auto pb-6 my-6 text-black ">
+        <div className="w-full  mt-14 ">
+          <h2 className="text-4xl font-bold pt-8">Mis Reservas</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-8 py-4">
+            {reservations.data.map((reservation) => (
+              <CardMyReservations
+                key={reservation.id}
+                reservation={reservation}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

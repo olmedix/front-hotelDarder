@@ -27,11 +27,11 @@ export function Header() {
       icon: <TbMassage className="text-5xl pt-5 mb-7" />,
       label: "Extras",
     },
-    {
+    /* {
       path: "/reservas",
       icon: <ion-icon name="bed-outline"></ion-icon>,
       label: "Mis Reservas",
-    },
+    },*/
     {
       path: "/login",
       icon: <ion-icon name="person-outline"></ion-icon>,
@@ -97,7 +97,7 @@ export function Header() {
       </div>
       {user && (
         <div
-          className="absolute top-14 right-0 mr-7 p-3 rounded-full cursor-pointer
+          className="absolute top-14 right-0 mr-8 p-3 rounded-full cursor-pointer
         shadow-2xl text-gray-800 hover:scale-120 hover:text-white transition duration-300 ease-in-out"
           onClick={handleLogout}
         >
