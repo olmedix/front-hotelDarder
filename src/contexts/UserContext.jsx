@@ -26,7 +26,7 @@ export const UserProvider = ({ children }) => {
 
       getUser();
     }
-  }, []);
+  }, [user]);
 
   return (
     <UserContext.Provider value={{ user, setUser, loading, error }}>

@@ -35,13 +35,13 @@ export function Header() {
     {
       path: "/login",
       icon: <ion-icon name="person-outline"></ion-icon>,
-      label: "Login/Registro",
+      label: "Inicia sesión",
     },
   ];
 
   const activeIndex = navItems.findIndex((item) => {
     const expectedPath =
-      item.label === "Login/Registro" && user ? "/profile" : item.path;
+      item.label === "Inicia sesión" && user ? "/profile" : item.path;
     return location.pathname === expectedPath;
   });
 
@@ -76,13 +76,13 @@ export function Header() {
               >
                 <NavLink
                   to={
-                    item.label === "Login/Registro" && user
+                    item.label === "Inicia sesión" && user
                       ? "/profile"
                       : item.path
                   }
                 >
                   <span className="icon">{item.icon}</span>
-                  {item.label === "Login/Registro" && user ? (
+                  {item.label === "Inicia sesión" && user ? (
                     <span className="texto">Mi perfil</span>
                   ) : (
                     <span className="texto">{item.label}</span>

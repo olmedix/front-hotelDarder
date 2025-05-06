@@ -202,3 +202,21 @@ export const fetchRestoreUser = async (email) => {
 
   return response.json();
 };
+
+export const fetchMyReservations = async (userId) => {
+  const response = await fetch(`${API_BASE_URL}/reservation/${userId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(
+      errorData.message || "Error al obtener las reservas del usuario"
+    );
+  }
+  return response.json();
+};
