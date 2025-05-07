@@ -339,7 +339,7 @@ export function UserProfile() {
 
       {/* Mis Reservas */}
       <section className="w-2/3 mx-auto pb-6 my-6 text-black ">
-        {reservations.length === 0 && (
+        {reservations.length !== 0 && (
           <div className="w-full  mt-14 ">
             <h2 className="text-4xl font-bold pt-8">Mis Reservas</h2>
 

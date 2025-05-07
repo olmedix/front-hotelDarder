@@ -192,9 +192,9 @@ export function ExtraReservation({
       </aside>
 
       {showDialog && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-bold mb-4 text-green-600">
+        <div className="fixed inset-0 bg-transparent bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-gray-300 p-6 rounded-lg shadow-lg text-center">
+            <h2 className="text-2xl font-bold mb-4 text-[#0097e6]">
               ¡Reserva realizada!
             </h2>
             <p className="text-gray-700 mb-4">
