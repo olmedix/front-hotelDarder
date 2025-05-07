@@ -99,9 +99,7 @@ export function UserProfile() {
   if (errorReservation) return <div>Error: {errorReservation}</div>;
 
   return (
-    <div className="relative w-full bg-cover bg-center ">
-      <Header />
-
+    <div className="relative w-full bg-cover bg-center mt-30">
       <h1 className="text-black text-4xl font-bold pt-8">Datos personales</h1>
       <div className="w-2/3 mx-auto my-14 pb-8 text-black bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg">
         <main className="px-5 mt-8 w-2/3 mx-auto rounded-t-xl">
@@ -341,18 +339,20 @@ export function UserProfile() {
 
       {/* Mis Reservas */}
       <section className="w-2/3 mx-auto pb-6 my-6 text-black ">
-        <div className="w-full  mt-14 ">
-          <h2 className="text-4xl font-bold pt-8">Mis Reservas</h2>
+        {reservations.length === 0 && (
+          <div className="w-full  mt-14 ">
+            <h2 className="text-4xl font-bold pt-8">Mis Reservas</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-8 py-4">
-            {reservations.data.map((reservation) => (
-              <CardMyReservations
-                key={reservation.id}
-                reservation={reservation}
-              />
-            ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-8 py-4">
+              {reservations.data.map((reservation) => (
+                <CardMyReservations
+                  key={reservation.id}
+                  reservation={reservation}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </section>
     </div>
   );

@@ -47,8 +47,7 @@ export function RegisterLogin() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="relative w-full h-screen bg-cover bg-center ">
-      <Header />
+    <div className="relative w-full h-screen bg-cover bg-center mt-40">
       <section className="w-2/3 mx-auto pb-6 my-6 text-black bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg">
         <main>
           {!isLogin ? (

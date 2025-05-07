@@ -1,7 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import "../css/navigation.css";
 import { TbMassage } from "react-icons/tb";
-import { CiMedicalCross } from "react-icons/ci";
 import { useUser } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import { IoLogInSharp } from "react-icons/io5";
@@ -58,8 +57,8 @@ export function Header() {
   };
 
   return (
-    <header className=" w-full relative flex">
-      <div className="flex mt-4 ml-10 items-center space-x-2">
+    <header className="absolute top-0 w-full flex z-50">
+      <div className="flex mt-12 ml-10 items-center space-x-2">
         <h1 className="text-[#0097e6] font-serif font-semibold text-3xl tracking-wide drop-shadow-lg text-shadow-2xl shadow-gray-600">
           <span className="text-5xl">H.</span> Emili Darder
         </h1>
@@ -97,7 +96,7 @@ export function Header() {
       {user && (
         <div
           className="absolute top-14 right-0 mr-8 p-3 rounded-full cursor-pointer
-        shadow-2xl text-gray-800 hover:scale-120 hover:text-white transition duration-300 ease-in-out"
+        shadow-2xl text-gray-800 hover:scale-120 hover:text-white transition duration-300 ease-in-out z-100"
           onClick={handleLogout}
         >
           <IoLogInSharp className="text-2xl text-[#0097e6]" />

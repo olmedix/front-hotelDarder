@@ -22,9 +22,7 @@ export function Home() {
   ]);
 
   return (
-    <main className="relative imgHotel w-full bg-cover bg-center bg-no-repeat bg-fixed bg-white">
-      <Header />
-
+    <main className="relative pt-[200px] imgHotel w-full bg-cover bg-center bg-no-repeat bg-fixed bg-white">
       <ReservationForm
         showCalendar={showCalendar}
         setShowCalendar={setShowCalendar}

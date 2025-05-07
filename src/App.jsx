@@ -18,6 +18,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { Header } from "./components/Header";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <CategoryProvider>
           <HotelProvider>
             <Router>
+              <Header />
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/contacto" element={<Contacto />} />

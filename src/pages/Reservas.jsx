@@ -34,7 +34,6 @@ export function Reservas() {
 
   return (
     <div className="relative w-full h-screen bg-cover bg-center ">
-      <Header />
       <section className="w-2/3 mx-auto pb-6 my-6 text-black ">
         <main className="w-full  mt-14 ">
           <h1 className="pt-8">Mis Reservas</h1>

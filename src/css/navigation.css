@@ -5,6 +5,7 @@
     background-color: #1e272e; 
     padding: 0 1.75rem; 
     border-radius: 10px; 
+    z-index: 100;
 }
 
 .navigation ul {

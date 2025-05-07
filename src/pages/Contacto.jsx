@@ -9,9 +9,7 @@ export function Contacto() {
 
   return (
     <div className="relative w-full h-screen bg-cover bg-center ">
-      <Header />
-
-      <main className="w-full h-screen mt-14">
+      <main className="w-full h-screen mt-40">
         <div className="w-2/3 mx-auto my-6 text-black bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg">
           <h2 className="pt-12 pb-8 font-semibold text-gray-500">
             HABLA CON UN EXPERTO AHORA
