@@ -58,6 +58,7 @@ export function ExtraReservation({
           extra_reservation_number: generateRandomString(10),
           totalPrice: totalPrice,
           status: status,
+          user_id: 1,
           extras: Object.entries(selectedExtras).map(([id, quantity]) => ({
             extra_id: id,
             quantity: quantity,
