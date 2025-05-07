@@ -59,11 +59,10 @@ export function Header() {
 
   return (
     <header className=" w-full relative flex">
-      <div className="flex w-1/3 pl-20 pt-4 text-center items-center">
-        <div className="flex items-center justify-center p-2.5 rounded-full shadow-2xl text-gray-800">
-          <CiMedicalCross className="text-5xl text-white font-bold" />
-          <h1 className="mb-2 ml-1 text-[#0097e6]">Emili Darder</h1>
-        </div>
+      <div className="flex mt-4 ml-10 items-center space-x-2">
+        <h1 className="text-[#0097e6] font-serif font-semibold text-3xl tracking-wide drop-shadow-lg text-shadow-2xl shadow-gray-600">
+          <span className="text-5xl">H.</span> Emili Darder
+        </h1>
       </div>
 
       <div className="w-2/3 mt-10 mr-10 flex justify-end">

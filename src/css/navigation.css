@@ -1,5 +1,7 @@
 .navigation {
-    position: relative;
+    position: absolute;
+    top: 40px;
+    right: 40px;
     background-color: #1e272e; 
     padding: 0 1.75rem; 
     border-radius: 10px; 
