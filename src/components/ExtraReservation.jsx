@@ -159,9 +159,9 @@ export function ExtraReservation({
                 disabled={totalPrice === 0}
                 onClick={() => handlePurchase("confirmed")}
               >
-                Pagar ahora
+                Reservar
               </button>
-
+              {/* DESCOMENTAR CUANDO SE QUIERA HACER EL PAGO EN EL HOTEL
               <button
                 className=" mt-4 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
                 disabled={totalPrice === 0}
@@ -169,22 +169,27 @@ export function ExtraReservation({
               >
                 Pagar en el hotel
               </button>
+              */}
             </>
           )}
         </div>
-        <div className="mt-6 mx-2 p-4 bg-gray-200 rounded-md shadow font-bold text-lg flex flex-col items-center justify-center text-center">
+        <div className="mt-6 mx-2 p-4 bg-gray-200 rounded-md shadow font-bold text-lg flex flex-col items-center justify-center text-center overflow-hidden break-word">
           <p className="text-gray-600">
             ¡Confirma el día de tu reserva con el Hotel!
           </p>
-          <p className="text-[#0097e6] mt-2">
+          <p className="text-gray-500 mt-2">
             Email:{" "}
-            <a href={`tel:${hotel[0].phone}`} className="hover:underline">
+          </p>
+          <p className="text-[#0097e6] break-words max-w-full">
+            <a href={`tel:${hotel[0].phone}`} className="hover:underline text-[#0097e6] break-all">
               {hotel[0].email}
             </a>
           </p>
-          <p className="text-[#0097e6] mt-2">
+          <p className="text-gray-500 mt-2">
             Telf:{" "}
-            <a href={`tel:${hotel[0].phone}`} className="hover:underline">
+          </p>
+          <p className="break-words">
+            <a href={`tel:${hotel[0].phone}`} className="hover:underline text-[#0097e6]">
               {hotel[0].phone}
             </a>
           </p>
