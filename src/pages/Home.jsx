@@ -7,7 +7,7 @@ import { Facilities } from "../components/Facilities";
 import { HotelServices } from "../components/HotelServices";
 
 export function Home() {
-  const [showCalendar, setShowCalendar] = useState(false);
+ /* const [showCalendar, setShowCalendar] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
   const [showRooms, setShowRooms] = useState(false);
   const [people, setPeople] = useState(1);
@@ -20,11 +20,12 @@ export function Home() {
       key: "selection",
     },
   ]);
+*/
 
   return (
     <main className="relative pt-[200px] imgHotel w-full bg-cover bg-center bg-no-repeat bg-fixed bg-white">
       <ReservationForm
-        showCalendar={showCalendar}
+        /*showCalendar={showCalendar}
         setShowCalendar={setShowCalendar}
         state={state}
         setState={setState}
@@ -35,7 +36,7 @@ export function Home() {
         showRooms={showRooms}
         setShowRooms={setShowRooms}
         rooms={rooms}
-        setRooms={setRooms}
+        setRooms={setRooms}*/
       />
 
       <section className="relative px-5 mt-96 w-2/3 mx-auto bg-[#fff] rounded-t-xl">
