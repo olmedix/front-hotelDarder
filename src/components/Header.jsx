@@ -17,20 +17,20 @@ export function Header() {
       label: "Inicio",
     },
     {
-      path: "/contacto",
-      icon: <ion-icon name="call-outline"></ion-icon>,
-      label: "Contacto",
+      path: "/booking",
+      icon: <ion-icon name="bed-outline"></ion-icon>,
+      label: "Reservar",
     },
     {
       path: "/extras",
       icon: <TbMassage className="text-5xl pt-5 mb-7" />,
       label: "Extras",
     },
-    /* {
-      path: "/reservas",
-      icon: <ion-icon name="bed-outline"></ion-icon>,
-      label: "Mis Reservas",
-    },*/
+    {
+      path: "/contacto",
+      icon: <ion-icon name="call-outline"></ion-icon>,
+      label: "Contacto",
+    },
     {
       path: "/login",
       icon: <ion-icon name="person-outline"></ion-icon>,
