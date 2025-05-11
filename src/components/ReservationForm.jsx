@@ -8,7 +8,7 @@ import { useReservation } from "../contexts/ReservationContext";
 
 import { useNavigate } from "react-router-dom";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // estilos base
 import "react-date-range/dist/theme/default.css"; // tema por defecto
@@ -22,7 +22,6 @@ export function ReservationForm() {
     state,
     setState,
     people,
-    setPeople,
     rooms,
     setRooms,
     roomNumber,
@@ -32,13 +31,6 @@ export function ReservationForm() {
   const handleClickAway = () => {
     setShowCalendar(false);
   };
-
-  useEffect(() => {
-    const totalPeople = rooms
-      .slice(0, roomNumber)
-      .reduce((sum, room) => sum + room.value, 0);
-    setPeople(totalPeople);
-  }, [rooms, roomNumber]);
 
   const updateRoomValue = (id, delta) => {
     setRooms((prevRooms) =>

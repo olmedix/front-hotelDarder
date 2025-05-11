@@ -221,3 +221,15 @@ export const fetchMyReservations = async (userId) => {
   }
   return response.json();
 };
+
+export const fetchPension = async () => {
+  const response = await fetch(`${API_BASE_URL}/pension`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) throw new Error("Error al obtener las pensiones");
+  const result = await response.json();
+  return result;
+};
