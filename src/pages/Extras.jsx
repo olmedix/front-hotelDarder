@@ -4,8 +4,6 @@ import { fetchExtras } from "../services/api";
 import { URL_BACK } from "../services/api";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { FaRegTrashAlt } from "react-icons/fa";
-
-import { Header } from "../components/Header";
 import { ExtraReservation } from "../components/ExtraReservation";
 
 export function Extras() {

@@ -4,7 +4,7 @@ import Collapsible from "react-collapsible";
 import { SiTicktick } from "react-icons/si";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
-export function PensionBooking({
+export function BookingPension({
   pension,
   selectedRegimen,
   setSelectedRegimen,
@@ -21,7 +21,7 @@ export function PensionBooking({
   };
 
   return (
-    <section className="block w-3/4 text-left bg-red-400 px-5 mx-auto rounded-t-xl">
+    <section className="block w-9/10 text-left  px-5 mx-auto rounded-t-xl">
       <h2 className="text-black text-4xl font-bold pt-8">Elige un régimen</h2>
 
       {pension.map((item) => {
@@ -31,9 +31,9 @@ export function PensionBooking({
         return (
           <div
             key={item.id}
-            className="border-2 border-gray-200 rounded-lg bg-white p-5 mt-5"
+            className="border-2 border-gray-200 rounded-lg bg-gray-100 p-5 mt-5"
           >
-            <div className="flex justify-between items-center pb-3 border-b-2 border-gray-200 text-lg">
+            <div className="flex justify-between items-center pb-3  border-b-2 border-gray-300 text-lg">
               {/* Radio + Label (no abre/cierra) */}
               <label className="font-semibold flex items-center cursor-pointer">
                 <input
