@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Collapsible from "react-collapsible";
 import { SiTicktick } from "react-icons/si";
@@ -11,6 +11,14 @@ export function BookingPension({
 }) {
   const [openId, setOpenId] = useState(null); // para manejar cuál está abierto
 
+  // Seleccionar el primero automáticamente si no hay ninguno
+  useEffect(() => {
+    if (pension.length > 0 && !selectedRegimen) {
+      setSelectedRegimen(pension[0].id);
+      setOpenId(pension[0].id);
+    }
+  }, [pension, selectedRegimen, setSelectedRegimen]);
+
   const handleClick = (id) => {
     setOpenId((prev) => (prev === id ? null : id));
   };
@@ -22,7 +30,7 @@ export function BookingPension({
 
   return (
     <section className="block w-9/10 text-left  px-5 mx-auto rounded-t-xl">
-      <h2 className="text-black text-4xl font-bold pt-8">Elige un régimen</h2>
+      <h2 className="text-black text-4xl font-bold">Elige un régimen</h2>
 
       {pension.map((item) => {
         const isOpen = openId === item.id;
@@ -48,17 +56,25 @@ export function BookingPension({
               </label>
 
               {/* Botón de abrir/cerrar (no afecta al radio) */}
-              <button
-                type="button"
-                onClick={() => handleClick(item.id)}
-                className="focus:outline-none"
-              >
-                {isOpen ? (
-                  <IoIosArrowUp className="text-xl font-bold" />
-                ) : (
-                  <IoIosArrowDown className="text-xl font-bold" />
-                )}
-              </button>
+              <div>
+                <span className="text-sm text-gray-500">
+                  Persona/noche{" "}
+                  <span className="text-xl font-semibold text-black">
+                    {item.price}€{" "}
+                  </span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => handleClick(item.id)}
+                  className="focus:outline-none"
+                >
+                  {isOpen ? (
+                    <IoIosArrowUp className="text-xl font-bold" />
+                  ) : (
+                    <IoIosArrowDown className="text-xl font-bold" />
+                  )}
+                </button>
+              </div>
             </div>
 
             {/* Collapsible: solo depende de openId */}

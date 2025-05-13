@@ -15,10 +15,11 @@ export const ReservationProvider = ({ children }) => {
     { id: "room3", value: 1 },
   ]);
   const [people, setPeople] = useState(1);
+  // Por defecto, la fecha de inicio es hoy y la fecha de fin es mañana
   const [state, setState] = useState([
     {
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
       key: "selection",
     },
   ]);

@@ -82,7 +82,18 @@ export function ReservationForm() {
               <div className="absolute z-70 mt-6">
                 <DateRange
                   editableDateInputs={true}
-                  onChange={(item) => setState([item.selection])}
+                  onChange={(item) => {
+                    const start = item.selection.startDate;
+                    let end = item.selection.endDate;
+
+                    // Si start y end son el mismo día, forzar mínimo 1 día más
+                    if (start.toDateString() === end.toDateString()) {
+                      end = new Date(start);
+                      end.setDate(end.getDate() + 1); // Sumar un día
+                    }
+
+                    setState([{ ...item.selection, endDate: end }]);
+                  }}
                   moveRangeOnFirstSelection={false}
                   ranges={state}
                   months={2}
