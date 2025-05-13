@@ -8,6 +8,7 @@ export const useReservation = () => useContext(ReservationContext);
 
 // Proveedor del contexto
 export const ReservationProvider = ({ children }) => {
+  const [roomNumberSelected, setRoomNumberSelected] = useState(1);
   const [roomNumber, setRoomNumber] = useState(1);
   const [rooms, setRooms] = useState([
     { id: "room1", value: 1 },
@@ -43,6 +44,8 @@ export const ReservationProvider = ({ children }) => {
         setRooms,
         state,
         setState,
+        roomNumberSelected,
+        setRoomNumberSelected,
       }}
     >
       {children}

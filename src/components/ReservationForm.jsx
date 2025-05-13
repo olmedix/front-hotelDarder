@@ -8,7 +8,7 @@ import { useReservation } from "../contexts/ReservationContext";
 
 import { useNavigate } from "react-router-dom";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // estilos base
 import "react-date-range/dist/theme/default.css"; // tema por defecto
@@ -18,22 +18,34 @@ export function ReservationForm() {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
   const [showRooms, setShowRooms] = useState(false);
+
   const {
     state,
     setState,
-    people,
     rooms,
     setRooms,
     roomNumber,
     setRoomNumber,
+    setRoomNumberSelected,
   } = useReservation();
+
+  //Estados iniciales
+  const [tempDates, setTempDates] = useState(state);
+  const [tempRooms, setTempRooms] = useState(rooms);
+  const [tempRoomNumber, setTempRoomNumber] = useState(roomNumber);
+
+  useEffect(() => {
+    setTempDates(state);
+    setTempRooms(rooms);
+    setTempRoomNumber(roomNumber);
+  }, [state, rooms, roomNumber]);
 
   const handleClickAway = () => {
     setShowCalendar(false);
   };
 
   const updateRoomValue = (id, delta) => {
-    setRooms((prevRooms) =>
+    setTempRooms((prevRooms) =>
       prevRooms.map((room) => {
         if (room.id === id) {
           const newValue = room.value + delta;
@@ -72,8 +84,8 @@ export function ReservationForm() {
           <h5 className="font-semibold mb-4">FECHAS</h5>
           <p className="flex w-full items-center justify-center">
             <IoCalendarNumberSharp className="text-[#0097e6]" />
-            {`${format(state[0].startDate, "yyyy/MM/dd")} - ${format(
-              state[0].endDate,
+            {`${format(tempDates[0].startDate, "yyyy/MM/dd")} - ${format(
+              tempDates[0].endDate,
               "yyyy/MM/dd"
             )}`}
           </p>
@@ -86,16 +98,15 @@ export function ReservationForm() {
                     const start = item.selection.startDate;
                     let end = item.selection.endDate;
 
-                    // Si start y end son el mismo día, forzar mínimo 1 día más
                     if (start.toDateString() === end.toDateString()) {
                       end = new Date(start);
-                      end.setDate(end.getDate() + 1); // Sumar un día
+                      end.setDate(end.getDate() + 1);
                     }
 
-                    setState([{ ...item.selection, endDate: end }]);
+                    setTempDates([{ ...item.selection, endDate: end }]);
                   }}
+                  ranges={tempDates}
                   moveRangeOnFirstSelection={false}
-                  ranges={state}
                   months={2}
                   minDate={new Date()}
                   direction="horizontal"
@@ -118,14 +129,18 @@ export function ReservationForm() {
             </h5>
             <p className="flex text-center items-center justify-center">
               <FaUser className="text-1xl text-[#0097e6]" />
-              <span className="relative pl-2 text-lg">{people}</span>
+              <span className="relative pl-2 text-lg">
+                {tempRooms
+                  .slice(0, tempRoomNumber)
+                  .reduce((sum, r) => sum + r.value, 0)}
+              </span>
             </p>
           </button>
 
           {showPeople && (
             <div className="absolute z-60 w-2/10 h-20 bg-[#FFFFF0] ">
               <AnimatePresence>
-                {rooms.slice(0, roomNumber).map((room, index) => (
+                {tempRooms.slice(0, tempRoomNumber).map((room, index) => (
                   <motion.div
                     key={room.id}
                     initial={{ opacity: 0, y: -20 }}
@@ -190,7 +205,7 @@ export function ReservationForm() {
             <p className="flex text-center items-center justify-center">
               <FaBed className="text-2xl text-[#0097e6]" />
               <span className="relative -mt-0.5 pl-3 text-lg">
-                {roomNumber}
+                {tempRoomNumber}
               </span>
             </p>
           </button>
@@ -201,9 +216,8 @@ export function ReservationForm() {
                 <div
                   className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full"
                   onClick={() => {
-                    if (roomNumber > 1) {
-                      setRoomNumber(roomNumber - 1);
-                    }
+                    if (tempRoomNumber > 1)
+                      setTempRoomNumber(tempRoomNumber - 1);
                   }}
                 >
                   <button className="absolute top-5 left-11.5 font-bold text-[#0097e6] text-2xl">
@@ -211,14 +225,13 @@ export function ReservationForm() {
                   </button>
                 </div>
 
-                <p className="font-semibold text-xl">{roomNumber}</p>
+                <p className="font-semibold text-xl">{tempRoomNumber}</p>
 
                 <div
                   className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full"
                   onClick={() => {
-                    if (roomNumber < 3) {
-                      setRoomNumber(roomNumber + 1);
-                    }
+                    if (tempRoomNumber < 3)
+                      setTempRoomNumber(tempRoomNumber + 1);
                   }}
                 >
                   <button className="absolute top-5.5 right-11 font-bold text-[#0097e6] text-xl">
@@ -234,6 +247,10 @@ export function ReservationForm() {
           <button
             className="w-full h-full bg-[#0097e6] text-white font-bold text-2xl rounded-br-2xl rounded-tr-2xl"
             onClick={() => {
+              setState(tempDates);
+              setRooms(tempRooms);
+              setRoomNumber(tempRoomNumber);
+              setRoomNumberSelected(1);
               navigate("/booking");
             }}
           >

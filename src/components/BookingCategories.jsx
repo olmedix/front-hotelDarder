@@ -1,5 +1,6 @@
 import { URL_BACK } from "../services/api";
 import { useState, useEffect } from "react";
+import { useReservation } from "../contexts/ReservationContext";
 import { FaRulerCombined } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { PiBathtubFill } from "react-icons/pi";
@@ -7,21 +8,15 @@ import Swal from "sweetalert2";
 
 export function BookingCategories({
   categories,
-  state,
-  roomNumber,
-  rooms,
   priceRooms,
   setPriceRooms,
+  diffDays,
+  lastUsedDiscount,
+  setLastUsedDiscount,
 }) {
+  const { roomNumber, rooms, roomNumberSelected, setRoomNumberSelected } =
+    useReservation();
   const [appliedDiscount, setAppliedDiscount] = useState(null);
-
-  const [roomNumberSelected, setRoomNumberSelected] = useState(1);
-
-  // Conocer la diferencia entre las dos fechas en días
-  const start = state[0].startDate;
-  const end = state[0].endDate;
-  const diffTime = Math.abs(end - start); // diferencia en milisegundos
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // convertir a días
 
   const discountPrice = 0.9; // 10% de descuento
 
@@ -75,6 +70,8 @@ export function BookingCategories({
     };
 
     setPriceRooms(updatedPrices);
+
+    setLastUsedDiscount(newDiscount !== 1);
 
     if (roomNumberSelected < roomNumber) {
       setRoomNumberSelected(roomNumberSelected + 1);

@@ -10,13 +10,11 @@ import { BookingPension } from "../components/BookingPension";
 import { BookingCategories } from "../components/BookingCategories";
 
 export function Booking() {
-  const { state, roomNumber, rooms, people } = useReservation();
-  console.log("state", state);
-  console.log("roomNumber", roomNumber);
-  console.log("rooms", rooms);
-  console.log("people", people);
+  const { state, roomNumber, rooms, people, roomNumberSelected } =
+    useReservation();
   const [note, setNote] = useState("");
   const [priceRooms, setPriceRooms] = useState([]);
+  const [lastUsedDiscount, setLastUsedDiscount] = useState(false);
 
   const [pension, setPension] = useState([]);
   const [selectedRegimen, setSelectedRegimen] = useState(0);
@@ -27,9 +25,15 @@ export function Booking() {
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [errorCategories, setErrorCategories] = useState(null);
 
+  // Conocer la diferencia entre las dos fechas en días
+  const start = state[0].startDate;
+  const end = state[0].endDate;
+  const diffTime = Math.abs(end - start); // diferencia en milisegundos
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // convertir a días
+
   useEffect(() => {
     setPriceRooms([]);
-  }, [roomNumber]);
+  }, [roomNumber, people, state]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,11 +88,11 @@ export function Booking() {
           {/* Sección de habitaciones */}
           <BookingCategories
             categories={categories}
-            state={state}
-            roomNumber={roomNumber}
-            rooms={rooms}
             priceRooms={priceRooms}
             setPriceRooms={setPriceRooms}
+            diffDays={diffDays}
+            lastUsedDiscount={lastUsedDiscount}
+            setLastUsedDiscount={setLastUsedDiscount}
           />
 
           <section className="block w-9/10 text-left mt-6  px-5 mx-auto rounded-t-xl">
@@ -134,7 +138,7 @@ export function Booking() {
 
             {/* Detalles de las habitaciones */}
             <div className="text-left bg-gray-100 border-b border-gray-500 mx-2.5 py-2">
-              {rooms.slice(0, roomNumber).map((room, idx) => (
+              {rooms.slice(0, roomNumberSelected).map((room, idx) => (
                 <div className="pb-2" key={idx}>
                   <p className="font-semibold text-xl">Habitación {idx + 1}</p>
                   <div className="flex justify-between items-center">
@@ -163,22 +167,34 @@ export function Booking() {
               <div className="flex justify-between items-center font-bold">
                 <p className="text-LG">Régimen</p>
                 {(pension.find((p) => p.id === selectedRegimen)?.price || 0) *
-                  people}
+                  people *
+                  diffDays}
                 €
               </div>
               {/*Precio total de las pensiones*/}
               <div className="flex justify-between items-center font-bold">
                 <p className="text-LG">Habitaciones:</p>
-                {priceRooms.reduce((acc, room) => acc + room.value, 0)}€
+                {priceRooms.reduce((acc, room) => acc + room.value, 0) *
+                  diffDays}
+                €
               </div>
               <div className="flex justify-between items-center text-3xl font-bold">
                 {/* Suma de habitaciones y régimen */}
                 <p className="text-xl">PRECIO FINAL:</p>
-                {priceRooms.reduce((acc, room) => acc + room.value, 0) +
+                {priceRooms.reduce((acc, room) => acc + room.value, 0) *
+                  diffDays +
                   (pension.find((p) => p.id === selectedRegimen)?.price || 0) *
-                    people}
+                    people *
+                    diffDays}
                 €
               </div>
+
+              <button
+                className="mt-4 border-2 border-[#0097e6] bg-[#0097e6] text-white py-2 px-3 shadow-md shadow-black rounded-lg hover:bg-[#0072a3] transition duration-300 ease-in-out"
+                onClick={console.log(lastUsedDiscount)}
+              >
+                Reservar ahora
+              </button>
             </div>
           </div>
         </aside>
