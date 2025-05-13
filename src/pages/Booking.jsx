@@ -106,48 +106,79 @@ export function Booking() {
         </div>
 
         {/* Sección de detalles de la reserva */}
-        <aside className="sticky top-0 w-3/10 h-80 text-black bg-gray-100 rounded-lg">
+        <aside className="sticky top-0 w-3/10 h-80 text-lg text-black bg-gray-100 rounded-lg">
           <div className="w-full bg-gray-100 pb-6 rounded-b-lg">
             <div className="w-full py-2.5 rounded-lg border border-gray-200 bg-gray-300 text-gray-800 shadow-2xs">
               <h3>Detalles de la reserva</h3>
             </div>
 
             <div className="text-left  border-b border-gray-500 mx-2.5 py-2">
-              <p>
-                <span className="font-semibold ">Fechas:</span>
+              <div className="flex justify-between items-center">
+                <p className="font-semibold">Fechas:</p>
                 {` ${format(state[0].startDate, "yyyy/MM/dd")} - ${format(
                   state[0].endDate,
                   "yyyy/MM/dd"
                 )}`}
-              </p>
-              <p>
-                <span className="font-semibold ">Nº Personas: </span>
+              </div>
+
+              <div className="flex justify-between items-center">
+                <p className="font-semibold ">Nº Personas:</p>
                 {people}
-              </p>
-              <p>
-                <span className="font-semibold ">Régimen: </span>
+              </div>
+
+              <div className="flex justify-between items-center">
+                <p className="font-semibold ">Régimen:</p>
                 {pension[selectedRegimen - 1]?.name}
-              </p>
+              </div>
             </div>
 
             {/* Detalles de las habitaciones */}
             <div className="text-left bg-gray-100 border-b border-gray-500 mx-2.5 py-2">
               {rooms.slice(0, roomNumber).map((room, idx) => (
                 <div className="pb-2" key={idx}>
-                  <p>
-                    <span className="font-semibold">Habitación {idx + 1}:</span>{" "}
-                    {room.category}
-                  </p>
-                  <p>
-                    <span className="pl-2">- Nº Personas: </span>
+                  <p className="font-semibold text-xl">Habitación {idx + 1}</p>
+                  <div className="flex justify-between items-center">
+                    <p className="pl-3 font-semibold">- Categoría:</p>
+                    {categories.find((cat) => cat.id === priceRooms[idx]?.id)
+                      ?.name || (
+                      <span className="text-red-500">No seleccionada</span>
+                    )}
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <p className="pl-3 font-semibold">- Nº Personas:</p>
                     {room.value}
-                  </p>
-                  <p>
-                    <span className="pl-2">- Precio: </span>
+                  </div>
+
+                  <div className="flex justify-between items-center">
+                    <p className="pl-3 font-semibold">- Precio:</p>
                     {priceRooms[idx]?.value}€
-                  </p>
+                  </div>
                 </div>
               ))}
+            </div>
+
+            {/* PRECIO TOTAL */}
+            <div className=" bg-gray-100  mx-2.5 py-2">
+              {/*Precio total de las habitaciones*/}
+              <div className="flex justify-between items-center font-bold">
+                <p className="text-LG">Régimen</p>
+                {(pension.find((p) => p.id === selectedRegimen)?.price || 0) *
+                  people}
+                €
+              </div>
+              {/*Precio total de las pensiones*/}
+              <div className="flex justify-between items-center font-bold">
+                <p className="text-LG">Habitaciones:</p>
+                {priceRooms.reduce((acc, room) => acc + room.value, 0)}€
+              </div>
+              <div className="flex justify-between items-center text-3xl font-bold">
+                {/* Suma de habitaciones y régimen */}
+                <p className="text-xl">PRECIO FINAL:</p>
+                {priceRooms.reduce((acc, room) => acc + room.value, 0) +
+                  (pension.find((p) => p.id === selectedRegimen)?.price || 0) *
+                    people}
+                €
+              </div>
             </div>
           </div>
         </aside>
