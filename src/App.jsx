@@ -10,6 +10,7 @@ import { Contacto } from "./pages/Contacto";
 import { Extras } from "./pages/Extras";
 import { Home } from "./pages/Home";
 import { PaymentSuccess } from "./pages/PaymentSuccess";
+import { ReservationPaymentSuccess } from "./pages/ReservationPaymentSuccess";
 import { RegisterLogin } from "./pages/RegisterLogin";
 import { Booking } from "./pages/Booking";
 
@@ -46,6 +47,10 @@ function App() {
                   />
                   <Route path="/login" element={<RegisterLogin />} />
                   <Route path="/payment-success" element={<PaymentSuccess />} />
+                  <Route
+                    path="/hotel-payment-success"
+                    element={<ReservationPaymentSuccess />}
+                  />
 
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>

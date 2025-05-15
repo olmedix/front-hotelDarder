@@ -3,7 +3,6 @@ import { fetchReservaExtras } from "../services/api";
 import { API_BASE_URL } from "../services/api";
 import { useState } from "react";
 import { useHotel } from "../contexts/HotelContext";
-import { generatePDF } from "../services/generatePdf";
 
 const stripePromise = loadStripe(
   "pk_test_51RIeK2RpGxL5WH6XfnCzEWv5XSuvvf3UwrBs7V76aJ7wU9uJKpy2joWfVkM6KFhVoFiVlT6MLzO0dXqC0hfXeTIm00uzoS5tZ3"
@@ -39,7 +38,7 @@ export function ExtraReservation({
     setOpenQuantity({});
   };
 
-  const handlePurchase = async (status) => {
+  const handlePurchase = async () => {
     try {
       const generateRandomString = (length) => {
         const characters =
@@ -57,8 +56,7 @@ export function ExtraReservation({
         {
           extra_reservation_number: generateRandomString(10),
           totalPrice: totalPrice,
-          status: status,
-          user_id: 1,
+          status: "pending",
           extras: Object.entries(selectedExtras).map(([id, quantity]) => ({
             extra_id: id,
             quantity: quantity,
@@ -72,35 +70,26 @@ export function ExtraReservation({
 
       if (!reserva) throw new Error("Error creando reserva");
 
-      if (status === "confirmed") {
-        // 2. Crear sesión de Stripe
-        const response = await fetch(
-          `${API_BASE_URL}/create-checkout-session`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name: "Reserva de extras",
-              amount: reserva.totalPrice,
-            }),
-          }
-        );
+      // 2. Crear sesión de Stripe
+      const response = await fetch(`${API_BASE_URL}/create-checkout-session`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: "Reserva de extras",
+          amount: reserva.totalPrice,
+        }),
+      });
 
-        const session = await response.json();
-        const stripe = await stripePromise;
+      const session = await response.json();
+      const stripe = await stripePromise;
 
-        localStorage.setItem("reserva", JSON.stringify(reserva));
-        localStorage.setItem("extras", JSON.stringify(extras));
-        localStorage.setItem("reservations", JSON.stringify(reservations));
-        resetSelectedExtras();
-        await stripe.redirectToCheckout({ sessionId: session.id });
-      } else if (status === "pending") {
-        generatePDF(reserva, extras, reservations);
-        setShowDialog(true);
-        resetSelectedExtras();
-      }
+      localStorage.setItem("reserva", JSON.stringify(reserva));
+      localStorage.setItem("extras", JSON.stringify(extras));
+      localStorage.setItem("reservations", JSON.stringify(reservations));
+      resetSelectedExtras();
+      await stripe.redirectToCheckout({ sessionId: session.id });
     } catch (error) {
       console.error(error);
       alert("Hubo un error en el proceso de compra");
@@ -153,43 +142,34 @@ export function ExtraReservation({
 
           {/* Botón de continuar con la reserva */}
           {totalPrice !== 0 && (
-            <>
-              <button
-                className=" mt-4 mr-2 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
-                disabled={totalPrice === 0}
-                onClick={() => handlePurchase("confirmed")}
-              >
-                Reservar
-              </button>
-              {/* DESCOMENTAR CUANDO SE QUIERA HACER EL PAGO EN EL HOTEL
-              <button
-                className=" mt-4 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
-                disabled={totalPrice === 0}
-                onClick={() => handlePurchase("pending")}
-              >
-                Pagar en el hotel
-              </button>
-              */}
-            </>
+            <button
+              className=" mt-4 mr-2 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
+              disabled={totalPrice === 0}
+              onClick={() => handlePurchase()}
+            >
+              Reservar
+            </button>
           )}
         </div>
         <div className="mt-6 mx-2 p-4 bg-gray-200 rounded-md shadow font-bold text-lg flex flex-col items-center justify-center text-center overflow-hidden break-word">
           <p className="text-gray-600">
             ¡Confirma el día de tu reserva con el Hotel!
           </p>
-          <p className="text-gray-500 mt-2">
-            Email:{" "}
-          </p>
+          <p className="text-gray-500 mt-2">Email: </p>
           <p className="text-[#0097e6] break-words max-w-full">
-            <a href={`tel:${hotel[0].phone}`} className="hover:underline text-[#0097e6] break-all">
+            <a
+              href={`tel:${hotel[0].phone}`}
+              className="hover:underline text-[#0097e6] break-all"
+            >
               {hotel[0].email}
             </a>
           </p>
-          <p className="text-gray-500 mt-2">
-            Telf:{" "}
-          </p>
+          <p className="text-gray-500 mt-2">Telf: </p>
           <p className="break-words">
-            <a href={`tel:${hotel[0].phone}`} className="hover:underline text-[#0097e6]">
+            <a
+              href={`tel:${hotel[0].phone}`}
+              className="hover:underline text-[#0097e6]"
+            >
               {hotel[0].phone}
             </a>
           </p>

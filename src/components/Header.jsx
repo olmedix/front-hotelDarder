@@ -89,7 +89,7 @@ export function Header() {
               </li>
             ))}
 
-            <div className="indicator"></div>
+            {activeIndex !== -1 && <div className="indicator"></div>}
           </ul>
         </nav>
       </div>

@@ -51,6 +51,25 @@ export const fetchReservaExtras = async (reservations) => {
   const result = await response.json();
   return result;
 };
+export const fetchUpdateReservaExtras = async (
+  extra_reservation_number,
+  status
+) => {
+  const response = await fetch(
+    `${API_BASE_URL}/extraReservation/${extra_reservation_number}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    }
+  );
+
+  if (!response.ok) throw new Error("Error al actualizar la reserva");
+  const result = await response.json();
+  return result;
+};
 
 export const fetchReserva = async (reservations) => {
   const response = await fetch(`${API_BASE_URL}/reservation`, {
@@ -63,6 +82,24 @@ export const fetchReserva = async (reservations) => {
   });
 
   if (!response.ok) throw new Error("Error al realizar la reserva");
+  const result = await response.json();
+  return result;
+};
+
+export const fetchUpdateReserva = async (reservation_number, status) => {
+  const response = await fetch(
+    `${API_BASE_URL}/reservation/${reservation_number}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+      body: JSON.stringify({ status }),
+    }
+  );
+
+  if (!response.ok) throw new Error("Error al actualizar la reserva");
   const result = await response.json();
   return result;
 };

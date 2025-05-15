@@ -19,8 +19,15 @@ export function Booking() {
     "pk_test_51RIeK2RpGxL5WH6XfnCzEWv5XSuvvf3UwrBs7V76aJ7wU9uJKpy2joWfVkM6KFhVoFiVlT6MLzO0dXqC0hfXeTIm00uzoS5tZ3"
   );
 
-  const { state, roomNumber, rooms, people, roomNumberSelected } =
-    useReservation();
+  const {
+    state,
+    roomNumber,
+    setRoomNumber,
+    rooms,
+    people,
+    roomNumberSelected,
+    setRoomNumberSelected,
+  } = useReservation();
   const [note, setNote] = useState("");
   const [priceRooms, setPriceRooms] = useState([]);
   const [lastUsedDiscount, setLastUsedDiscount] = useState(false);
@@ -65,6 +72,13 @@ export function Booking() {
     fetchData();
   }, []);
 
+  const resetReservationForm = () => {
+    setNote("");
+    setPriceRooms([]);
+    setRoomNumber(1);
+    setRoomNumberSelected(1);
+  };
+
   const toggleTotalPrice = () => {
     return (
       priceRooms.reduce((acc, room) => acc + room.value, 0) +
@@ -72,7 +86,7 @@ export function Booking() {
     );
   };
 
-  const handlePurchase = async (status) => {
+  const handlePurchase = async () => {
     try {
       const generateRandomString = (length = 10) => {
         const characters =
@@ -116,22 +130,21 @@ export function Booking() {
           end_date: format(state[0].endDate, "yyyy-MM-dd"),
           numPeople: people,
           totalPrice: toggleTotalPrice(),
-          status: status,
+          status: "pending",
           notes: note,
           pension_id: selectedRegimen,
           room_categories: groupedRoomCategories,
         },
       ];
 
-      // 1. Crear la reserva
-      await fetchReserva(reservations);
-      // Modal de confirmación de reserva
-      modalConfirmReservation();
-
-      console.log("lastUsedDiscount:", lastUsedDiscount);
-      console.log("status:", status);
+      //Crear la reserva
+      const reservaData = await fetchReserva(reservations);
+      const reserva = reservaData.data[0];
 
       if (lastUsedDiscount) {
+        // 1. Guardar la reserva en localStorage para el pago
+        localStorage.setItem("reservationRooms", JSON.stringify(reserva));
+
         // 2. Crear sesión de Stripe
         const response = await fetch(
           `${API_BASE_URL}/create-checkout-session`,
@@ -143,15 +156,18 @@ export function Booking() {
             body: JSON.stringify({
               name: "Reserva de habitación",
               amount: toggleTotalPrice(),
+              type: "hotel",
             }),
           }
         );
         const session = await response.json();
         const stripe = await stripePromise;
         await stripe.redirectToCheckout({ sessionId: session.id });
+      } else {
+        // Modal de confirmación de reserva
+        modalConfirmReservation();
       }
     } catch (error) {
-      console.error(error);
       alert("Hubo un error en el proceso de compra");
     }
   };
@@ -292,14 +308,15 @@ export function Booking() {
               </div>
 
               <button
-                className="mt-4 border-2 border-[#0097e6] bg-[#0097e6] text-white py-2 px-3 shadow-md shadow-black rounded-lg hover:bg-[#0072a3] transition duration-300 ease-in-out"
+                className="mt-4 border-2 border-[#0097e6] bg-[#0097e6] text-white py-2 px-3 shadow-md shadow-black rounded-lg hover:bg-[#0072a3] transition duration-300 ease-in-out
+                disabled:bg-gray-300 disabled:border-gray-300 disabled:text-gray-500 disabled:shadow-none disabled:cursor-not-allowed"
                 onClick={() => {
-                  const status = lastUsedDiscount ? "confirmed" : "pending";
-                  handlePurchase(status);
+                  handlePurchase();
+                  resetReservationForm();
                 }}
                 disabled={
-                  priceRooms.length === 0 ||
-                  priceRooms.some((room) => room.value === 0)
+                  priceRooms.length < roomNumber ||
+                  roomNumberSelected < roomNumber
                 }
               >
                 Reservar ahora
