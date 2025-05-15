@@ -44,6 +44,7 @@ export function CardMyReservations({ reservation }) {
       <ul>
         {reservation.room_categories.map((category, index) => (
           <li key={index} className="text-gray-500 text-sm pl-2">
+            {category.quantity > 1 && " " + category.quantity + " -  "}
             {category.name} - {category.roomView}
           </li>
         ))}

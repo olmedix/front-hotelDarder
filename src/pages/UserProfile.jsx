@@ -35,7 +35,6 @@ export function UserProfile() {
     const fetchReservations = async () => {
       try {
         const response = await fetchMyReservations(user.id);
-        console.log("response" + response);
         setReservations(response);
       } catch (error) {
         setErrorReservation(error.message);
@@ -339,10 +338,13 @@ export function UserProfile() {
 
       {/* Mis Reservas */}
       <section className="w-2/3 mx-auto pb-6 my-6 text-black ">
-        {reservations.length !== 0 && (
+        <h2 className="text-4xl font-bold pt-8">Mis Reservas</h2>
+        {reservations.data.length === 0 ? (
+          <p className="text-xl text-gray-500 mt-5">
+            Aún no has realizado ninguna reserva
+          </p>
+        ) : (
           <div className="w-full  mt-14 ">
-            <h2 className="text-4xl font-bold pt-8">Mis Reservas</h2>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-8 py-4">
               {reservations.data.map((reservation) => (
                 <CardMyReservations
