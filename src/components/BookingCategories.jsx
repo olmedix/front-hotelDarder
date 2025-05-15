@@ -52,6 +52,7 @@ export function BookingCategories({
         title: "Capacidad excedida",
         text: "La habitación no acepta esa cantidad de personas.",
         confirmButtonColor: "#0097e6",
+        confirmButtonText: "Aceptar",
       });
       return;
     }

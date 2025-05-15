@@ -2,14 +2,23 @@ import { format } from "date-fns";
 import { useReservation } from "../contexts/ReservationContext";
 import { ReservationForm } from "../components/ReservationForm";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+
+import { loadStripe } from "@stripe/stripe-js";
 
 import { fetchPension } from "../services/api";
 import { fetchCategories } from "../services/api";
+import { fetchReserva } from "../services/api";
+import { API_BASE_URL } from "../services/api";
 
 import { BookingPension } from "../components/BookingPension";
 import { BookingCategories } from "../components/BookingCategories";
 
 export function Booking() {
+  const stripePromise = loadStripe(
+    "pk_test_51RIeK2RpGxL5WH6XfnCzEWv5XSuvvf3UwrBs7V76aJ7wU9uJKpy2joWfVkM6KFhVoFiVlT6MLzO0dXqC0hfXeTIm00uzoS5tZ3"
+  );
+
   const { state, roomNumber, rooms, people, roomNumberSelected } =
     useReservation();
   const [note, setNote] = useState("");
@@ -55,6 +64,107 @@ export function Booking() {
 
     fetchData();
   }, []);
+
+  const toggleTotalPrice = () => {
+    return (
+      priceRooms.reduce((acc, room) => acc + room.value, 0) +
+      (pension.find((p) => p.id === selectedRegimen)?.price || 0) * people
+    );
+  };
+
+  const handlePurchase = async (status) => {
+    try {
+      const generateRandomString = (length = 10) => {
+        const characters =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let result = "";
+        for (let i = 0; i < length; i++) {
+          result += characters.charAt(
+            Math.floor(Math.random() * characters.length)
+          );
+        }
+        return result;
+      };
+
+      // Agrupar por categoría de habitación
+      const groupedRoomCategories = Object.values(
+        rooms.slice(0, roomNumberSelected).reduce((acc, room, index) => {
+          const id = priceRooms[index]?.id;
+          const numPeople = room.value;
+
+          if (!id) return acc;
+
+          if (!acc[id]) {
+            acc[id] = {
+              id,
+              quantity: 1,
+              numPeople: numPeople,
+            };
+          } else {
+            acc[id].quantity += 1;
+            acc[id].numPeople += numPeople;
+          }
+
+          return acc;
+        }, {})
+      );
+
+      const reservations = [
+        {
+          reservation_number: generateRandomString(),
+          start_date: format(state[0].startDate, "yyyy-MM-dd"),
+          end_date: format(state[0].endDate, "yyyy-MM-dd"),
+          numPeople: people,
+          totalPrice: toggleTotalPrice(),
+          status: status,
+          notes: note,
+          pension_id: selectedRegimen,
+          room_categories: groupedRoomCategories,
+        },
+      ];
+
+      // 1. Crear la reserva
+      await fetchReserva(reservations);
+      // Modal de confirmación de reserva
+      modalConfirmReservation();
+
+      console.log("lastUsedDiscount:", lastUsedDiscount);
+      console.log("status:", status);
+
+      if (lastUsedDiscount) {
+        // 2. Crear sesión de Stripe
+        const response = await fetch(
+          `${API_BASE_URL}/create-checkout-session`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: "Reserva de habitación",
+              amount: toggleTotalPrice(),
+            }),
+          }
+        );
+        const session = await response.json();
+        const stripe = await stripePromise;
+        await stripe.redirectToCheckout({ sessionId: session.id });
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un error en el proceso de compra");
+    }
+  };
+
+  const modalConfirmReservation = () => {
+    Swal.fire({
+      title: "Reserva realizada",
+      text: "¡Gracias por reservar con nosotros, pronto recibirá un correo con la información de su reserva!",
+      icon: "success",
+      confirmButtonColor: "#0097e6",
+      confirmButtonText: "Aceptar",
+    });
+  };
 
   if (loadingPension || loadingCategories) {
     return <div>Cargando datos...</div>;
@@ -167,31 +277,30 @@ export function Booking() {
               <div className="flex justify-between items-center font-bold">
                 <p className="text-LG">Régimen</p>
                 {(pension.find((p) => p.id === selectedRegimen)?.price || 0) *
-                  people *
-                  diffDays}
+                  people}
                 €
               </div>
               {/*Precio total de las pensiones*/}
               <div className="flex justify-between items-center font-bold">
                 <p className="text-LG">Habitaciones:</p>
-                {priceRooms.reduce((acc, room) => acc + room.value, 0) *
-                  diffDays}
-                €
+                {priceRooms.reduce((acc, room) => acc + room.value, 0)}€
               </div>
               <div className="flex justify-between items-center text-3xl font-bold">
                 {/* Suma de habitaciones y régimen */}
                 <p className="text-xl">PRECIO FINAL:</p>
-                {priceRooms.reduce((acc, room) => acc + room.value, 0) *
-                  diffDays +
-                  (pension.find((p) => p.id === selectedRegimen)?.price || 0) *
-                    people *
-                    diffDays}
-                €
+                {toggleTotalPrice()}€
               </div>
 
               <button
                 className="mt-4 border-2 border-[#0097e6] bg-[#0097e6] text-white py-2 px-3 shadow-md shadow-black rounded-lg hover:bg-[#0072a3] transition duration-300 ease-in-out"
-                onClick={console.log(lastUsedDiscount)}
+                onClick={() => {
+                  const status = lastUsedDiscount ? "confirmed" : "pending";
+                  handlePurchase(status);
+                }}
+                disabled={
+                  priceRooms.length === 0 ||
+                  priceRooms.some((room) => room.value === 0)
+                }
               >
                 Reservar ahora
               </button>
