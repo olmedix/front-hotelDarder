@@ -22,7 +22,7 @@ export const generatePDF = (reserva, extras, reservations) => {
     doc.text(`Número de reserva: ${reserva.extra_reservation_number}`, 20, 40);
     doc.text(`Fecha: ${formattedDate}`, 20, 50);
     doc.text(`Hora: ${formattedTime}`, 20, 60);
-    doc.text(`Estado: ${reserva.status}`, 20, 70);
+    doc.text(`Estado: Procesado`, 20, 70);
 
     doc.line(20, 75, 190, 75); // línea divisoria
 

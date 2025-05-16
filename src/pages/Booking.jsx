@@ -1,8 +1,10 @@
 import { format } from "date-fns";
+import { useUser } from "../contexts/UserContext";
 import { useReservation } from "../contexts/ReservationContext";
 import { ReservationForm } from "../components/ReservationForm";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -18,7 +20,9 @@ export function Booking() {
   const stripePromise = loadStripe(
     "pk_test_51RIeK2RpGxL5WH6XfnCzEWv5XSuvvf3UwrBs7V76aJ7wU9uJKpy2joWfVkM6KFhVoFiVlT6MLzO0dXqC0hfXeTIm00uzoS5tZ3"
   );
+  const navigate = useNavigate();
 
+  const { user } = useUser();
   const {
     state,
     roomNumber,
@@ -311,6 +315,20 @@ export function Booking() {
                 className="mt-4 border-2 border-[#0097e6] bg-[#0097e6] text-white py-2 px-3 shadow-md shadow-black rounded-lg hover:bg-[#0072a3] transition duration-300 ease-in-out
                 disabled:bg-gray-300 disabled:border-gray-300 disabled:text-gray-500 disabled:shadow-none disabled:cursor-not-allowed"
                 onClick={() => {
+                  if (!user) {
+                    Swal.fire({
+                      title: "Inicia sesión",
+                      text: "Para realizar la reserva debes iniciar sesión",
+                      icon: "warning",
+                      confirmButtonColor: "#0097e6",
+                      confirmButtonText: "Iniciar sesión",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        navigate("/login");
+                      }
+                    });
+                    return;
+                  }
                   handlePurchase();
                   resetReservationForm();
                 }}
