@@ -43,7 +43,6 @@ export const fetchReservaExtras = async (reservations) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     },
     body: JSON.stringify({ reservations }),
   });
@@ -61,6 +60,7 @@ export const fetchUpdateReservaExtras = async (
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
       body: JSON.stringify({ status }),
     }
@@ -71,17 +71,21 @@ export const fetchUpdateReservaExtras = async (
   return result;
 };
 
-export const fetchReserva = async (reservations) => {
+export const fetchReserva = async (sendEmail, reservations) => {
   const response = await fetch(`${API_BASE_URL}/reservation`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     },
-    body: JSON.stringify({ reservations }),
+    body: JSON.stringify({ sendEmail, reservations }),
   });
 
-  if (!response.ok) throw new Error("Error al realizar la reserva");
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error("Error al realizar la reserva:", errorData);
+    throw new Error("Error al realizar la reserva");
+  }
   const result = await response.json();
   return result;
 };
@@ -102,6 +106,28 @@ export const fetchUpdateReserva = async (reservation_number, status) => {
   if (!response.ok) throw new Error("Error al actualizar la reserva");
   const result = await response.json();
   return result;
+};
+
+export const fetchCategoriesAvailable = async (dates) => {
+  const params = new URLSearchParams({
+    start_date: dates.start_date,
+    end_date: dates.end_date,
+  });
+
+  const response = await fetch(
+    `${API_BASE_URL}/categories-available?${params}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!response.ok)
+    throw new Error("Error al obtener las categorías disponibles");
+
+  return await response.json();
 };
 
 export const fetchPayment = async (payment) => {

@@ -86,7 +86,9 @@ export function Booking() {
   const toggleTotalPrice = () => {
     return (
       priceRooms.reduce((acc, room) => acc + room.value, 0) +
-      (pension.find((p) => p.id === selectedRegimen)?.price || 0) * people
+      (pension.find((p) => p.id === selectedRegimen)?.price || 0) *
+        people *
+        diffDays
     );
   };
 
@@ -142,7 +144,10 @@ export function Booking() {
       ];
 
       //Crear la reserva
-      const reservaData = await fetchReserva(reservations);
+      const reservaData = await fetchReserva(
+        lastUsedDiscount ? false : true,
+        reservations
+      );
       const reserva = reservaData.data[0];
 
       if (lastUsedDiscount) {
@@ -172,7 +177,7 @@ export function Booking() {
         modalConfirmReservation();
       }
     } catch (error) {
-      alert("Hubo un error en el proceso de compra");
+      alert(error.message);
     }
   };
 
@@ -297,7 +302,8 @@ export function Booking() {
               <div className="flex justify-between items-center font-bold">
                 <p className="text-LG">Régimen</p>
                 {(pension.find((p) => p.id === selectedRegimen)?.price || 0) *
-                  people}
+                  people *
+                  diffDays}
                 €
               </div>
               {/*Precio total de las pensiones*/}

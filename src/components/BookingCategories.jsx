@@ -5,18 +5,26 @@ import { FaRulerCombined } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { PiBathtubFill } from "react-icons/pi";
 import Swal from "sweetalert2";
+import { formatISO } from "date-fns";
+
+import { fetchCategoriesAvailable } from "../services/api";
 
 export function BookingCategories({
   categories,
   priceRooms,
   setPriceRooms,
   diffDays,
-  lastUsedDiscount,
   setLastUsedDiscount,
 }) {
-  const { roomNumber, rooms, roomNumberSelected, setRoomNumberSelected } =
-    useReservation();
+  const {
+    roomNumber,
+    rooms,
+    roomNumberSelected,
+    setRoomNumberSelected,
+    state,
+  } = useReservation();
   const [appliedDiscount, setAppliedDiscount] = useState(null);
+  const [categoriesAvailable, setCategoriesAvailable] = useState([]);
 
   const discountPrice = 0.9; // 10% de descuento
 
@@ -42,6 +50,29 @@ export function BookingCategories({
 
     setPriceRooms(updatedPrices);
   }, [appliedDiscount]);
+
+  console.log(formatISO(state[0].startDate, { representation: "date" }));
+  console.log(formatISO(state[0].endDate, { representation: "date" }));
+  // Conocer las categorías disponibles
+  useEffect(() => {
+    const getCategoriesAvailable = async () => {
+      if (!state[0].startDate || !state[0].endDate) return;
+
+      try {
+        const dates = {
+          start_date: formatISO(state[0].startDate, { representation: "date" }),
+          end_date: formatISO(state[0].endDate, { representation: "date" }),
+        };
+        const data = await fetchCategoriesAvailable(dates);
+        console.log("Categorias disponibles: ", data);
+        setCategoriesAvailable(data);
+      } catch (error) {
+        console.error("Error al obtener las categorias disponibles: ", error);
+      }
+    };
+
+    getCategoriesAvailable();
+  }, [state]);
 
   const handleCategorySelect = (item, newDiscount) => {
     const roomIndex = roomNumberSelected - 1;
@@ -124,6 +155,31 @@ export function BookingCategories({
                     <PiBathtubFill className="text-xl" /> Jacuzzi
                   </li>
                 )}
+
+                {categoriesAvailable.map((available) => {
+                  if (item.id === available.room_category_id) {
+                    if (available.available_rooms < 1) {
+                      return (
+                        <li
+                          key={available.room_category_id}
+                          className="text-red-500 text-lg"
+                        >
+                          No disponible en estas fechas
+                        </li>
+                      );
+                    } else if (available.available_rooms < 3) {
+                      return (
+                        <li
+                          key={available.room_category_id}
+                          className="text-red-500 text-lg"
+                        >
+                          Disponibles {available.available_rooms} habitaciones
+                        </li>
+                      );
+                    }
+                  }
+                  return null;
+                })}
               </ul>
             </div>
           </div>
@@ -145,9 +201,15 @@ export function BookingCategories({
                 </span>
 
                 {/* BOTON  CON DESCUENTO*/}
+
                 <button
                   className="border-2 border-[#0097e6] text-[#0097e6] py-2 px-3 shadow-md shadow-black rounded-lg hover:bg-[#0097e6] hover:text-white transition duration-300 ease-in-out"
                   onClick={() => handleCategorySelect(item, discountPrice)}
+                  disabled={categoriesAvailable.some(
+                    (available) =>
+                      item.id === available.room_category_id &&
+                      available.available_rooms < 1
+                  )}
                 >
                   Seleccionar
                 </button>
@@ -163,6 +225,11 @@ export function BookingCategories({
                 <button
                   className="border-2 border-[#0097e6] text-[#0097e6] py-2 px-3 shadow-md shadow-black rounded-lg hover:bg-[#0097e6] hover:text-white transition duration-300 ease-in-out"
                   onClick={() => handleCategorySelect(item, 1)}
+                  disabled={categoriesAvailable.some(
+                    (available) =>
+                      item.id === available.room_category_id &&
+                      available.available_rooms < 1
+                  )}
                 >
                   Seleccionar
                 </button>

@@ -90,29 +90,27 @@ export function ReservationForm() {
             )}`}
           </p>
           {showCalendar && (
-            <ClickAwayListener onClickAway={handleClickAway}>
-              <div className="absolute z-70 mt-6">
-                <DateRange
-                  editableDateInputs={true}
-                  onChange={(item) => {
-                    const start = item.selection.startDate;
-                    let end = item.selection.endDate;
+            <div className="absolute z-70 mt-6">
+              <DateRange
+                editableDateInputs={true}
+                onChange={(item) => {
+                  const start = item.selection.startDate;
+                  let end = item.selection.endDate;
 
-                    if (start.toDateString() === end.toDateString()) {
-                      end = new Date(start);
-                      end.setDate(end.getDate() + 1);
-                    }
+                  if (start.toDateString() === end.toDateString()) {
+                    end = new Date(start);
+                    end.setDate(end.getDate() + 1);
+                  }
 
-                    setTempDates([{ ...item.selection, endDate: end }]);
-                  }}
-                  ranges={tempDates}
-                  moveRangeOnFirstSelection={false}
-                  months={2}
-                  minDate={new Date()}
-                  direction="horizontal"
-                />
-              </div>
-            </ClickAwayListener>
+                  setTempDates([{ ...item.selection, endDate: end }]);
+                }}
+                ranges={tempDates}
+                moveRangeOnFirstSelection={false}
+                months={2}
+                minDate={new Date()}
+                direction="horizontal"
+              />
+            </div>
           )}
         </div>
 
