@@ -69,25 +69,26 @@ export function ReservationForm() {
         </div>
 
         {/* FECHAS */}
-        <div
-          className="h-full  w-2/10 cursor-pointer "
-          onClick={() => {
-            setShowCalendar(!showCalendar),
-              setShowPeople(false),
-              setShowRooms(false);
-          }}
-        >
-          <h5 className="font-semibold mb-4">FECHAS</h5>
-          <p className="flex w-full items-center justify-center">
-            <IoCalendarNumberSharp className="text-[#0097e6]" />
-            {`${format(tempDates[0].startDate, "yyyy/MM/dd")} - ${format(
-              tempDates[0].endDate,
-              "yyyy/MM/dd"
-            )}`}
-          </p>
+        <div className="h-full  w-2/10 cursor-pointer ">
+          <div
+            onClick={() => {
+              setShowCalendar(!showCalendar),
+                setShowPeople(false),
+                setShowRooms(false);
+            }}
+          >
+            <h5 className="font-semibold mb-4">FECHAS</h5>
+            <p className="flex w-full items-center justify-center">
+              <IoCalendarNumberSharp className="text-[#0097e6]" />
+              {`${format(tempDates[0].startDate, "yyyy/MM/dd")} - ${format(
+                tempDates[0].endDate,
+                "yyyy/MM/dd"
+              )}`}
+            </p>
+          </div>
 
-          <AnimatePresence>
-            {showCalendar && (
+          {showCalendar && (
+            <AnimatePresence>
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -115,9 +116,8 @@ export function ReservationForm() {
                   direction="horizontal"
                 />
               </motion.div>
-              //</ClickAwayListener>
-            )}
-          </AnimatePresence>
+            </AnimatePresence>
+          )}
         </div>
 
         {/* PERSONAS */}
