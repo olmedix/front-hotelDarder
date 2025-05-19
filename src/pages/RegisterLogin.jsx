@@ -1,6 +1,6 @@
 import { Register } from "../components/Register";
 import { Login } from "../components/Login";
-import { Header } from "../components/Header";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useState, useEffect } from "react";
 import { fetchForgotPassword } from "../services/api";
 
@@ -22,6 +22,10 @@ export function RegisterLogin() {
       return () => clearTimeout(timeout);
     }
   }, [error, success]);
+
+  const handleClickAway = () => {
+    setshowForgotPassword(false);
+  };
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
@@ -90,37 +94,40 @@ export function RegisterLogin() {
           {error && <p className="text-red-600 mt-2 text-sm">{error}</p>}
           {success && <p className="text-green-600 mt-2 text-sm">{success}</p>}
           {showForgotPassword && (
-            <div className="w-1/2 mx-auto">
-              <form
-                className="px-5 bg-white p-4 rounded-lg shadow-gray-700 shadow-lg"
-                onSubmit={handleForgotPassword}
-              >
-                <label
-                  htmlFor="email"
-                  className="block text-left font-bold ml-2 mb-2 text-lg"
+            <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+              <ClickAwayListener onClickAway={handleClickAway}>
+                <form
+                  className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md animate-fade-in"
+                  onSubmit={handleForgotPassword}
                 >
-                  Correo electrónico
-                  <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  placeholder="Correo electrónico..."
-                  className="block p-3 rounded-xl border border-gray-300  w-full"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                />
+                  <h6 className="font-semibold text-xl mb-4">
+                    Restablecer contraseña
+                  </h6>
+                  <label
+                    htmlFor="email"
+                    className="block text-gray-700 text-left  ml-2 mb-2 text-lg font-medium"
+                  >
+                    Correo electrónico:
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0097e6] focus:border-transparent"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                  />
 
-                <button
-                  className=" mt-4 mr-2 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
-                  type="submit"
-                  disabled={loading}
-                >
-                  {loading ? "Enviando..." : "Restablecer contraseña"}
-                </button>
-              </form>
+                  <button
+                    className=" mt-4 mr-2 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading ? "Enviando..." : "Restablecer contraseña"}
+                  </button>
+                </form>
+              </ClickAwayListener>
             </div>
           )}
         </section>

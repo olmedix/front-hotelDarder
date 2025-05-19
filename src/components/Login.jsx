@@ -144,12 +144,12 @@ export function Login() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                      className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0097e6] focus:border-transparent"
                     />
                   </label>
                   <button
                     type="submit"
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg transition"
+                    className="bg-[#0097e6] hover:bg-[#007bb5] text-white py-2 px-4 rounded-lg transition"
                   >
                     Restaurar cuenta
                   </button>
