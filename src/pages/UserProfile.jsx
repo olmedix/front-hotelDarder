@@ -1,9 +1,10 @@
-import { Header } from "../components/Header.jsx";
+import { Spinner } from "../components/Spinner.jsx";
 import { useUser } from "../contexts/UserContext";
 import { useState, useEffect } from "react";
 import { fetchUpdateUser } from "../services/api.js";
 import { fetchDeleteUser } from "../services/api.js";
 import { CardMyReservations } from "../components/CardMyReservations";
+import { DeleteAccountModal } from "../components/DeleteAccountModal.jsx";
 import { fetchMyReservations } from "../services/api";
 
 export function UserProfile() {
@@ -28,6 +29,8 @@ export function UserProfile() {
   const [reservations, setReservations] = useState([]);
   const [loadingReservation, setLoadingReservation] = useState(true);
   const [errorReservation, setErrorReservation] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [loadingDeleteCount, setLoadingDeleteCount] = useState(false);
 
   useEffect(() => {
     if (!user) return; // Espera a que user esté disponible
@@ -78,21 +81,21 @@ export function UserProfile() {
   };
 
   const handleDeleteAccount = async () => {
-    if (window.confirm("¿Estás seguro de que deseas desactivar tu cuenta?")) {
-      try {
-        await fetchDeleteUser(user.id);
-        setUser(null); // Clear user data from context
-        localStorage.removeItem("authToken"); // Remove token from local storage
-        window.location.href = "/"; // Redirect to home page
-      } catch (error) {
-        setMessage(error.message);
-        setErrorUpdate(error.message);
-      }
+    try {
+      setLoadingDeleteCount(true);
+      await fetchDeleteUser(user.id);
+      setUser(null); // Elimina usuario del contexto
+      localStorage.removeItem("authToken");
+      window.location.href = "/";
+    } catch (error) {
+      setErrorUpdate(error.message);
+    } finally {
+      setLoadingDeleteCount(false);
     }
   };
 
-  if (loading || loadingUpdate || loadingReservation)
-    return <div>Loading...</div>;
+  if (loading || loadingUpdate || loadingReservation || loadingDeleteCount)
+    return <Spinner />;
   if (error) return <div>Error: {error.message}</div>;
   if (errorUpdate) return <div>Error: {error}</div>;
   if (errorReservation) return <div>Error: {errorReservation}</div>;
@@ -324,15 +327,20 @@ export function UserProfile() {
         </main>
 
         <section className="text-lg text-end font-semibold mt-5 pr-5 mx-auto">
-          <p>
-            <span
-              className="text-red-500 cursor-pointer"
-              onClick={handleDeleteAccount}
-            >
-              Desactivar
-            </span>{" "}
-            mi cuenta
-          </p>
+          <button
+            className="text-red-600 hover:underline"
+            onClick={() => setShowDeleteModal(true)}
+          >
+            Desactivar cuenta
+          </button>
+
+          {showDeleteModal && (
+            <DeleteAccountModal
+              onClose={() => setShowDeleteModal(false)}
+              onConfirm={handleDeleteAccount}
+              loading={loading}
+            />
+          )}
         </section>
       </div>
 

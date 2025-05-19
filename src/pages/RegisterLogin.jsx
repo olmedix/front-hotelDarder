@@ -1,27 +1,19 @@
+import { Spinner } from "../components/Spinner";
 import { Register } from "../components/Register";
 import { Login } from "../components/Login";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { fetchForgotPassword } from "../services/api";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export function RegisterLogin() {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [showForgotPassword, setshowForgotPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-
-  useEffect(() => {
-    if (error || success) {
-      const timeout = setTimeout(() => {
-        setError(null);
-        setSuccess(null);
-      }, 3000);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [error, success]);
 
   const handleClickAway = () => {
     setshowForgotPassword(false);
@@ -30,29 +22,40 @@ export function RegisterLogin() {
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     setError(null);
-    setSuccess(null);
     setLoading(true);
 
     try {
       if (!email || email.trim() === "") throw new Error("Email no válido");
 
       await fetchForgotPassword(email);
-      setSuccess("Correo enviado correctamente. Revisa tu bandeja de entrada.");
+      Swal.fire({
+        title: "Correo enviado correctamente",
+        text: "Revisa tu bandeja de entrada",
+        icon: "success",
+        confirmButtonColor: "#0097e6",
+        confirmButtonText: "Aceptar",
+      });
     } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "No se ha encontrado el correo electrónico",
+        icon: "error",
+        confirmButtonColor: "#0097e6",
+        confirmButtonText: "Aceptar",
+      });
       setError(error.message);
     } finally {
       setLoading(false);
       setshowForgotPassword(false);
+      navigate("/login");
     }
   };
 
-  if (loading)
-    return <div className="text-black text-3xl font-bold">Cargando...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <Spinner />;
 
   return (
-    <div className="relative w-full h-screen bg-cover bg-center mt-40">
-      <section className="w-2/3 mx-auto pb-6 my-6 text-black bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg">
+    <div className="relative w-full bg-cover bg-center mt-40">
+      <section className="w-2/3 mx-auto pb-6 mt-6 mb-24 text-black bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg">
         <main>
           {!isLogin ? (
             <p
@@ -91,10 +94,8 @@ export function RegisterLogin() {
             He olvidado la contraseña
           </button>
 
-          {error && <p className="text-red-600 mt-2 text-sm">{error}</p>}
-          {success && <p className="text-green-600 mt-2 text-sm">{success}</p>}
           {showForgotPassword && (
-            <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+            <div className="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-xs z-50">
               <ClickAwayListener onClickAway={handleClickAway}>
                 <form
                   className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md animate-fade-in"

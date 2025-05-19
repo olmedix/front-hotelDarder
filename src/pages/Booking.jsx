@@ -13,6 +13,7 @@ import { fetchCategories } from "../services/api";
 import { fetchReserva } from "../services/api";
 import { API_BASE_URL } from "../services/api";
 
+import { Spinner } from "../components/Spinner";
 import { BookingPension } from "../components/BookingPension";
 import { BookingCategories } from "../components/BookingCategories";
 
@@ -192,7 +193,7 @@ export function Booking() {
   };
 
   if (loadingPension || loadingCategories) {
-    return <div>Cargando datos...</div>;
+    return <Spinner />;
   }
 
   if (errorPension || errorCategories) {

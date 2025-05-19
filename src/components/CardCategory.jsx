@@ -1,5 +1,5 @@
-import React from "react";
 import "../css/react-carousel.css";
+import { Spinner } from "./Spinner";
 import { Carousel } from "react-responsive-carousel";
 import { useCategories } from "../contexts/CategoryContext";
 import { URL_BACK } from "../services/api";
@@ -7,7 +7,7 @@ import { URL_BACK } from "../services/api";
 export function CardCategory() {
   const { categories, loading, error } = useCategories();
 
-  if (loading) return <div>Cargando...</div>;
+  if (loading) return <Spinner />;
   if (error) return <div>{error}</div>;
 
   return (

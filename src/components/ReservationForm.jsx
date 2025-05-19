@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useReservation } from "../contexts/ReservationContext";
 
 import { useNavigate } from "react-router-dom";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
 import React, { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // estilos base

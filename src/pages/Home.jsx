@@ -1,45 +1,14 @@
-import { Header } from "../components/Header";
-
-import React, { useState } from "react";
 import { ReservationForm } from "../components/ReservationForm";
 import { Accommodation } from "../components/Accommodation";
 import { Facilities } from "../components/Facilities";
 import { HotelServices } from "../components/HotelServices";
 
 export function Home() {
- /* const [showCalendar, setShowCalendar] = useState(false);
-  const [showPeople, setShowPeople] = useState(false);
-  const [showRooms, setShowRooms] = useState(false);
-  const [people, setPeople] = useState(1);
-  const [rooms, setRooms] = useState(1);
-
-  const [state, setState] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-*/
-
   return (
-    <main className="relative pt-[200px] imgHotel w-full bg-cover bg-center bg-no-repeat bg-fixed bg-white">
-      <ReservationForm
-        /*showCalendar={showCalendar}
-        setShowCalendar={setShowCalendar}
-        state={state}
-        setState={setState}
-        showPeople={showPeople}
-        setShowPeople={setShowPeople}
-        people={people}
-        setPeople={setPeople}
-        showRooms={showRooms}
-        setShowRooms={setShowRooms}
-        rooms={rooms}
-        setRooms={setRooms}*/
-      />
+    <div className="relative py-[200px] imgHotel w-full bg-cover bg-center bg-no-repeat bg-fixed bg-white">
+      <ReservationForm />
 
-      <section className="relative px-5 mt-96 w-2/3 mx-auto bg-[#fff] rounded-t-xl">
+      <main className="relative px-5 mt-[500px] w-2/3 mx-auto bg-[#fff] rounded-t-xl">
         <h2 className="text-[#1e272e] font-semibold text-3xl pt-6 mb-5">
           Hotel Emili Darder: Descubre el mejor Hotel para tus vacaciones
         </h2>
@@ -54,11 +23,11 @@ export function Home() {
           momentos especiales y transforma tu estadía en recuerdos que durarán
           para siempre.
         </p>
-      </section>
+      </main>
 
       <Accommodation />
       <Facilities />
       <HotelServices />
-    </main>
+    </div>
   );
 }

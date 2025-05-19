@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
 import { fetchPayment } from "../services/api";
 import { fetchUpdateReserva } from "../services/api";
 
@@ -26,7 +25,6 @@ export function ReservationPaymentSuccess() {
 
         // Despues del cobro actualizamos el estado de la reserva
         await fetchUpdateReserva(storedReserva.reservation_number, "confirmed");
-
         localStorage.removeItem("reservationRooms");
       } catch (error) {
         console.error(error.message);

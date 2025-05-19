@@ -1,10 +1,10 @@
-import { Header } from "../components/Header";
 import { useHotel } from "../contexts/HotelContext";
+import { Spinner } from "../components/Spinner";
 
 export function Contacto() {
   const { hotel, loading, error } = useHotel();
 
-  if (loading) return <div>Cargando...</div>;
+  if (loading) return <Spinner />;
   if (error) return <div>{error}</div>;
 
   return (

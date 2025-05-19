@@ -51,8 +51,6 @@ export function BookingCategories({
     setPriceRooms(updatedPrices);
   }, [appliedDiscount]);
 
-  console.log(formatISO(state[0].startDate, { representation: "date" }));
-  console.log(formatISO(state[0].endDate, { representation: "date" }));
   // Conocer las categorías disponibles
   useEffect(() => {
     const getCategoriesAvailable = async () => {
@@ -64,7 +62,6 @@ export function BookingCategories({
           end_date: formatISO(state[0].endDate, { representation: "date" }),
         };
         const data = await fetchCategoriesAvailable(dates);
-        console.log("Categorias disponibles: ", data);
         setCategoriesAvailable(data);
       } catch (error) {
         console.error("Error al obtener las categorias disponibles: ", error);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Spinner } from "../components/Spinner";
 import Collapsible from "react-collapsible";
 import { fetchExtras } from "../services/api";
 import { URL_BACK } from "../services/api";
@@ -123,7 +124,7 @@ export function Extras() {
     localStorage.setItem("selectedExtras", JSON.stringify(updatedSelected));
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Spinner />;
   if (error) return <p>{error}</p>;
 
   return (

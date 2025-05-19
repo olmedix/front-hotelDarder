@@ -1,4 +1,5 @@
 import "../css/react-carousel.css";
+import { Spinner } from "./Spinner";
 import { Carousel } from "react-responsive-carousel";
 import { DESCRIPTION_HOTEL } from "../services/descriptionsHotel";
 import { URL_BACK } from "../services/api";
@@ -7,11 +8,11 @@ import { useHotel } from "../contexts/HotelContext";
 export function HotelServices() {
   const { hotel, loading, error } = useHotel();
 
-  if (loading) return <div>Cargando...</div>;
+  if (loading) return <Spinner />;
   if (error) return <div>{error}</div>;
 
   return (
-    <section className="w-2/3 mx-auto px-5 py-26 bg-[#fff]">
+    <section className="w-2/3 mx-auto px-5 py-26 bg-[#fff] rounded-b-xl">
       <h3 className="pl-5 pb-5 text-2xl text-left text-[#1e272e]">
         Conoce nuestro Hotel
       </h3>

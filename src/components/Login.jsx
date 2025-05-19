@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchRestoreUser, login } from "../services/api";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Swal from "sweetalert2";
 
 export function Login() {
   const navigate = useNavigate();
@@ -49,8 +50,23 @@ export function Login() {
     try {
       await fetchRestoreUser(email);
       setShowRestoreUser(false);
+      Swal.fire({
+        title: "Cuenta restaurada",
+        text: "¡Ya puedes iniciar sesión!",
+        icon: "success",
+        confirmButtonColor: "#0097e6",
+        confirmButtonText: "Aceptar",
+      });
       navigate("/login");
     } catch (error) {
+      Swal.fire({
+        title: "Cuenta no restaurada",
+        text: error.message,
+        icon: "error",
+        confirmButtonColor: "#0097e6",
+        confirmButtonText: "Aceptar",
+      });
+      navigate("/login");
       setMessage(error.message);
     }
   };
@@ -127,9 +143,9 @@ export function Login() {
           Restablecer mi cuenta
         </button>
         {showRestoreUser && (
-          <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+          <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50 backdrop-blur-xs">
             <ClickAwayListener onClickAway={handleClickAway}>
-              <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md animate-fade-in">
+              <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md animate-fade-in ">
                 <h2 className="text-xl font-semibold mb-4 text-center text-gray-800">
                   Restaurar cuenta
                 </h2>

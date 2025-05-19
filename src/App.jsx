@@ -1,3 +1,5 @@
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 import { CategoryProvider } from "./contexts/CategoryContext";
 import { HotelProvider } from "./contexts/HotelContext";
 import { UserProvider } from "./contexts/UserContext";
@@ -20,7 +22,6 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { Header } from "./components/Header";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
 
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
+                <Footer />
               </Router>
             </HotelProvider>
           </CategoryProvider>
