@@ -40,10 +40,6 @@ export function ReservationForm() {
     setTempRoomNumber(roomNumber);
   }, [state, rooms, roomNumber]);
 
-  const handleClickAway = () => {
-    setShowCalendar(false);
-  };
-
   const updateRoomValue = (id, delta) => {
     setTempRooms((prevRooms) =>
       prevRooms.map((room) => {
@@ -89,29 +85,39 @@ export function ReservationForm() {
               "yyyy/MM/dd"
             )}`}
           </p>
-          {showCalendar && (
-            <div className="absolute z-70 mt-6">
-              <DateRange
-                editableDateInputs={true}
-                onChange={(item) => {
-                  const start = item.selection.startDate;
-                  let end = item.selection.endDate;
 
-                  if (start.toDateString() === end.toDateString()) {
-                    end = new Date(start);
-                    end.setDate(end.getDate() + 1);
-                  }
+          <AnimatePresence>
+            {showCalendar && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="absolute z-70 mt-6"
+              >
+                <DateRange
+                  editableDateInputs={true}
+                  onChange={(item) => {
+                    const start = item.selection.startDate;
+                    let end = item.selection.endDate;
 
-                  setTempDates([{ ...item.selection, endDate: end }]);
-                }}
-                ranges={tempDates}
-                moveRangeOnFirstSelection={false}
-                months={2}
-                minDate={new Date()}
-                direction="horizontal"
-              />
-            </div>
-          )}
+                    if (start.toDateString() === end.toDateString()) {
+                      end = new Date(start);
+                      end.setDate(end.getDate() + 1);
+                    }
+
+                    setTempDates([{ ...item.selection, endDate: end }]);
+                  }}
+                  ranges={tempDates}
+                  moveRangeOnFirstSelection={false}
+                  months={2}
+                  minDate={new Date()}
+                  direction="horizontal"
+                />
+              </motion.div>
+              //</ClickAwayListener>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* PERSONAS */}
@@ -120,6 +126,7 @@ export function ReservationForm() {
             className="w-full h-full text-left"
             onClick={() => {
               setShowPeople(!showPeople);
+              setShowCalendar(false);
             }}
           >
             <h5 className="relative font-semibold text-center -top-4 truncate">
@@ -135,9 +142,9 @@ export function ReservationForm() {
             </p>
           </button>
 
-          {showPeople && (
-            <div className="absolute z-60 w-2/10 h-20 bg-[#FFFFF0] ">
-              <AnimatePresence>
+          <AnimatePresence>
+            {showPeople && (
+              <div className="absolute z-60 w-2/10 h-20 bg-[#FFFFF0] ">
                 {tempRooms.slice(0, tempRoomNumber).map((room, index) => (
                   <motion.div
                     key={room.id}
@@ -145,7 +152,7 @@ export function ReservationForm() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3 }}
-                    className="flex flex-col justify-between items-center last:border-b-0 p-2 bg-[#FFFFF0] border-x-3 border-b-3"
+                    className="flex flex-col justify-between items-center p-2 bg-[#FFFFF0] border-x border-b"
                   >
                     <h3 className="font-bold text-[#0097e6] text-lg mb-2">
                       Habitación {index + 1}
@@ -186,16 +193,16 @@ export function ReservationForm() {
                     </div>
                   </motion.div>
                 ))}
-              </AnimatePresence>
-            </div>
-          )}
+              </div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* HABITACIONES */}
         <div className="h-full w-2/10 cursor-pointer truncate">
           <button
             onClick={() => {
-              setShowRooms(!showRooms);
+              setShowRooms(!showRooms), setShowCalendar(false);
             }}
             className="w-full h-full text"
           >
@@ -208,37 +215,54 @@ export function ReservationForm() {
             </p>
           </button>
 
-          {showRooms && (
-            <div className="absolute w-2/10 left-6/10 z-50 h-20 bg-[#FFFFF0]">
-              <div className="flex justify-between items-center h-full px-10">
-                <div
-                  className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full"
-                  onClick={() => {
-                    if (tempRoomNumber > 1)
-                      setTempRoomNumber(tempRoomNumber - 1);
-                  }}
-                >
-                  <button className="absolute top-5 left-11.5 font-bold text-[#0097e6] text-2xl">
-                    -
-                  </button>
-                </div>
+          <AnimatePresence>
+            {showRooms && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="absolute w-2/10 h-20 left-6/10 z-50 bg-[#FFFFF0] border-x border-b"
+              >
+                <div className="flex justify-between items-center h-full px-6 py-4">
+                  {/* Botón - */}
+                  <div
+                    className={`w-8 h-8 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center cursor-pointer ${
+                      tempRoomNumber === 1
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      if (tempRoomNumber > 1) {
+                        setTempRoomNumber(tempRoomNumber - 1);
+                      }
+                    }}
+                  >
+                    <span className="text-[#0097e6] font-bold text-xl">-</span>
+                  </div>
 
-                <p className="font-semibold text-xl">{tempRoomNumber}</p>
+                  {/* Número de habitaciones */}
+                  <p className="font-semibold text-xl">{tempRoomNumber}</p>
 
-                <div
-                  className="w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full"
-                  onClick={() => {
-                    if (tempRoomNumber < 3)
-                      setTempRoomNumber(tempRoomNumber + 1);
-                  }}
-                >
-                  <button className="absolute top-5.5 right-11 font-bold text-[#0097e6] text-xl">
-                    +
-                  </button>
+                  {/* Botón + */}
+                  <div
+                    className={`w-8 h-8 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center cursor-pointer ${
+                      tempRoomNumber === 3
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      if (tempRoomNumber < 3) {
+                        setTempRoomNumber(tempRoomNumber + 1);
+                      }
+                    }}
+                  >
+                    <span className="text-[#0097e6] font-bold text-xl">+</span>
+                  </div>
                 </div>
-              </div>
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="w-2/10">
