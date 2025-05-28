@@ -54,7 +54,7 @@ export function RegisterLogin() {
   if (loading) return <Spinner />;
 
   return (
-    <div className="relative w-full bg-cover bg-center mt-40">
+    <div className="relative w-full bg-cover bg-center mt-40 mb-90">
       <section className="w-2/3 mx-auto pb-6 mt-6 mb-24 text-black bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg">
         <main>
           {!isLogin ? (
