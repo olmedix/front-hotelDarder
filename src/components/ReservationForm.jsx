@@ -12,7 +12,7 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // estilos base
 import "react-date-range/dist/theme/default.css"; // tema por defecto
 
-export function ReservationForm() {
+export function ReservationForm({ setPriceRooms }) {
   const navigate = useNavigate();
   const [showCalendar, setShowCalendar] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
@@ -272,6 +272,7 @@ export function ReservationForm() {
               setRooms(tempRooms);
               setRoomNumber(tempRoomNumber);
               setRoomNumberSelected(1);
+              setPriceRooms([]);
               navigate("/booking");
             }}
           >

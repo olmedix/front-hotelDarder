@@ -15,6 +15,10 @@ export function BookingCategories({
   setPriceRooms,
   diffDays,
   setLastUsedDiscount,
+  selectedRoomsCount,
+  setSelectedRoomsCount,
+  roomCategorySelected,
+  setRoomCategorySelected,
 }) {
   const {
     roomNumber,
@@ -23,6 +27,7 @@ export function BookingCategories({
     setRoomNumberSelected,
     state,
   } = useReservation();
+
   const [appliedDiscount, setAppliedDiscount] = useState(null);
   const [categoriesAvailable, setCategoriesAvailable] = useState([]);
 
@@ -73,6 +78,31 @@ export function BookingCategories({
 
   const handleCategorySelect = (item, newDiscount) => {
     const roomIndex = roomNumberSelected - 1;
+    const currentCategoryId = roomCategorySelected[roomIndex];
+
+    // Si el usuario vuelve a seleccionar la misma categoría y descuento, no hacer nada
+    if (currentCategoryId === item.id && appliedDiscount === newDiscount)
+      return;
+
+    // Si cambia de categoría, hay que restar una del contador anterior
+    if (currentCategoryId !== undefined) {
+      setSelectedRoomsCount((prev) => ({
+        ...prev,
+        [currentCategoryId]: Math.max((prev[currentCategoryId] || 1) - 1, 0),
+      }));
+    }
+
+    // Agregar una a la nueva categoría seleccionada
+    setSelectedRoomsCount((prev) => ({
+      ...prev,
+      [item.id]: (prev[item.id] || 0) + 1,
+    }));
+
+    // Actualizamos el registro de selección por habitación
+    setRoomCategorySelected((prev) => ({
+      ...prev,
+      [roomIndex]: item.id,
+    }));
 
     if (item.capacity < rooms[roomIndex].value) {
       Swal.fire({
@@ -155,7 +185,11 @@ export function BookingCategories({
 
                 {categoriesAvailable.map((available) => {
                   if (item.id === available.room_category_id) {
-                    if (available.available_rooms < 1) {
+                    const selectedCount = selectedRoomsCount[item.id] || 0;
+                    const remainingRooms =
+                      available.available_rooms - selectedCount;
+
+                    if (remainingRooms < 1) {
                       return (
                         <li
                           key={available.room_category_id}
@@ -164,13 +198,13 @@ export function BookingCategories({
                           No disponible en estas fechas
                         </li>
                       );
-                    } else if (available.available_rooms < 3) {
+                    } else if (remainingRooms < 3) {
                       return (
                         <li
                           key={available.room_category_id}
                           className="text-red-500 text-lg"
                         >
-                          Disponibles {available.available_rooms} habitaciones
+                          Disponibles {remainingRooms} habitaciones
                         </li>
                       );
                     }
@@ -202,11 +236,13 @@ export function BookingCategories({
                 <button
                   className="border-2 border-[#0097e6] text-[#0097e6] py-2 px-3 shadow-md shadow-black rounded-lg hover:bg-[#0097e6] hover:text-white transition duration-300 ease-in-out"
                   onClick={() => handleCategorySelect(item, discountPrice)}
-                  disabled={categoriesAvailable.some(
-                    (available) =>
+                  disabled={categoriesAvailable.some((available) => {
+                    const selectedCount = selectedRoomsCount[item.id] || 0;
+                    return (
                       item.id === available.room_category_id &&
-                      available.available_rooms < 1
-                  )}
+                      available.available_rooms - selectedCount < 1
+                    );
+                  })}
                 >
                   Seleccionar
                 </button>
@@ -222,11 +258,13 @@ export function BookingCategories({
                 <button
                   className="border-2 border-[#0097e6] text-[#0097e6] py-2 px-3 shadow-md shadow-black rounded-lg hover:bg-[#0097e6] hover:text-white transition duration-300 ease-in-out"
                   onClick={() => handleCategorySelect(item, 1)}
-                  disabled={categoriesAvailable.some(
-                    (available) =>
+                  disabled={categoriesAvailable.some((available) => {
+                    const selectedCount = selectedRoomsCount[item.id] || 0;
+                    return (
                       item.id === available.room_category_id &&
-                      available.available_rooms < 1
-                  )}
+                      available.available_rooms - selectedCount < 1
+                    );
+                  })}
                 >
                   Seleccionar
                 </button>

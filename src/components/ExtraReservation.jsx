@@ -158,8 +158,8 @@ export function ExtraReservation({
           <p className="text-gray-500 mt-2">Email: </p>
           <p className="text-[#0097e6] break-words max-w-full">
             <a
-              href={`tel:${hotel[0].phone}`}
-              className="hover:underline text-[#0097e6] break-all"
+              href={`mailto:${hotel[0].email}`}
+              className="text-[#0097e6] underline "
             >
               {hotel[0].email}
             </a>

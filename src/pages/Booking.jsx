@@ -52,6 +52,13 @@ export function Booking() {
   const diffTime = Math.abs(end - start); // diferencia en milisegundos
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // convertir a días
 
+  // Para actualizar el numero de habitaciones disponibles localmente
+  const [selectedRoomsCount, setSelectedRoomsCount] = useState({});
+  const [roomCategorySelected, setRoomCategorySelected] = useState({});
+  useEffect(() => {
+    setSelectedRoomsCount({});
+  }, [roomNumber]);
+
   useEffect(() => {
     setPriceRooms([]);
   }, [roomNumber, people, state]);
@@ -209,7 +216,7 @@ export function Booking() {
   return (
     <div className="relative w-full min-h-screen text-black bg-cover bg-center">
       <div className="mt-40 ">
-        <ReservationForm />
+        <ReservationForm setPriceRooms={setPriceRooms} />
       </div>
 
       <div className="flex w-8/10 mx-auto mt-20 mb-36">
@@ -229,6 +236,10 @@ export function Booking() {
             diffDays={diffDays}
             lastUsedDiscount={lastUsedDiscount}
             setLastUsedDiscount={setLastUsedDiscount}
+            selectedRoomsCount={selectedRoomsCount}
+            setSelectedRoomsCount={setSelectedRoomsCount}
+            roomCategorySelected={roomCategorySelected}
+            setRoomCategorySelected={setRoomCategorySelected}
           />
 
           <section className="block w-9/10 text-left mt-6  px-5 mx-auto rounded-t-xl">
