@@ -111,5 +111,16 @@ export const generatePDF = async (reserva, extras, reservations) => {
     console.error("Error al cargar la imagen:", error);
   }
 
+  // Aviso legal o nota al final
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "italic");
+  doc.setTextColor(100); // Un gris suave
+  doc.text(
+    "La reserva está sujeta a disponibilidad y deberá ser confirmada por el hotel el mismo día de la solicitud. Será el establecimiento quien le informará si la fecha deseada está disponible.",
+    20,
+    290,
+    { maxWidth: 170 } // Para que haga salto de línea si es necesario
+  );
+
   doc.save(`reserva_extras_${reserva.extra_reservation_number}.pdf`);
 };

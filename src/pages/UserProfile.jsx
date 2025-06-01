@@ -31,6 +31,7 @@ export function UserProfile() {
   const [errorReservation, setErrorReservation] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [loadingDeleteCount, setLoadingDeleteCount] = useState(false);
+  const [paginateReservations, setPaginateReservations] = useState(4);
 
   useEffect(() => {
     if (!user) return; // Espera a que user esté disponible
@@ -354,13 +355,24 @@ export function UserProfile() {
         ) : (
           <div className="w-full  mt-14 ">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-8 py-4">
-              {reservations.data.map((reservation) => (
-                <CardMyReservations
-                  key={reservation.id}
-                  reservation={reservation}
-                />
-              ))}
+              {[...reservations.data]
+                .reverse()
+                .slice(0, paginateReservations)
+                .map((reservation) => (
+                  <CardMyReservations
+                    key={reservation.id}
+                    reservation={reservation}
+                  />
+                ))}
             </div>
+
+            <button
+              className="mt-4 mr-2 p-2 bg-[#0097e6] text-white font-semibold rounded-md shadow hover:bg-[#007bb5] focus:outline-none focus:ring-2 focus:ring-[#007bb5] focus:ring-opacity-50"
+              onClick={() => setPaginateReservations(paginateReservations + 4)}
+              disabled={paginateReservations >= reservations.data.length}
+            >
+              Ver más reservas
+            </button>
           </div>
         )}
       </section>
