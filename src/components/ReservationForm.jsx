@@ -6,7 +6,7 @@ import { IoCalendarNumberSharp } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import { useReservation } from "../contexts/ReservationContext";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // estilos base
@@ -14,6 +14,7 @@ import "react-date-range/dist/theme/default.css"; // tema por defecto
 
 export function ReservationForm({ setPriceRooms }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showCalendar, setShowCalendar] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
   const [showRooms, setShowRooms] = useState(false);
@@ -272,8 +273,13 @@ export function ReservationForm({ setPriceRooms }) {
               setRooms(tempRooms);
               setRoomNumber(tempRoomNumber);
               setRoomNumberSelected(1);
-              setPriceRooms([]);
-              navigate("/booking");
+
+              // Resetear los valores de las habitaciones si nos encontramos en la página de reservas si estamos en home navegamos a booking
+              if (location.pathname === "/booking") {
+                setPriceRooms([]);
+              } else {
+                navigate("/booking");
+              }
             }}
           >
             Buscar
