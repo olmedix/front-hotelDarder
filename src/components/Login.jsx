@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchRestoreUser, login } from "../services/api";
+import { login } from "../services/api";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Swal from "sweetalert2";
+import { fetchRestoreUser } from "../services/api";
 
 export function Login() {
   const navigate = useNavigate();
@@ -49,10 +50,11 @@ export function Login() {
     e.preventDefault();
     try {
       await fetchRestoreUser(email);
+
       setShowRestoreUser(false);
       Swal.fire({
-        title: "Cuenta restaurada",
-        text: "¡Ya puedes iniciar sesión!",
+        title: "Correo enviado",
+        text: "Revisa tu correo para restablecer tu cuenta.",
         icon: "success",
         confirmButtonColor: "#0097e6",
         confirmButtonText: "Aceptar",
@@ -60,8 +62,8 @@ export function Login() {
       navigate("/login");
     } catch (error) {
       Swal.fire({
-        title: "Cuenta no restaurada",
-        text: error.message,
+        title: "Error",
+        text: "No se pudo enviar el correo.",
         icon: "error",
         confirmButtonColor: "#0097e6",
         confirmButtonText: "Aceptar",

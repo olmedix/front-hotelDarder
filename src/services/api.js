@@ -266,11 +266,9 @@ export const fetchDeleteUser = async (id) => {
 };
 
 export const fetchRestoreUser = async (email) => {
-  const response = await fetch(`${API_BASE_URL}/user/${email}/restore`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
+  const response = await fetch(API_BASE_URL + "/request-restore", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email }),
   });
 
