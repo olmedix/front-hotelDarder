@@ -79,7 +79,7 @@ export function BookingPension({
             {/* Collapsible: solo depende de openId */}
             <Collapsible open={isOpen}>
               <div className="block w-full px-4 py-3">
-                {item.description.split(",").map((desc, index) => (
+                {item.description?.split(",").map((desc, index) => (
                   <p key={index} className="flex mt-2">
                     <span className="pr-2 text-[#0097e6]">
                       <SiTicktick />
