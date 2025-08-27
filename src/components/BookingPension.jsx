@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import Collapsible from "react-collapsible";
+import * as Collapsible from "@radix-ui/react-collapsible";
 import { SiTicktick } from "react-icons/si";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 export function BookingPension({
-  pension,
+  pension = [],
   selectedRegimen,
   setSelectedRegimen,
 }) {
-  const [openId, setOpenId] = useState(null); // para manejar cuál está abierto
+  const [openId, setOpenId] = useState(null); // cuál está abierto
 
   // Seleccionar el primero automáticamente si no hay ninguno
   useEffect(() => {
@@ -18,17 +18,13 @@ export function BookingPension({
     }
   }, [pension, selectedRegimen, setSelectedRegimen]);
 
-  const handleClick = (id) => {
-    setOpenId((prev) => (prev === id ? null : id));
-  };
-
   const handleRadioChange = (id) => {
     setSelectedRegimen(id);
     setOpenId(id);
   };
 
   return (
-    <section className="block w-9/10 text-left  px-5 mx-auto rounded-t-xl">
+    <section className="block w-9/10 text-left px-5 mx-auto rounded-t-xl">
       <h2 className="text-black text-4xl font-bold">Elige un régimen</h2>
 
       {pension.map((item) => {
@@ -36,11 +32,13 @@ export function BookingPension({
         const isChecked = selectedRegimen === item.id;
 
         return (
-          <div
+          <Collapsible.Root
             key={item.id}
+            open={isOpen}
+            onOpenChange={(open) => setOpenId(open ? item.id : null)}
             className="border-2 border-gray-200 rounded-lg bg-gray-100 p-5 mt-5"
           >
-            <div className="flex justify-between items-center pb-3  border-b-2 border-gray-300 text-lg">
+            <div className="flex justify-between items-center pb-3 border-b-2 border-gray-300 text-lg">
               {/* Radio + Label (no abre/cierra) */}
               <label className="font-semibold flex items-center cursor-pointer">
                 <input
@@ -49,37 +47,42 @@ export function BookingPension({
                   value={item.name}
                   checked={isChecked}
                   onChange={() => handleRadioChange(item.id)}
-                  className="mr-2"
+                  className="mr-2 cursor-pointer"
                 />
                 {item.name}
               </label>
 
-              {/* Botón de abrir/cerrar (no afecta al radio) */}
-              <div>
+              {/* Precio + botón abrir/cerrar */}
+              <div className="flex items-center gap-3">
                 <span className="text-sm text-gray-500">
                   Persona/noche{" "}
                   <span className="text-xl font-semibold text-black">
-                    {item.price}€{" "}
+                    {item.price}€
                   </span>
                 </span>
-                <button
-                  type="button"
-                  onClick={() => handleClick(item.id)}
-                  className="focus:outline-none"
-                >
-                  {isOpen ? (
-                    <IoIosArrowUp className="text-xl font-bold" />
-                  ) : (
-                    <IoIosArrowDown className="text-xl font-bold" />
-                  )}
-                </button>
+
+                <Collapsible.Trigger asChild>
+                  <button
+                    type="button"
+                    className="focus:outline-none"
+                    aria-label={isOpen ? "Cerrar detalles" : "Abrir detalles"}
+                  >
+                    {isOpen ? (
+                      <IoIosArrowUp className="text-xl font-bold" />
+                    ) : (
+                      <IoIosArrowDown className="text-xl font-bold" />
+                    )}
+                  </button>
+                </Collapsible.Trigger>
               </div>
             </div>
 
-            {/* Collapsible: solo depende de openId */}
-            <Collapsible open={isOpen}>
-              <div className="block w-full px-4 py-3">
-                {item.description?.split(",").map((desc, index) => (
+            {/* Contenido colapsable */}
+            <Collapsible.Content className="block w-full px-4 py-3">
+              {(item.description || "")
+                .split(",")
+                .filter((s) => s.trim().length > 0)
+                .map((desc, index) => (
                   <p key={index} className="flex mt-2">
                     <span className="pr-2 text-[#0097e6]">
                       <SiTicktick />
@@ -87,9 +90,8 @@ export function BookingPension({
                     {desc.trim()}
                   </p>
                 ))}
-              </div>
-            </Collapsible>
-          </div>
+            </Collapsible.Content>
+          </Collapsible.Root>
         );
       })}
     </section>
