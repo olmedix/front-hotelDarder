@@ -55,12 +55,12 @@ export function ReservationForm({ setPriceRooms }) {
   };
 
   return (
-    <section className="sticky top-0 w-8/10 h-22 mx-auto bg-[#FFFFF0] border rounded-2xl z-50">
-      <div className="flex h-full text-black">
+    <section className="sm:sticky top-0 sm:w-8/10 w-[95%] mx-auto bg-[#FFFFF0] border rounded-2xl z-50">
+      <div className="flex flex-col sm:flex-row h-full text-black">
         {/* DESTINO */}
-        <div className="h-full  w-2/10">
-          <h5 className="font-semibold mt-1 mb-3">DESTINO</h5>
-          <p className="flex ml-3tems-center justify-center">
+        <div className="w-full sm:w-2/10 text-center sm:text-left border-b sm:border-b-0 sm:border-r p-2">
+          <h5 className="font-semibold mt-1 mb-1 sm:mb-3">DESTINO</h5>
+          <p className="flex items-center justify-center sm:justify-start">
             <span className="mr-2 mt-1 text-[#0097e6]">
               <FaHotel />
             </span>
@@ -69,7 +69,7 @@ export function ReservationForm({ setPriceRooms }) {
         </div>
 
         {/* FECHAS */}
-        <div className="h-full  w-2/10 cursor-pointer ">
+        <div className="w-full sm:w-2/10 text-center sm:text-left border-b sm:border-b-0 sm:border-r p-2 cursor-pointer">
           <div
             onClick={() => {
               setShowCalendar(!showCalendar),
@@ -121,15 +121,16 @@ export function ReservationForm({ setPriceRooms }) {
         </div>
 
         {/* PERSONAS */}
-        <div className="h-full w-2/10 cursor-pointer">
+        <div className="w-full sm:w-2/10 text-center sm:text-left border-b sm:border-b-0 sm:border-r cursor-pointer">
           <button
             className="w-full h-full text-left"
             onClick={() => {
               setShowPeople(!showPeople);
               setShowCalendar(false);
+              setShowRooms(false);
             }}
           >
-            <h5 className="relative font-semibold text-center -top-4 truncate">
+            <h5 className="relative font-semibold text-center pt-2 sm:-top-3 truncate">
               PERSONAS
             </h5>
             <p className="flex text-center items-center justify-center">
@@ -144,7 +145,7 @@ export function ReservationForm({ setPriceRooms }) {
 
           <AnimatePresence>
             {showPeople && (
-              <div className="absolute z-60 w-2/10 h-20 bg-[#FFFFF0] ">
+              <div className="absolute z-60 w-[95%] sm:w-2/10 bg-[#FFFFF0] ">
                 {tempRooms.slice(0, tempRoomNumber).map((room, index) => (
                   <motion.div
                     key={room.id}
@@ -152,15 +153,18 @@ export function ReservationForm({ setPriceRooms }) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3 }}
-                    className="flex flex-col justify-between items-center p-2 bg-[#FFFFF0] border-x border-b"
+                    className="flex flex-col justify-between items-center p-2 bg-[#0097e6] border-x border-b"
                   >
-                    <h3 className="font-bold text-[#0097e6] text-lg mb-2">
+                    <h3 className="sm:hidden md:inline font-bold text-white text-lg mb-2">
                       Habitación {index + 1}
+                    </h3>
+                    <h3 className="hidden sm:inline md:hidden font-bold text-white text-lg mb-2">
+                      Hab. {index + 1}
                     </h3>
 
                     <div className="flex justify-between items-center w-full px-4">
                       <div
-                        className={`w-6 h-6 bg-gray-300 border-[#0097e6] rounded-full flex items-center justify-center cursor-pointer ${
+                        className={`w-5 h-5 bg-white border-[#0097e6] rounded-full flex items-center justify-center cursor-pointer ${
                           room.value === 1
                             ? "opacity-50 cursor-not-allowed"
                             : ""
@@ -169,15 +173,17 @@ export function ReservationForm({ setPriceRooms }) {
                           room.value > 1 && updateRoomValue(room.id, -1)
                         }
                       >
-                        <span className="text-[#0097e6] font-bold text-xl">
+                        <span className="text-[#0097e6] font-bold text-xl mb-1.5">
                           -
                         </span>
                       </div>
 
-                      <p className="font-semibold text-xl">{room.value}</p>
+                      <p className="font-semibold text-xl text-white">
+                        {room.value}
+                      </p>
 
                       <div
-                        className={`w-6 h-6 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center cursor-pointer ${
+                        className={`w-6 h-6 bg-white border-2 border-[#0097e6] rounded-full flex items-center justify-center cursor-pointer ${
                           room.value === 4
                             ? "opacity-50 cursor-not-allowed"
                             : ""
@@ -186,7 +192,7 @@ export function ReservationForm({ setPriceRooms }) {
                           room.value < 4 && updateRoomValue(room.id, 1)
                         }
                       >
-                        <span className="text-[#0097e6] font-bold text-xl">
+                        <span className="text-[#0097e6] font-bold text-xl  mb-1">
                           +
                         </span>
                       </div>
@@ -199,14 +205,21 @@ export function ReservationForm({ setPriceRooms }) {
         </div>
 
         {/* HABITACIONES */}
-        <div className="h-full w-2/10 cursor-pointer truncate">
+        <div className="w-full sm:w-2/10 text-center sm:text-left border-b sm:border-b-0 sm:border-r cursor-pointer">
           <button
             onClick={() => {
-              setShowRooms(!showRooms), setShowCalendar(false);
+              setShowRooms(!showRooms),
+                setShowCalendar(false),
+                setShowPeople(false);
             }}
             className="w-full h-full text"
           >
-            <h5 className="relative font-semibold -top-4">HABITACIONES</h5>
+            <h5 className="relative font-semibold pt-2 sm:-top-3">
+              <span className="hidden sm:inline md:hidden">HAB</span>
+              <span className="sm:hidden md:inline lg:inline ">
+                HABITACIONES
+              </span>
+            </h5>
             <p className="flex text-center items-center justify-center">
               <FaBed className="text-2xl text-[#0097e6]" />
               <span className="relative -mt-0.5 pl-3 text-lg">
@@ -217,57 +230,61 @@ export function ReservationForm({ setPriceRooms }) {
 
           <AnimatePresence>
             {showRooms && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="absolute w-2/10 h-20 left-6/10 z-50 bg-[#FFFFF0] border-x border-b"
-              >
-                <div className="flex justify-between items-center h-full px-6 py-4">
-                  {/* Botón - */}
-                  <div
-                    className={`w-8 h-8 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center cursor-pointer ${
-                      tempRoomNumber === 1
-                        ? "opacity-50 cursor-not-allowed"
-                        : ""
-                    }`}
-                    onClick={() => {
-                      if (tempRoomNumber > 1) {
-                        setTempRoomNumber(tempRoomNumber - 1);
-                      }
-                    }}
-                  >
-                    <span className="text-[#0097e6] font-bold text-xl">-</span>
-                  </div>
+              <div className="absolute z-59 w-[95%] sm:w-1/5 bg-[#FFFFF0]">
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full p-2 bg-[#0097e6] border-x border-b"
+                >
+                  <div className="flex justify-between items-center w-full px-6 py-4">
+                    {/* Botón - */}
+                    <div
+                      className={`w-6 h-6 bg-white border-2 border-[#0097e6] rounded-full flex items-center justify-center cursor-pointer ${
+                        tempRoomNumber === 1
+                          ? "opacity-50 cursor-not-allowed"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        if (tempRoomNumber > 1)
+                          setTempRoomNumber(tempRoomNumber - 1);
+                      }}
+                    >
+                      <span className="text-[#0097e6] font-bold text-xl leading-none mb-1.5">
+                        -
+                      </span>
+                    </div>
 
-                  {/* Número de habitaciones */}
-                  <p className="font-semibold text-xl">{tempRoomNumber}</p>
+                    {/* Número de habitaciones */}
+                    <p className="font-semibold text-xl">{tempRoomNumber}</p>
 
-                  {/* Botón + */}
-                  <div
-                    className={`w-8 h-8 bg-gray-300 border-2 border-[#0097e6] rounded-full flex items-center justify-center cursor-pointer ${
-                      tempRoomNumber === 3
-                        ? "opacity-50 cursor-not-allowed"
-                        : ""
-                    }`}
-                    onClick={() => {
-                      if (tempRoomNumber < 3) {
-                        setTempRoomNumber(tempRoomNumber + 1);
-                      }
-                    }}
-                  >
-                    <span className="text-[#0097e6] font-bold text-xl">+</span>
+                    {/* Botón + */}
+                    <div
+                      className={`w-6 h-6 bg-white border-2 border-[#0097e6] rounded-full flex items-center justify-center cursor-pointer ${
+                        tempRoomNumber === 3
+                          ? "opacity-50 cursor-not-allowed"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        if (tempRoomNumber < 3)
+                          setTempRoomNumber(tempRoomNumber + 1);
+                      }}
+                    >
+                      <span className="text-[#0097e6] font-bold text-xl leading-none mb-1">
+                        +
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
             )}
           </AnimatePresence>
         </div>
 
-        <div className="w-2/10">
+        <div className="w-full sm:w-2/10">
           <button
-            className="w-full h-full bg-[#0097e6] text-white font-bold text-2xl rounded-br-2xl rounded-tr-2xl"
+            className="w-full h-12 sm:h-full bg-[#0097e6] text-white font-bold text-xl sm:text-2xl rounded-b-2xl sm:rounded-bl-none sm:rounded-br-2xl sm:rounded-tr-2xl"
             onClick={() => {
               setState(tempDates);
               setRooms(tempRooms);

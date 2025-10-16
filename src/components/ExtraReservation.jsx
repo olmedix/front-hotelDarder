@@ -4,9 +4,8 @@ import { API_BASE_URL } from "../services/api";
 import { useState } from "react";
 import { useHotel } from "../contexts/HotelContext";
 
-const stripePromise = loadStripe(
-  "pk_test_51RIeK2RpGxL5WH6XfnCzEWv5XSuvvf3UwrBs7V76aJ7wU9uJKpy2joWfVkM6KFhVoFiVlT6MLzO0dXqC0hfXeTIm00uzoS5tZ3"
-);
+// eslint-disable-next-line no-undef
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export function ExtraReservation({
   selectedExtras,

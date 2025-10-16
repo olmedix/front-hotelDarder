@@ -94,3 +94,94 @@
 .navigation ul li:nth-child(5).activo~.indicator{
     transform: translateX(calc(80px*4));
 }
+
+
+/* -----------------------
+  Estilos menú móvil (hamburguesa)
+   - No interfieren con .navigation (esconde en lg)
+------------------------*/
+.mobile-nav {
+  position: absolute;
+  top: 64px;         /* ajusta según altura del header */
+  left: 0;
+  width: 100%;
+  padding: 0 10px;
+  background: rgba(30, 39, 46, 0.95); /* parecido a tu fondo .navigation */
+  backdrop-filter: blur(6px);
+  z-index: 45;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  animation: slideDown 180ms ease-out;
+}
+
+/* pequeños ajustes para los iconos/texto dentro del mobile nav */
+.mobile-nav .icon {
+  color: #fff;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* texto de las opciones en móvil */
+.mobile-nav .texto {
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* animación */
+@keyframes slideDown {
+  from { transform: translateY(-6px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+
+
+@media (max-width: 500px) {
+    .navigation {
+        top: 30px;
+     
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    .navigation ul li {
+        width: 60px; 
+        height: 60px;
+    }
+    
+    .navigation ul li a .icon {
+        line-height: 60px;
+        font-size: 1.2rem;
+    }
+    
+    .indicator {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #d2dae2;
+        top: -47%;
+        left: 4%;
+    }
+    
+    .navigation ul li:nth-child(1).activo~.indicator{
+        transform: translateX(calc(50px*0));
+    }
+    
+    .navigation ul li:nth-child(2).activo~.indicator{
+        transform: translateX(calc(60px*1));
+    }
+    
+    .navigation ul li:nth-child(3).activo~.indicator{
+        transform: translateX(calc(60px*2));
+    }
+    
+    .navigation ul li:nth-child(4).activo~.indicator{
+        transform: translateX(calc(60px*3));
+    }
+    
+    .navigation ul li:nth-child(5).activo~.indicator{
+        transform: translateX(calc(60px*4));
+    }
+}

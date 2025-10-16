@@ -57,15 +57,15 @@ export function Header() {
   };
 
   return (
-    <header className="absolute top-0 w-full flex z-50">
-      <div className="flex mt-12 ml-10 items-center space-x-2">
+    <header className="absolute top-0 w-full flex flex-col md:flex-row z-50">
+      <div className="mt-4 md:mt-12 mx-[10px] md:ml-10 flex flex-col md:flex-row md:items-center space-y-2 md:space-x-2 w-full">
         <h1 className="text-[#0097e6] font-serif font-semibold text-3xl tracking-wide drop-shadow-lg text-shadow-2xl shadow-gray-600">
-          <span className="text-5xl">H.</span> Emili Darder
+          <span className="text-5xl md:hidden lg:inline">H.</span> Emili Darder
         </h1>
       </div>
 
-      <div className="w-2/3 mt-10 mr-10 flex justify-end">
-        <nav className="navigation">
+      <div className="w-full lg:w-2/3 mt-4 lg:mt-10  lg:px-0 flex justify-center lg:justify-end">
+        <nav className="navigation mt-16 md:mt-0">
           <ul>
             {navItems.map((item, index) => (
               <li
@@ -95,7 +95,7 @@ export function Header() {
       </div>
       {user && (
         <div
-          className="absolute top-14 right-0 mr-8 p-3 rounded-full cursor-pointer
+          className="absolute top-27 -right-7 p-1 bg-white md:bg-transparent md:top-14 md:right-0 mr-8 md:p-3 rounded-full cursor-pointer
         shadow-2xl text-gray-800 hover:scale-120 hover:text-white transition duration-300 ease-in-out z-100"
           onClick={handleLogout}
         >

@@ -1,5 +1,7 @@
-export const URL_BACK = "http://hotelemilidarder.test/";
-export const API_BASE_URL = "http://hotelemilidarder.test/api";
+// eslint-disable-next-line no-undef
+export const URL_BACK = import.meta.env.VITE_URL_BACK;
+
+export const API_BASE_URL = URL_BACK + "api";
 
 export const fetchCategories = async () => {
   const response = await fetch(`${API_BASE_URL}/category`, {
