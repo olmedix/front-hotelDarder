@@ -215,11 +215,11 @@ export function Booking() {
 
   return (
     <div className="relative w-full min-h-screen text-black bg-cover bg-center">
-      <div className="mt-40 ">
+      <div className="mt-44 sm:mt-50 mx-auto">
         <ReservationForm setPriceRooms={setPriceRooms} />
       </div>
 
-      <div className="flex w-8/10 mx-auto mt-20 mb-36">
+      <div className="flex flex-col-reverse lg:flex lg:flex-row w-8/10 mx-auto mt-20 mb-36">
         <div className="w-8/10 ">
           {/* sección de régimen */}
           <BookingPension
@@ -257,19 +257,21 @@ export function Booking() {
         </div>
 
         {/* Sección de detalles de la reserva */}
-        <aside className="sticky top-0 w-3/10 h-80 text-lg text-black bg-gray-100 rounded-lg">
+        <aside className="w-full lg:w-3/10 lg:sticky top-0 h-80 text-lg text-black bg-gray-100 rounded-lg">
           <div className="w-full bg-gray-100 pb-6 rounded-b-lg">
             <div className="w-full py-2.5 rounded-lg border border-gray-200 bg-gray-300 text-gray-800 shadow-2xs">
               <h3>Detalles de la reserva</h3>
             </div>
 
             <div className="text-left  border-b border-gray-500 mx-2.5 py-2">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between lg:block xl:flex items-center">
                 <p className="font-semibold">Fechas:</p>
-                {` ${format(state[0].startDate, "yyyy/MM/dd")} - ${format(
-                  state[0].endDate,
-                  "yyyy/MM/dd"
-                )}`}
+                <p className="lg:text-end">
+                  {` ${format(state[0].startDate, "yyyy/MM/dd")} - ${format(
+                    state[0].endDate,
+                    "yyyy/MM/dd"
+                  )}`}
+                </p>
               </div>
 
               <div className="flex justify-between items-center">
@@ -288,13 +290,16 @@ export function Booking() {
               {rooms.slice(0, roomNumberSelected).map((room, idx) => (
                 <div className="pb-2" key={idx}>
                   <p className="font-semibold text-xl">Habitación {idx + 1}</p>
-                  <div className="flex justify-between items-center">
+                  <div className="flex lg:block xl:flex justify-between items-center">
                     <p className="pl-3 font-semibold">- Categoría:</p>
-                    {categories.find((cat) => cat.id === priceRooms[idx]?.id)
-                      ?.name || (
-                      <span className="text-red-500">No seleccionada</span>
-                    )}
+                    <p className="text-end">
+                      {categories.find((cat) => cat.id === priceRooms[idx]?.id)
+                        ?.name || (
+                        <span className="text-red-500">No seleccionada</span>
+                      )}
+                    </p>
                   </div>
+
                   <div className="flex justify-between items-center">
                     <p className="pl-3 font-semibold">- Nº Personas:</p>
                     {room.value}

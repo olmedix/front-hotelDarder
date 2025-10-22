@@ -97,7 +97,7 @@ export function ExtraReservation({
 
   return (
     <>
-      <aside className="w-1/4 ">
+      <aside className="w-full mx-auto mt-6 md:w-1/4 ">
         <div className="w-full py-2.5 rounded-lg border border-gray-200 bg-gray-300 text-gray-800 shadow-2xs">
           <h2 className="text-xl font-medium">Detalles de la reserva</h2>
 
@@ -150,7 +150,8 @@ export function ExtraReservation({
             </button>
           )}
         </div>
-        <div className="mt-6 mx-2 p-4 bg-gray-200 rounded-md shadow font-bold text-lg flex flex-col items-center justify-center text-center overflow-hidden break-word">
+
+        <div className="hidden md:flex flex-col mt-6 mx-2 p-4 bg-gray-200 rounded-md shadow font-bold text-lg  items-center justify-center text-center overflow-hidden break-word">
           <p className="text-gray-600">
             ¡Confirma el día de tu reserva con el Hotel!
           </p>
