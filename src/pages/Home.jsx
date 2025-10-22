@@ -8,7 +8,7 @@ export function Home() {
     <div className="relative py-[200px] imgHotel w-full bg-cover bg-center bg-no-repeat bg-fixed bg-white">
       <ReservationForm />
 
-      <main className="relative px-5 mt-[500px] w-2/3 mx-auto bg-[#fff] rounded-t-xl">
+      <main className="relative px-5 mt-[500px] w-full sm:w-2/3 mx-auto bg-[#fff] rounded-t-xl">
         <h2 className="text-[#1e272e] font-semibold text-3xl pt-6 mb-5">
           Hotel Emili Darder: Descubre el mejor Hotel para tus vacaciones
         </h2>

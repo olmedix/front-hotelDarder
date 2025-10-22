@@ -9,7 +9,7 @@ import { FaParking } from "react-icons/fa";
 
 export function Facilities() {
   return (
-    <section className="w-2/3 px-5 mx-auto text-black bg-[#fff]">
+    <section className="w-full sm:w-2/3 px-5 mx-auto text-black bg-[#fff]">
       <h3 className="pl-5 text-2xl text-left text-[#1e272e]">
         Servicios e instalaciones
       </h3>
@@ -20,7 +20,7 @@ export function Facilities() {
       </p>
 
       <div className=" w-full">
-        <ul className="grid grid-cols-4 ">
+        <ul className="grid grid-cols-2 sm:grid-cols-3 ">
           <li className="flex gap-x-1.5 font-semibold text-left text-lg mt-7">
             <GrRestaurant className="text-[#0097e6]" /> Restaurante de Autor
           </li>

@@ -18,7 +18,7 @@ export function CardCategory() {
         .map((category, index) => (
           <div
             key={index}
-            className="flex w-md gap-4 my-6 text-black bg-[#f2f2f2] rounded-bl-lg rounded-br-lg shadow-gray-700 shadow-lg"
+            className="flex w-[370px] sm:w-md gap-4 my-6 text-black bg-[#f2f2f2] rounded-bl-lg rounded-br-lg shadow-gray-700 shadow-lg"
           >
             <div className="rounded-lg w-md">
               <Carousel>
