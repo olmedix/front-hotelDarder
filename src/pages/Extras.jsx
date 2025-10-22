@@ -92,8 +92,8 @@ export function Extras() {
 
   return (
     <div className="relative w-full min-h-screen text-black bg-cover bg-center">
-      <section className="relative flex px-5 mt-40 mb-36 w-9/10 mx-auto rounded-t-xl">
-        <main className="w-3/4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-14">
+      <section className="relative flex flex-col-reverse md:flex-row px-5 mt-40 mb-36 w-9/10 mx-auto rounded-t-xl">
+        <main className="w-full md:w-3/4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mt-9 md-top-0 gap-y-14">
           {extras.map((extra) => {
             const imgUrl = extra?.images?.[0]?.url
               ? `${URL_BACK}${extra.images[0].url}`
@@ -104,13 +104,12 @@ export function Extras() {
                 <div
                   style={{
                     position: "relative",
-                    width: "250px",
                     height: "250px",
                     backgroundImage: imgUrl ? `url(${imgUrl})` : undefined,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
-                  className="bg-gray-200 rounded-lg shadow-md flex items-center justify-center"
+                  className="w-full md:w-[240px] bg-gray-200 rounded-lg shadow-md flex items-center justify-center"
                 >
                   <div className="absolute top-0 -right-3 bg-[#0097e6] text-white font-semibold rounded-md rotate-25 px-3 py-1 shadow-2xs">
                     {extra.price} €
@@ -151,7 +150,7 @@ export function Extras() {
                 </div>
 
                 <div
-                  className="w-62 h-7 mt-7"
+                  className="w-full md:w-[240px] h-7 mt-7"
                   onClick={() => {
                     if (!openQuantity[extra.id]) {
                       toggleQuantity(extra.id);
