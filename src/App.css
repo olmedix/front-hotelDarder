@@ -41,3 +41,23 @@
 }
 
 
+/* 📱 Cuando la pantalla es más estrecha de 1000px */
+@media (max-width: 1000px) {
+  .custom-date-range {
+    width: 100%;
+  }
+
+  /* Mostrar solo un mes */
+  .custom-date-range .rdrMonths {
+    flex-direction: column !important;
+  }
+
+  .custom-date-range .rdrMonth {
+    width: 100% !important;
+  }
+
+  /* Ocultar el segundo mes */
+  .custom-date-range .rdrMonth:nth-child(2) {
+    display: none !important;
+  }
+}

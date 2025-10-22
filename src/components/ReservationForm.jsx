@@ -94,9 +94,10 @@ export function ReservationForm({ setPriceRooms }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
-                className="absolute z-70 mt-6"
+                className="absolute z-70 mt-2.5 w-[90%]"
               >
                 <DateRange
+                  className="custom-date-range"
                   editableDateInputs={true}
                   onChange={(item) => {
                     const start = item.selection.startDate;
