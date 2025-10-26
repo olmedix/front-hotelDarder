@@ -214,13 +214,13 @@ export function Booking() {
   }
 
   return (
-    <div className="relative w-full min-h-screen text-black bg-cover bg-center">
+    <div className="relative w-full mx-auto min-h-screen text-black bg-cover bg-center">
       <div className="mt-44 sm:mt-50 mx-auto">
         <ReservationForm setPriceRooms={setPriceRooms} />
       </div>
 
-      <div className="flex flex-col-reverse lg:flex lg:flex-row w-8/10 mx-auto mt-20 mb-36">
-        <div className="w-8/10 ">
+      <div className="flex flex-col-reverse lg:flex lg:flex-row w-9/10 md:w-8/10 mx-auto mt-20 mb-36">
+        <div className="w-full lg:w-8/10 ">
           {/* sección de régimen */}
           <BookingPension
             pension={pension}
@@ -242,7 +242,7 @@ export function Booking() {
             setRoomCategorySelected={setRoomCategorySelected}
           />
 
-          <section className="block w-9/10 text-left mt-6  px-5 mx-auto rounded-t-xl">
+          <section className="block w-full text-center mt-6  lg:px-5 mx-auto rounded-t-xl">
             <h6 className="text-black text-4xl font-bold pt-8 mb-5">
               Agrega una nota a la reserva
             </h6>

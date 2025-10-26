@@ -24,7 +24,7 @@ export function BookingPension({
   };
 
   return (
-    <section className="block w-9/10 text-left px-5 mx-auto rounded-t-xl">
+    <section className="block w-full mt-50 lg:mt-0 text-center lg:px-5 mx-auto rounded-t-xl">
       <h2 className="text-black text-4xl font-bold">Elige un régimen</h2>
 
       {pension.map((item) => {
