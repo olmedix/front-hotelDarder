@@ -81,7 +81,7 @@ export function Register({ setIsLogin }) {
   };
 
   return (
-    <section className="w-1/2 mx-auto">
+    <section className="w-9/10 md:w-4/5  mx-auto">
       <form
         className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 px-5 bg-white p-4 rounded-lg shadow-gray-700 shadow-lg animate-fade-in"
         onSubmit={handleSubmit}

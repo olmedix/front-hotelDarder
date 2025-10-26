@@ -74,7 +74,7 @@ export function Login() {
   };
 
   return (
-    <section className="w-1/2 mx-auto">
+    <section className="w-9/10 lg:w-1/2 mx-auto">
       <form
         className="px-5 bg-white p-4 rounded-lg shadow-gray-700 shadow-lg animate-fade-in"
         onSubmit={handleLoginSubmit}

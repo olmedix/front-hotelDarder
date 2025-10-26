@@ -55,8 +55,8 @@ export function RegisterLogin() {
 
   return (
     <div className="relative w-full bg-cover bg-center mt-40 mb-90">
-      <section className="w-2/3 mx-auto pb-6 mt-6 mb-24 text-black bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg">
-        <main>
+      <section className="w-9/10 lg:w-2/3 mx-auto pb-6 mt-6 mb-24 text-black bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg">
+        <main className="mt-50">
           {!isLogin ? (
             <p
               className="text-[#0097e6] text-end pt-2 pr-2 font-semibold cursor-pointer"

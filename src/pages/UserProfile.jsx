@@ -102,10 +102,10 @@ export function UserProfile() {
   if (errorReservation) return <div>Error: {errorReservation}</div>;
 
   return (
-    <div className="relative w-full bg-cover bg-center mt-30">
+    <div className="relative w-full bg-cover bg-center mt-40">
       <h1 className="text-black text-4xl font-bold pt-8">Datos personales</h1>
-      <div className="w-2/3 mx-auto my-14 pb-8 text-black bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg">
-        <main className="px-5 mt-8 w-2/3 mx-auto rounded-t-xl">
+      <div className="w-9/10 lg:w-2/3 mx-auto my-14 pb-8 text-black bg-[#f2f2f2] rounded-lg shadow-gray-700 shadow-lg">
+        <main className="px-5 mt-8 w-full lg:w-2/3 mx-auto rounded-t-xl">
           <form
             onSubmit={handleSubmit}
             className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 pt-8"
@@ -346,7 +346,7 @@ export function UserProfile() {
       </div>
 
       {/* Mis Reservas */}
-      <section className="w-2/3 mx-auto pb-6 my-6 text-black ">
+      <section className="w-9/10 lg:w-2/3 mx-auto pb-6 my-6 text-black ">
         <h2 className="text-4xl font-bold pt-8">Mis Reservas</h2>
         {reservations.data.length === 0 ? (
           <p className="text-xl text-gray-500 mt-5">
