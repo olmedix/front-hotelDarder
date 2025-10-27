@@ -18,9 +18,8 @@ import { BookingPension } from "../components/BookingPension";
 import { BookingCategories } from "../components/BookingCategories";
 
 export function Booking() {
-  const stripePromise = loadStripe(
-    "pk_test_51RIeK2RpGxL5WH6XfnCzEWv5XSuvvf3UwrBs7V76aJ7wU9uJKpy2joWfVkM6KFhVoFiVlT6MLzO0dXqC0hfXeTIm00uzoS5tZ3"
-  );
+  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
   const navigate = useNavigate();
 
   const { user } = useUser();
