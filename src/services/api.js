@@ -54,7 +54,7 @@ export const fetchReservaExtras = async (reservations) => {
 };
 export const fetchUpdateReservaExtras = async (
   extra_reservation_number,
-  status
+  status,
 ) => {
   const response = await fetch(
     `${API_BASE_URL}/extraReservation/${extra_reservation_number}`,
@@ -65,7 +65,7 @@ export const fetchUpdateReservaExtras = async (
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
       body: JSON.stringify({ status }),
-    }
+    },
   );
 
   if (!response.ok) throw new Error("Error al actualizar la reserva");
@@ -93,6 +93,10 @@ export const fetchReserva = async (sendEmail, reservations) => {
 };
 
 export const fetchUpdateReserva = async (reservation_number, status) => {
+  console.log(status);
+  console.log(
+    `primer console: ${API_BASE_URL}/reservation/${reservation_number}`,
+  );
   const response = await fetch(
     `${API_BASE_URL}/reservation/${reservation_number}`,
     {
@@ -102,7 +106,7 @@ export const fetchUpdateReserva = async (reservation_number, status) => {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
       body: JSON.stringify({ status }),
-    }
+    },
   );
 
   if (!response.ok) throw new Error("Error al actualizar la reserva");
@@ -123,7 +127,7 @@ export const fetchCategoriesAvailable = async (dates) => {
       headers: {
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
   if (!response.ok)
@@ -190,6 +194,7 @@ export const register = async (registerData) => {
 
   if (!response.ok) {
     const errorData = await response.json();
+    console.log("error");
     throw new Error(errorData.message || "Error en el registro");
   }
 
@@ -208,7 +213,7 @@ export const fetchForgotPassword = async (email) => {
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(
-      errorData.message || "Error al enviar el correo de recuperación"
+      errorData.message || "Error al enviar el correo de recuperación",
     );
   }
 
@@ -294,7 +299,7 @@ export const fetchMyReservations = async (userId) => {
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(
-      errorData.message || "Error al obtener las reservas del usuario"
+      errorData.message || "Error al obtener las reservas del usuario",
     );
   }
   return response.json();
